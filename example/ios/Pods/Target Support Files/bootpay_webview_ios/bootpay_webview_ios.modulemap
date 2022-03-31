@@ -1,0 +1,11 @@
+module bootpay_webview_ios {
+  umbrella header "bootpay-webview-umbrella.h"
+  
+  export *
+  module * { export * }
+
+  explicit module Test {
+    header "BTFlutterWebView_Test.h"
+    header "BTCookieManager_Test.h"
+  }
+}

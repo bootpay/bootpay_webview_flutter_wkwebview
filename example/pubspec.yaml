@@ -1,5 +1,5 @@
 name: webview_flutter_wkwebview_example
-description: Demonstrates how to use the bootpay_webview_flutter_wkwebview plugin.
+description: Demonstrates how to use the bootpay_webview_ios plugin.
 publish_to: none
 
 environment:
@@ -11,7 +11,7 @@ dependencies:
 
   path_provider: ^2.0.6
 
-  bootpay_webview_flutter_wkwebview:
+  bootpay_webview_ios:
     # When depending on this package from a real application you should use:
     #   bootpay_webview_flutter: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints

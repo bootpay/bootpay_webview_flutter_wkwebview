@@ -6,10 +6,10 @@
 
 #import "GeneratedPluginRegistrant.h"
 
-#if __has_include(<bootpay_webview_flutter_wkwebview/BTWebViewFlutterPlugin.h>)
-#import <bootpay_webview_flutter_wkwebview/BTWebViewFlutterPlugin.h>
+#if __has_include(<bootpay_webview_ios/BTWebViewFlutterPlugin.h>)
+#import <bootpay_webview_ios/BTWebViewFlutterPlugin.h>
 #else
-@import bootpay_webview_flutter_wkwebview;
+@import bootpay_webview_ios;
 #endif
 
 #if __has_include(<integration_test/IntegrationTestPlugin.h>)

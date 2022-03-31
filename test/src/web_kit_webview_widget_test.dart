@@ -12,10 +12,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:bootpay_webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/foundation/foundation.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/ui_kit/ui_kit.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/web_kit/web_kit.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/web_kit_webview_widget.dart';
+import 'package:bootpay_webview_ios/src/foundation/foundation.dart';
+import 'package:bootpay_webview_ios/src/ui_kit/ui_kit.dart';
+import 'package:bootpay_webview_ios/src/web_kit/web_kit.dart';
+import 'package:bootpay_webview_ios/src/web_kit_webview_widget.dart';
 
 import 'web_kit_webview_widget_test.mocks.dart';
 
@@ -407,7 +407,7 @@ void main() {
         when(mockWebView.evaluateJavaScript('runJavaScript')).thenAnswer(
           (_) => Future<Object?>.value(),
         );
-        // The legacy implementation of bootpay_webview_flutter_wkwebview would convert
+        // The legacy implementation of bootpay_webview_ios would convert
         // objects to strings before returning them to Dart. This verifies null
         // is represented the way it is in Objective-C.
         expect(
@@ -423,7 +423,7 @@ void main() {
         when(mockWebView.evaluateJavaScript('runJavaScript')).thenAnswer(
           (_) => Future<Object?>.value(<Object?>[1, 'string', null]),
         );
-        // The legacy implementation of bootpay_webview_flutter_wkwebview would convert
+        // The legacy implementation of bootpay_webview_ios would convert
         // objects to strings before returning them to Dart. This verifies list
         // is represented the way it is in Objective-C.
         expect(
@@ -442,7 +442,7 @@ void main() {
             null: null,
           }),
         );
-        // The legacy implementation of bootpay_webview_flutter_wkwebview would convert
+        // The legacy implementation of bootpay_webview_ios would convert
         // objects to strings before returning them to Dart. This verifies map
         // is represented the way it is in Objective-C.
         expect(

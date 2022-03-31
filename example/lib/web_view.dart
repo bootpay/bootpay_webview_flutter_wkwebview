@@ -9,7 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'package:bootpay_webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
-import 'package:bootpay_webview_flutter_wkwebview/bootpay_webview_flutter_wkwebview.dart';
+import 'package:bootpay_webview_ios/bootpay_webview_ios.dart';
 
 import 'navigation_decision.dart';
 import 'navigation_request.dart';
@@ -686,7 +686,7 @@ class WebViewCookieManager extends WebViewCookieManagerPlatform {
         WebViewCookieManagerPlatform.instance = WKWebViewCookieManager();
       } else {
         throw AssertionError(
-            'This platform is currently unsupported for bootpay_webview_flutter_wkwebview.');
+            'This platform is currently unsupported for bootpay_webview_ios.');
       }
     }
     return WebViewCookieManagerPlatform.instance!;

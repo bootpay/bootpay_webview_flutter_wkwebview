@@ -4,7 +4,7 @@
 
 // This header is available in the Test module. Import via "@import webview_flutter_wkwebview.Test;"
 
-#import <bootpay_webview_flutter_wkwebview/BTCookieManager.h>
+#import <bootpay_webview_ios/BTCookieManager.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

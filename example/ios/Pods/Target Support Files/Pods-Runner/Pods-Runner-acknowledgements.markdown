@@ -1,7 +1,7 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
-## bootpay_webview_flutter_wkwebview
+## bootpay_webview_ios
 
 Copyright 2013 The Flutter Authors. All rights reserved.
 

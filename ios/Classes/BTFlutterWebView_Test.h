@@ -4,7 +4,7 @@
 
 // This header is available in the Test module. Import via "@import webview_flutter_wkwebview.Test;"
 
-#import <bootpay_webview_flutter_wkwebview/BTFlutterWebView.h>
+#import <bootpay_webview_ios/BTFlutterWebView.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

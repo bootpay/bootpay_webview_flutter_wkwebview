@@ -5,7 +5,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bootpay_webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/wkwebview_cookie_manager.dart';
+import 'package:bootpay_webview_ios/src/wkwebview_cookie_manager.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

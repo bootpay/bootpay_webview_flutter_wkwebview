@@ -1,6 +1,7 @@
-## NEXT
+## 2.7.11
 
-* Fixes an integration test race condition.
+* fork project 
+* flutter pub publish 시에는  too long 버그로 example 제거 후 올려야함 
 
 ## 2.7.1
 

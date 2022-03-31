@@ -440,13 +440,13 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "bootpay_webview_flutter_wkwebview",
+      "name": "bootpay_webview_ios",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     }
   ],
-  "generated": "2022-03-31T04:37:35.579821Z",
+  "generated": "2022-03-31T07:14:55.749999Z",
   "generator": "pub",
   "generatorVersion": "2.15.1"
 }
