@@ -1,0 +1,11 @@
+framework module bootpay_webview_flutter_wkwebview {
+  umbrella header "bootpay-bootpay-webview-umbrella.h"
+  
+  export *
+  module * { export * }
+
+  explicit module Test {
+    header "BTFlutterWebView_Test.h"
+    header "BTCookieManager_Test.h"
+  }
+}
