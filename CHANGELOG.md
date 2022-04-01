@@ -1,3 +1,7 @@
+## 2.7.12
+
+* wkwebview delegate event logic update 
+
 ## 2.7.11
 
 * fork project 

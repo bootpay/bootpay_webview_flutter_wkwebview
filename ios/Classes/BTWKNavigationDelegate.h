@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property UIView* topBlindView;
 @property UIButton* topBlindButton;
 @property(nonatomic, assign) BOOL shouldEnableZoom;
+ 
 
 @end
 
