@@ -1,0 +1,10 @@
+module bootpay_webview_flutter_wkwebview {
+  umbrella header "bootpay-webview-umbrella.h"
+  
+  export *
+  module * { export * }
+
+  explicit module Test {
+    header "BTInstanceManager_Test.h"
+  }
+}
