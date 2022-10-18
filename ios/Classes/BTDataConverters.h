@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "FWFGeneratedWebKitApis.h"
+#import "BTGeneratedWebKitApis.h"
 
 #import <WebKit/WebKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * Converts an FWFNSUrlRequestData to an NSURLRequest.
+ * Converts an BTNSUrlRequestData to an NSURLRequest.
  *
  * @param data The data object containing information to create an NSURLRequest.
  *

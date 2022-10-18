@@ -5,8 +5,8 @@
 #import <Flutter/Flutter.h>
 #import <WebKit/WebKit.h>
 
-#import "FWFGeneratedWebKitApis.h"
-#import "FWFInstanceManager.h"
+#import "BTGeneratedWebKitApis.h"
+#import "BTInstanceManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * Handles creating WKHTTPCookieStore that intercommunicate with a paired Dart object.
  */
-@interface FWFHTTPCookieStoreHostApiImpl : NSObject <FWFWKHttpCookieStoreHostApi>
-- (instancetype)initWithInstanceManager:(FWFInstanceManager *)instanceManager;
+@interface BTHTTPCookieStoreHostApiImpl : NSObject <BTWKHttpCookieStoreHostApi>
+- (instancetype)initWithInstanceManager:(BTInstanceManager *)instanceManager;
 @end
 
 NS_ASSUME_NONNULL_END

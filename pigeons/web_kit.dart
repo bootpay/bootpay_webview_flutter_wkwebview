@@ -17,7 +17,7 @@ import 'package:pigeon/pigeon.dart';
     objcSourceOut: 'ios/Classes/BTGeneratedWebKitApis.m',
     objcOptions: ObjcOptions(
       header: 'ios/Classes/BTGeneratedWebKitApis.h',
-      prefix: 'FWF',
+      prefix: 'BT',
       copyrightHeader: <String>[
         'Copyright 2013 The Flutter Authors. All rights reserved.',
         'Use of this source code is governed by a BSD-style license that can be',

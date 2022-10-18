@@ -12,6 +12,7 @@
 @end
 
 @implementation BTWebView
+
 - (instancetype)initWithFrame:(CGRect)frame
                 configuration:(nonnull WKWebViewConfiguration *)configuration
               binaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger

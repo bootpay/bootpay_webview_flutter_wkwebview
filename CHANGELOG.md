@@ -2,6 +2,8 @@
 
 ## 2.9.5
 * bootpay fork 2.9.5 version 
+* 팝업 생성시 onCreateWebViewForDelegate 이벤트를 전달하지 않게 변경됨
+* 팝업을 메인 웹뷰가 대체되어서 로딩되는것이 아닌, 화면UI에 add 되었다가 remove 되는 것으로 정책을 잡음 
 * Updates imports for `prefer_relative_imports`.
 
 ## 2.9.4

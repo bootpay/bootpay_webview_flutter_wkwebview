@@ -2,30 +2,30 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "FLTWebViewFlutterPlugin.h"
-#import "FWFGeneratedWebKitApis.h"
-#import "FWFHTTPCookieStoreHostApi.h"
-#import "FWFInstanceManager.h"
-#import "FWFNavigationDelegateHostApi.h"
-#import "FWFObjectHostApi.h"
-#import "FWFPreferencesHostApi.h"
-#import "FWFScriptMessageHandlerHostApi.h"
-#import "FWFScrollViewHostApi.h"
-#import "FWFUIDelegateHostApi.h"
-#import "FWFUIViewHostApi.h"
-#import "FWFUserContentControllerHostApi.h"
-#import "FWFWebViewConfigurationHostApi.h"
-#import "FWFWebViewHostApi.h"
-#import "FWFWebsiteDataStoreHostApi.h"
+#import "BTWebViewFlutterPlugin.h"
+#import "BTGeneratedWebKitApis.h"
+#import "BTHTTPCookieStoreHostApi.h"
+#import "BTInstanceManager.h"
+#import "BTNavigationDelegateHostApi.h"
+#import "BTObjectHostApi.h"
+#import "BTPreferencesHostApi.h"
+#import "BTScriptMessageHandlerHostApi.h"
+#import "BTScrollViewHostApi.h"
+#import "BTUIDelegateHostApi.h"
+#import "BTUIViewHostApi.h"
+#import "BTUserContentControllerHostApi.h"
+#import "BTWebViewConfigurationHostApi.h"
+#import "BTWebViewHostApi.h"
+#import "BTWebsiteDataStoreHostApi.h"
 
-@interface FWFWebViewFactory : NSObject <FlutterPlatformViewFactory>
-@property(nonatomic, weak) FWFInstanceManager *instanceManager;
+@interface BTWebViewFactory : NSObject <FlutterPlatformViewFactory>
+@property(nonatomic, weak) BTInstanceManager *instanceManager;
 
-- (instancetype)initWithManager:(FWFInstanceManager *)manager;
+- (instancetype)initWithManager:(BTInstanceManager *)manager;
 @end
 
-@implementation FWFWebViewFactory
-- (instancetype)initWithManager:(FWFInstanceManager *)manager {
+@implementation BTWebViewFactory
+- (instancetype)initWithManager:(BTInstanceManager *)manager {
   self = [self init];
   if (self) {
     _instanceManager = manager;
@@ -41,22 +41,22 @@
                                     viewIdentifier:(int64_t)viewId
                                          arguments:(id _Nullable)args {
   NSNumber *identifier = (NSNumber *)args;
-  FWFWebView *webView =
-      (FWFWebView *)[self.instanceManager instanceForIdentifier:identifier.longValue];
+  BTWebView *webView =
+      (BTWebView *)[self.instanceManager instanceForIdentifier:identifier.longValue];
   webView.frame = frame;
   return webView;
 }
 
 @end
 
-@implementation FLTWebViewFlutterPlugin
+@implementation BTWebViewFlutterPlugin
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
-  FWFInstanceManager *instanceManager =
-      [[FWFInstanceManager alloc] initWithDeallocCallback:^(long identifier) {
-        FWFObjectFlutterApiImpl *objectApi = [[FWFObjectFlutterApiImpl alloc]
+  BTInstanceManager *instanceManager =
+      [[BTInstanceManager alloc] initWithDeallocCallback:^(long identifier) {
+        BTObjectFlutterApiImpl *objectApi = [[BTObjectFlutterApiImpl alloc]
             initWithBinaryMessenger:registrar.messenger
-                    instanceManager:[[FWFInstanceManager alloc] init]];
+                    instanceManager:[[BTInstanceManager alloc] init]];
 
         dispatch_async(dispatch_get_main_queue(), ^{
           [objectApi disposeObjectWithIdentifier:@(identifier)
@@ -65,44 +65,44 @@
                                       }];
         });
       }];
-  FWFWKHttpCookieStoreHostApiSetup(
+  BTWKHttpCookieStoreHostApiSetup(
       registrar.messenger,
-      [[FWFHTTPCookieStoreHostApiImpl alloc] initWithInstanceManager:instanceManager]);
-  FWFWKNavigationDelegateHostApiSetup(
+      [[BTHTTPCookieStoreHostApiImpl alloc] initWithInstanceManager:instanceManager]);
+  BTWKNavigationDelegateHostApiSetup(
       registrar.messenger,
-      [[FWFNavigationDelegateHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
+      [[BTNavigationDelegateHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
                                                         instanceManager:instanceManager]);
-  FWFNSObjectHostApiSetup(registrar.messenger,
-                          [[FWFObjectHostApiImpl alloc] initWithInstanceManager:instanceManager]);
-  FWFWKPreferencesHostApiSetup(registrar.messenger, [[FWFPreferencesHostApiImpl alloc]
+  BTNSObjectHostApiSetup(registrar.messenger,
+                          [[BTObjectHostApiImpl alloc] initWithInstanceManager:instanceManager]);
+  BTWKPreferencesHostApiSetup(registrar.messenger, [[BTPreferencesHostApiImpl alloc]
                                                         initWithInstanceManager:instanceManager]);
-  FWFWKScriptMessageHandlerHostApiSetup(
+  BTWKScriptMessageHandlerHostApiSetup(
       registrar.messenger,
-      [[FWFScriptMessageHandlerHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
+      [[BTScriptMessageHandlerHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
                                                           instanceManager:instanceManager]);
-  FWFUIScrollViewHostApiSetup(registrar.messenger, [[FWFScrollViewHostApiImpl alloc]
+  BTUIScrollViewHostApiSetup(registrar.messenger, [[BTScrollViewHostApiImpl alloc]
                                                        initWithInstanceManager:instanceManager]);
-  FWFWKUIDelegateHostApiSetup(registrar.messenger, [[FWFUIDelegateHostApiImpl alloc]
+  BTWKUIDelegateHostApiSetup(registrar.messenger, [[BTUIDelegateHostApiImpl alloc]
                                                        initWithBinaryMessenger:registrar.messenger
                                                                instanceManager:instanceManager]);
-  FWFUIViewHostApiSetup(registrar.messenger,
-                        [[FWFUIViewHostApiImpl alloc] initWithInstanceManager:instanceManager]);
-  FWFWKUserContentControllerHostApiSetup(
+  BTUIViewHostApiSetup(registrar.messenger,
+                        [[BTUIViewHostApiImpl alloc] initWithInstanceManager:instanceManager]);
+  BTWKUserContentControllerHostApiSetup(
       registrar.messenger,
-      [[FWFUserContentControllerHostApiImpl alloc] initWithInstanceManager:instanceManager]);
-  FWFWKWebsiteDataStoreHostApiSetup(
+      [[BTUserContentControllerHostApiImpl alloc] initWithInstanceManager:instanceManager]);
+  BTWKWebsiteDataStoreHostApiSetup(
       registrar.messenger,
-      [[FWFWebsiteDataStoreHostApiImpl alloc] initWithInstanceManager:instanceManager]);
-  FWFWKWebViewConfigurationHostApiSetup(
+      [[BTWebsiteDataStoreHostApiImpl alloc] initWithInstanceManager:instanceManager]);
+  BTWKWebViewConfigurationHostApiSetup(
       registrar.messenger,
-      [[FWFWebViewConfigurationHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
+      [[BTWebViewConfigurationHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
                                                           instanceManager:instanceManager]);
-  FWFWKWebViewHostApiSetup(registrar.messenger, [[FWFWebViewHostApiImpl alloc]
+  BTWKWebViewHostApiSetup(registrar.messenger, [[BTWebViewHostApiImpl alloc]
                                                     initWithBinaryMessenger:registrar.messenger
                                                             instanceManager:instanceManager]);
 
-  FWFWebViewFactory *webviewFactory = [[FWFWebViewFactory alloc] initWithManager:instanceManager];
-  [registrar registerViewFactory:webviewFactory withId:@"plugins.flutter.io/webview"];
+  BTWebViewFactory *webviewFactory = [[BTWebViewFactory alloc] initWithManager:instanceManager];
+  [registrar registerViewFactory:webviewFactory withId:@"kr.co.bootpay/webview"];
 
   // InstanceManager is published so that a strong reference is maintained.
   [registrar publish:instanceManager];

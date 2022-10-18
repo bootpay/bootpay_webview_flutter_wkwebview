@@ -2,7 +2,7 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
 Pod::Spec.new do |s|
-  s.name             = 'webview_flutter_wkwebview'
+  s.name             = 'bootpay_webview_flutter_wkwebview'
   s.version          = '0.0.1'
   s.summary          = 'A WebView Plugin for Flutter.'
   s.description      = <<-DESC
@@ -16,7 +16,7 @@ Downloaded by pub (not CocoaPods).
   s.documentation_url = 'https://pub.dev/packages/webview_flutter'
   s.source_files = 'Classes/**/*.{h,m}'
   s.public_header_files = 'Classes/**/*.h'
-  s.module_map = 'Classes/FlutterWebView.modulemap'
+  s.module_map = 'Classes/BTFlutterWebView.modulemap'
   s.dependency 'Flutter'
 
   s.platform = :ios, '9.0'

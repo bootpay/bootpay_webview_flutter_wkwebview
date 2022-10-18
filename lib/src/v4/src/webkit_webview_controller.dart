@@ -441,7 +441,7 @@ class WebKitWebViewWidget extends PlatformWebViewWidget {
   @override
   Widget build(BuildContext context) {
     return UiKitView(
-      viewType: 'plugins.flutter.io/webview',
+      viewType: 'kr.co.bootpay/webview',
       onPlatformViewCreated: (_) {},
       layoutDirection: params.layoutDirection,
       gestureRecognizers: params.gestureRecognizers,

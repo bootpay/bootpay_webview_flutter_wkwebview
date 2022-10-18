@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "FWFHTTPCookieStoreHostApi.h"
-#import "FWFDataConverters.h"
-#import "FWFWebsiteDataStoreHostApi.h"
+#import "BTHTTPCookieStoreHostApi.h"
+#import "BTDataConverters.h"
+#import "BTWebsiteDataStoreHostApi.h"
 
-@interface FWFHTTPCookieStoreHostApiImpl ()
+@interface BTHTTPCookieStoreHostApiImpl ()
 // InstanceManager must be weak to prevent a circular reference with the object it stores.
-@property(nonatomic, weak) FWFInstanceManager *instanceManager;
+@property(nonatomic, weak) BTInstanceManager *instanceManager;
 @end
 
-@implementation FWFHTTPCookieStoreHostApiImpl
-- (instancetype)initWithInstanceManager:(FWFInstanceManager *)instanceManager {
+@implementation BTHTTPCookieStoreHostApiImpl
+- (instancetype)initWithInstanceManager:(BTInstanceManager *)instanceManager {
   self = [self init];
   if (self) {
     _instanceManager = instanceManager;
@@ -36,16 +36,16 @@
                                   withIdentifier:identifier.longValue];
   } else {
     *error = [FlutterError
-        errorWithCode:@"FWFUnsupportedVersionError"
+        errorWithCode:@"BTUnsupportedVersionError"
               message:@"WKWebsiteDataStore.httpCookieStore is only supported on versions 11+."
               details:nil];
   }
 }
 
 - (void)setCookieForStoreWithIdentifier:(nonnull NSNumber *)identifier
-                                 cookie:(nonnull FWFNSHttpCookieData *)cookie
+                                 cookie:(nonnull BTNSHttpCookieData *)cookie
                              completion:(nonnull void (^)(FlutterError *_Nullable))completion {
-  NSHTTPCookie *nsCookie = FWFNSHTTPCookieFromCookieData(cookie);
+  NSHTTPCookie *nsCookie = BTNSHTTPCookieFromCookieData(cookie);
 
   if (@available(iOS 11.0, *)) {
     [[self HTTPCookieStoreForIdentifier:identifier] setCookie:nsCookie
@@ -53,7 +53,7 @@
                                               completion(nil);
                                             }];
   } else {
-    completion([FlutterError errorWithCode:@"FWFUnsupportedVersionError"
+    completion([FlutterError errorWithCode:@"BTUnsupportedVersionError"
                                    message:@"setCookie is only supported on versions 11+."
                                    details:nil]);
   }

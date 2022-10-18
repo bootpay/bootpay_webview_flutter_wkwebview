@@ -193,39 +193,6 @@
                                                                      NSAssert(!error, @"%@", error);
                                                                    }];
 }
-@end
-
-@interface BTNavigationDelegateHostApiImpl ()
-// BinaryMessenger must be weak to prevent a circular reference with the host API it
-// references.
-@property(nonatomic, weak) id<FlutterBinaryMessenger> binaryMessenger;
-// InstanceManager must be weak to prevent a circular reference with the object it stores.
-@property(nonatomic, weak) BTInstanceManager *instanceManager;
-@end
-
-@implementation BTNavigationDelegateHostApiImpl
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
-                        instanceManager:(BTInstanceManager *)instanceManager {
-  self = [self init];
-  if (self) {
-    _binaryMessenger = binaryMessenger;
-    _instanceManager = instanceManager;
-  }
-  return self;
-}
-
-- (BTNavigationDelegate *)navigationDelegateForIdentifier:(NSNumber *)identifier {
-  return (BTNavigationDelegate *)[self.instanceManager instanceForIdentifier:identifier.longValue];
-}
-
-- (void)createWithIdentifier:(nonnull NSNumber *)identifier
-                       error:(FlutterError *_Nullable __autoreleasing *_Nonnull)error {
-  BTNavigationDelegate *navigationDelegate =
-      [[BTNavigationDelegate alloc] initWithBinaryMessenger:self.binaryMessenger
-                                             instanceManager:self.instanceManager];
-  [self.instanceManager addDartCreatedInstance:navigationDelegate
-                                withIdentifier:identifier.longValue];
-}
 
 
 
@@ -258,6 +225,7 @@
 
 - (nullable WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures {
 
+
     WKWebView *popupView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, webView.bounds.size.width, webView.bounds.size.height) configuration:configuration];
 
 
@@ -284,7 +252,6 @@
         completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
     }
 }
-
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
 
@@ -440,6 +407,42 @@
 - (BOOL) isItunesURL:(NSString*) urlString {
     NSRange match = [urlString rangeOfString: @"apple.com"];
     return match.location != NSNotFound;
+}
+
+
+
+@end
+
+@interface BTNavigationDelegateHostApiImpl ()
+// BinaryMessenger must be weak to prevent a circular reference with the host API it
+// references.
+@property(nonatomic, weak) id<FlutterBinaryMessenger> binaryMessenger;
+// InstanceManager must be weak to prevent a circular reference with the object it stores.
+@property(nonatomic, weak) BTInstanceManager *instanceManager;
+@end
+
+@implementation BTNavigationDelegateHostApiImpl
+- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
+                        instanceManager:(BTInstanceManager *)instanceManager {
+  self = [self init];
+  if (self) {
+    _binaryMessenger = binaryMessenger;
+    _instanceManager = instanceManager;
+  }
+  return self;
+}
+
+- (BTNavigationDelegate *)navigationDelegateForIdentifier:(NSNumber *)identifier {
+  return (BTNavigationDelegate *)[self.instanceManager instanceForIdentifier:identifier.longValue];
+}
+
+- (void)createWithIdentifier:(nonnull NSNumber *)identifier
+                       error:(FlutterError *_Nullable __autoreleasing *_Nonnull)error {
+  BTNavigationDelegate *navigationDelegate =
+      [[BTNavigationDelegate alloc] initWithBinaryMessenger:self.binaryMessenger
+                                             instanceManager:self.instanceManager];
+  [self.instanceManager addDartCreatedInstance:navigationDelegate
+                                withIdentifier:identifier.longValue];
 }
 
 @end
