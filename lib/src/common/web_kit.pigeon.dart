@@ -457,7 +457,7 @@ class WKWebsiteDataStoreHostApi {
   Future<void> createFromWebViewConfiguration(
       int arg_identifier, int arg_configurationIdentifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebsiteDataStoreHostApi.createFromWebViewConfiguration',
+        'kr.co.bootpay.WKWebsiteDataStoreHostApi.createFromWebViewConfiguration',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
@@ -483,7 +483,7 @@ class WKWebsiteDataStoreHostApi {
 
   Future<void> createDefaultDataStore(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebsiteDataStoreHostApi.createDefaultDataStore',
+        'kr.co.bootpay.WKWebsiteDataStoreHostApi.createDefaultDataStore',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
@@ -511,7 +511,7 @@ class WKWebsiteDataStoreHostApi {
       List<WKWebsiteDataTypeEnumData?> arg_dataTypes,
       double arg_modificationTimeInSecondsSinceEpoch) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebsiteDataStoreHostApi.removeDataOfTypes', codec,
+        'kr.co.bootpay.WKWebsiteDataStoreHostApi.removeDataOfTypes', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel.send(<Object?>[
       arg_identifier,
@@ -559,7 +559,7 @@ class UIViewHostApi {
 
   Future<void> setBackgroundColor(int arg_identifier, int? arg_value) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.UIViewHostApi.setBackgroundColor', codec,
+        'kr.co.bootpay.UIViewHostApi.setBackgroundColor', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
         .send(<Object?>[arg_identifier, arg_value]) as Map<Object?, Object?>?;
@@ -583,7 +583,7 @@ class UIViewHostApi {
 
   Future<void> setOpaque(int arg_identifier, bool arg_opaque) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.UIViewHostApi.setOpaque', codec,
+        'kr.co.bootpay.UIViewHostApi.setOpaque', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
         .send(<Object?>[arg_identifier, arg_opaque]) as Map<Object?, Object?>?;
@@ -624,7 +624,7 @@ class UIScrollViewHostApi {
   Future<void> createFromWebView(
       int arg_identifier, int arg_webViewIdentifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.UIScrollViewHostApi.createFromWebView', codec,
+        'kr.co.bootpay.UIScrollViewHostApi.createFromWebView', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier, arg_webViewIdentifier])
@@ -649,7 +649,7 @@ class UIScrollViewHostApi {
 
   Future<List<double?>> getContentOffset(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.UIScrollViewHostApi.getContentOffset', codec,
+        'kr.co.bootpay.UIScrollViewHostApi.getContentOffset', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -678,7 +678,7 @@ class UIScrollViewHostApi {
 
   Future<void> scrollBy(int arg_identifier, double arg_x, double arg_y) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.UIScrollViewHostApi.scrollBy', codec,
+        'kr.co.bootpay.UIScrollViewHostApi.scrollBy', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier, arg_x, arg_y])
@@ -704,7 +704,7 @@ class UIScrollViewHostApi {
   Future<void> setContentOffset(
       int arg_identifier, double arg_x, double arg_y) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.UIScrollViewHostApi.setContentOffset', codec,
+        'kr.co.bootpay.UIScrollViewHostApi.setContentOffset', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier, arg_x, arg_y])
@@ -766,7 +766,7 @@ class WKWebViewConfigurationHostApi {
 
   Future<void> create(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewConfigurationHostApi.create', codec,
+        'kr.co.bootpay.WKWebViewConfigurationHostApi.create', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -791,7 +791,7 @@ class WKWebViewConfigurationHostApi {
   Future<void> createFromWebView(
       int arg_identifier, int arg_webViewIdentifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewConfigurationHostApi.createFromWebView',
+        'kr.co.bootpay.WKWebViewConfigurationHostApi.createFromWebView',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
@@ -818,7 +818,7 @@ class WKWebViewConfigurationHostApi {
   Future<void> setAllowsInlineMediaPlayback(
       int arg_identifier, bool arg_allow) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewConfigurationHostApi.setAllowsInlineMediaPlayback',
+        'kr.co.bootpay.WKWebViewConfigurationHostApi.setAllowsInlineMediaPlayback',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
@@ -844,7 +844,7 @@ class WKWebViewConfigurationHostApi {
   Future<void> setMediaTypesRequiringUserActionForPlayback(int arg_identifier,
       List<WKAudiovisualMediaTypeEnumData?> arg_types) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewConfigurationHostApi.setMediaTypesRequiringUserActionForPlayback',
+        'kr.co.bootpay.WKWebViewConfigurationHostApi.setMediaTypesRequiringUserActionForPlayback',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
@@ -881,18 +881,18 @@ abstract class WKWebViewConfigurationFlutterApi {
       {BinaryMessenger? binaryMessenger}) {
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.WKWebViewConfigurationFlutterApi.create', codec,
+          'kr.co.bootpay.WKWebViewConfigurationFlutterApi.create', codec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.WKWebViewConfigurationFlutterApi.create was null.');
+              'Argument for kr.co.bootpay.WKWebViewConfigurationFlutterApi.create was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
           assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.WKWebViewConfigurationFlutterApi.create was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKWebViewConfigurationFlutterApi.create was null, expected non-null int.');
           api.create(arg_identifier!);
           return;
         });
@@ -946,7 +946,7 @@ class WKUserContentControllerHostApi {
   Future<void> createFromWebViewConfiguration(
       int arg_identifier, int arg_configurationIdentifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKUserContentControllerHostApi.createFromWebViewConfiguration',
+        'kr.co.bootpay.WKUserContentControllerHostApi.createFromWebViewConfiguration',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
@@ -973,7 +973,7 @@ class WKUserContentControllerHostApi {
   Future<void> addScriptMessageHandler(
       int arg_identifier, int arg_handlerIdentifier, String arg_name) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKUserContentControllerHostApi.addScriptMessageHandler',
+        'kr.co.bootpay.WKUserContentControllerHostApi.addScriptMessageHandler',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
@@ -1000,7 +1000,7 @@ class WKUserContentControllerHostApi {
   Future<void> removeScriptMessageHandler(
       int arg_identifier, String arg_name) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKUserContentControllerHostApi.removeScriptMessageHandler',
+        'kr.co.bootpay.WKUserContentControllerHostApi.removeScriptMessageHandler',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
@@ -1025,7 +1025,7 @@ class WKUserContentControllerHostApi {
 
   Future<void> removeAllScriptMessageHandlers(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKUserContentControllerHostApi.removeAllScriptMessageHandlers',
+        'kr.co.bootpay.WKUserContentControllerHostApi.removeAllScriptMessageHandlers',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
@@ -1051,7 +1051,7 @@ class WKUserContentControllerHostApi {
   Future<void> addUserScript(
       int arg_identifier, WKUserScriptData arg_userScript) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKUserContentControllerHostApi.addUserScript',
+        'kr.co.bootpay.WKUserContentControllerHostApi.addUserScript',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
@@ -1077,7 +1077,7 @@ class WKUserContentControllerHostApi {
 
   Future<void> removeAllUserScripts(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKUserContentControllerHostApi.removeAllUserScripts',
+        'kr.co.bootpay.WKUserContentControllerHostApi.removeAllUserScripts',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
@@ -1119,7 +1119,7 @@ class WKPreferencesHostApi {
   Future<void> createFromWebViewConfiguration(
       int arg_identifier, int arg_configurationIdentifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKPreferencesHostApi.createFromWebViewConfiguration',
+        'kr.co.bootpay.WKPreferencesHostApi.createFromWebViewConfiguration',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
@@ -1146,7 +1146,7 @@ class WKPreferencesHostApi {
   Future<void> setJavaScriptEnabled(
       int arg_identifier, bool arg_enabled) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKPreferencesHostApi.setJavaScriptEnabled', codec,
+        'kr.co.bootpay.WKPreferencesHostApi.setJavaScriptEnabled', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
         .send(<Object?>[arg_identifier, arg_enabled]) as Map<Object?, Object?>?;
@@ -1187,7 +1187,7 @@ class WKScriptMessageHandlerHostApi {
 
   Future<void> create(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKScriptMessageHandlerHostApi.create', codec,
+        'kr.co.bootpay.WKScriptMessageHandlerHostApi.create', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -1244,7 +1244,7 @@ abstract class WKScriptMessageHandlerFlutterApi {
       {BinaryMessenger? binaryMessenger}) {
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.WKScriptMessageHandlerFlutterApi.didReceiveScriptMessage',
+          'kr.co.bootpay.WKScriptMessageHandlerFlutterApi.didReceiveScriptMessage',
           codec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
@@ -1252,18 +1252,18 @@ abstract class WKScriptMessageHandlerFlutterApi {
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.WKScriptMessageHandlerFlutterApi.didReceiveScriptMessage was null.');
+              'Argument for kr.co.bootpay.WKScriptMessageHandlerFlutterApi.didReceiveScriptMessage was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
           assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.WKScriptMessageHandlerFlutterApi.didReceiveScriptMessage was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKScriptMessageHandlerFlutterApi.didReceiveScriptMessage was null, expected non-null int.');
           final int? arg_userContentControllerIdentifier = (args[1] as int?);
           assert(arg_userContentControllerIdentifier != null,
-              'Argument for dev.flutter.pigeon.WKScriptMessageHandlerFlutterApi.didReceiveScriptMessage was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKScriptMessageHandlerFlutterApi.didReceiveScriptMessage was null, expected non-null int.');
           final WKScriptMessageData? arg_message =
               (args[2] as WKScriptMessageData?);
           assert(arg_message != null,
-              'Argument for dev.flutter.pigeon.WKScriptMessageHandlerFlutterApi.didReceiveScriptMessage was null, expected non-null WKScriptMessageData.');
+              'Argument for kr.co.bootpay.WKScriptMessageHandlerFlutterApi.didReceiveScriptMessage was null, expected non-null WKScriptMessageData.');
           api.didReceiveScriptMessage(arg_identifier!,
               arg_userContentControllerIdentifier!, arg_message!);
           return;
@@ -1291,7 +1291,7 @@ class WKNavigationDelegateHostApi {
 
   Future<void> create(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKNavigationDelegateHostApi.create', codec,
+        'kr.co.bootpay.WKNavigationDelegateHostApi.create', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -1383,7 +1383,7 @@ abstract class WKNavigationDelegateFlutterApi {
       {BinaryMessenger? binaryMessenger}) {
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFinishNavigation',
+          'kr.co.bootpay.WKNavigationDelegateFlutterApi.didFinishNavigation',
           codec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
@@ -1391,14 +1391,14 @@ abstract class WKNavigationDelegateFlutterApi {
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFinishNavigation was null.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didFinishNavigation was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
           assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFinishNavigation was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didFinishNavigation was null, expected non-null int.');
           final int? arg_webViewIdentifier = (args[1] as int?);
           assert(arg_webViewIdentifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFinishNavigation was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didFinishNavigation was null, expected non-null int.');
           final String? arg_url = (args[2] as String?);
           api.didFinishNavigation(
               arg_identifier!, arg_webViewIdentifier!, arg_url);
@@ -1408,7 +1408,7 @@ abstract class WKNavigationDelegateFlutterApi {
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didStartProvisionalNavigation',
+          'kr.co.bootpay.WKNavigationDelegateFlutterApi.didStartProvisionalNavigation',
           codec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
@@ -1416,14 +1416,14 @@ abstract class WKNavigationDelegateFlutterApi {
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didStartProvisionalNavigation was null.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didStartProvisionalNavigation was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
           assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didStartProvisionalNavigation was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didStartProvisionalNavigation was null, expected non-null int.');
           final int? arg_webViewIdentifier = (args[1] as int?);
           assert(arg_webViewIdentifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didStartProvisionalNavigation was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didStartProvisionalNavigation was null, expected non-null int.');
           final String? arg_url = (args[2] as String?);
           api.didStartProvisionalNavigation(
               arg_identifier!, arg_webViewIdentifier!, arg_url);
@@ -1433,7 +1433,7 @@ abstract class WKNavigationDelegateFlutterApi {
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.WKNavigationDelegateFlutterApi.decidePolicyForNavigationAction',
+          'kr.co.bootpay.WKNavigationDelegateFlutterApi.decidePolicyForNavigationAction',
           codec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
@@ -1441,18 +1441,18 @@ abstract class WKNavigationDelegateFlutterApi {
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.decidePolicyForNavigationAction was null.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.decidePolicyForNavigationAction was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
           assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.decidePolicyForNavigationAction was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.decidePolicyForNavigationAction was null, expected non-null int.');
           final int? arg_webViewIdentifier = (args[1] as int?);
           assert(arg_webViewIdentifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.decidePolicyForNavigationAction was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.decidePolicyForNavigationAction was null, expected non-null int.');
           final WKNavigationActionData? arg_navigationAction =
               (args[2] as WKNavigationActionData?);
           assert(arg_navigationAction != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.decidePolicyForNavigationAction was null, expected non-null WKNavigationActionData.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.decidePolicyForNavigationAction was null, expected non-null WKNavigationActionData.');
           final WKNavigationActionPolicyEnumData output =
               await api.decidePolicyForNavigationAction(arg_identifier!,
                   arg_webViewIdentifier!, arg_navigationAction!);
@@ -1462,7 +1462,7 @@ abstract class WKNavigationDelegateFlutterApi {
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFailNavigation',
+          'kr.co.bootpay.WKNavigationDelegateFlutterApi.didFailNavigation',
           codec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
@@ -1470,17 +1470,17 @@ abstract class WKNavigationDelegateFlutterApi {
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFailNavigation was null.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didFailNavigation was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
           assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFailNavigation was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didFailNavigation was null, expected non-null int.');
           final int? arg_webViewIdentifier = (args[1] as int?);
           assert(arg_webViewIdentifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFailNavigation was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didFailNavigation was null, expected non-null int.');
           final NSErrorData? arg_error = (args[2] as NSErrorData?);
           assert(arg_error != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFailNavigation was null, expected non-null NSErrorData.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didFailNavigation was null, expected non-null NSErrorData.');
           api.didFailNavigation(
               arg_identifier!, arg_webViewIdentifier!, arg_error!);
           return;
@@ -1489,7 +1489,7 @@ abstract class WKNavigationDelegateFlutterApi {
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFailProvisionalNavigation',
+          'kr.co.bootpay.WKNavigationDelegateFlutterApi.didFailProvisionalNavigation',
           codec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
@@ -1497,17 +1497,17 @@ abstract class WKNavigationDelegateFlutterApi {
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFailProvisionalNavigation was null.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didFailProvisionalNavigation was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
           assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFailProvisionalNavigation was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didFailProvisionalNavigation was null, expected non-null int.');
           final int? arg_webViewIdentifier = (args[1] as int?);
           assert(arg_webViewIdentifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFailProvisionalNavigation was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didFailProvisionalNavigation was null, expected non-null int.');
           final NSErrorData? arg_error = (args[2] as NSErrorData?);
           assert(arg_error != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.didFailProvisionalNavigation was null, expected non-null NSErrorData.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.didFailProvisionalNavigation was null, expected non-null NSErrorData.');
           api.didFailProvisionalNavigation(
               arg_identifier!, arg_webViewIdentifier!, arg_error!);
           return;
@@ -1516,7 +1516,7 @@ abstract class WKNavigationDelegateFlutterApi {
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.WKNavigationDelegateFlutterApi.webViewWebContentProcessDidTerminate',
+          'kr.co.bootpay.WKNavigationDelegateFlutterApi.webViewWebContentProcessDidTerminate',
           codec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
@@ -1524,14 +1524,14 @@ abstract class WKNavigationDelegateFlutterApi {
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.webViewWebContentProcessDidTerminate was null.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.webViewWebContentProcessDidTerminate was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
           assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.webViewWebContentProcessDidTerminate was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.webViewWebContentProcessDidTerminate was null, expected non-null int.');
           final int? arg_webViewIdentifier = (args[1] as int?);
           assert(arg_webViewIdentifier != null,
-              'Argument for dev.flutter.pigeon.WKNavigationDelegateFlutterApi.webViewWebContentProcessDidTerminate was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKNavigationDelegateFlutterApi.webViewWebContentProcessDidTerminate was null, expected non-null int.');
           api.webViewWebContentProcessDidTerminate(
               arg_identifier!, arg_webViewIdentifier!);
           return;
@@ -1578,7 +1578,7 @@ class NSObjectHostApi {
 
   Future<void> dispose(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.NSObjectHostApi.dispose', codec,
+        'kr.co.bootpay.NSObjectHostApi.dispose', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -1606,7 +1606,7 @@ class NSObjectHostApi {
       String arg_keyPath,
       List<NSKeyValueObservingOptionsEnumData?> arg_options) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.NSObjectHostApi.addObserver', codec,
+        'kr.co.bootpay.NSObjectHostApi.addObserver', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel.send(<Object?>[
       arg_identifier,
@@ -1635,7 +1635,7 @@ class NSObjectHostApi {
   Future<void> removeObserver(int arg_identifier, int arg_observerIdentifier,
       String arg_keyPath) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.NSObjectHostApi.removeObserver', codec,
+        'kr.co.bootpay.NSObjectHostApi.removeObserver', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel.send(
             <Object?>[arg_identifier, arg_observerIdentifier, arg_keyPath])
@@ -1775,32 +1775,32 @@ abstract class NSObjectFlutterApi {
       {BinaryMessenger? binaryMessenger}) {
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.NSObjectFlutterApi.observeValue', codec,
+          'kr.co.bootpay.NSObjectFlutterApi.observeValue', codec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.NSObjectFlutterApi.observeValue was null.');
+              'Argument for kr.co.bootpay.NSObjectFlutterApi.observeValue was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
           assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.NSObjectFlutterApi.observeValue was null, expected non-null int.');
+              'Argument for kr.co.bootpay.NSObjectFlutterApi.observeValue was null, expected non-null int.');
           final String? arg_keyPath = (args[1] as String?);
           assert(arg_keyPath != null,
-              'Argument for dev.flutter.pigeon.NSObjectFlutterApi.observeValue was null, expected non-null String.');
+              'Argument for kr.co.bootpay.NSObjectFlutterApi.observeValue was null, expected non-null String.');
           final int? arg_objectIdentifier = (args[2] as int?);
           assert(arg_objectIdentifier != null,
-              'Argument for dev.flutter.pigeon.NSObjectFlutterApi.observeValue was null, expected non-null int.');
+              'Argument for kr.co.bootpay.NSObjectFlutterApi.observeValue was null, expected non-null int.');
           final List<NSKeyValueChangeKeyEnumData?>? arg_changeKeys =
               (args[3] as List<Object?>?)?.cast<NSKeyValueChangeKeyEnumData?>();
           assert(arg_changeKeys != null,
-              'Argument for dev.flutter.pigeon.NSObjectFlutterApi.observeValue was null, expected non-null List<NSKeyValueChangeKeyEnumData?>.');
+              'Argument for kr.co.bootpay.NSObjectFlutterApi.observeValue was null, expected non-null List<NSKeyValueChangeKeyEnumData?>.');
           final List<Object?>? arg_changeValues =
               (args[4] as List<Object?>?)?.cast<Object?>();
           assert(arg_changeValues != null,
-              'Argument for dev.flutter.pigeon.NSObjectFlutterApi.observeValue was null, expected non-null List<Object?>.');
+              'Argument for kr.co.bootpay.NSObjectFlutterApi.observeValue was null, expected non-null List<Object?>.');
           api.observeValue(arg_identifier!, arg_keyPath!, arg_objectIdentifier!,
               arg_changeKeys!, arg_changeValues!);
           return;
@@ -1809,18 +1809,18 @@ abstract class NSObjectFlutterApi {
     }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.NSObjectFlutterApi.dispose', codec,
+          'kr.co.bootpay.NSObjectFlutterApi.dispose', codec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.NSObjectFlutterApi.dispose was null.');
+              'Argument for kr.co.bootpay.NSObjectFlutterApi.dispose was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
           assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.NSObjectFlutterApi.dispose was null, expected non-null int.');
+              'Argument for kr.co.bootpay.NSObjectFlutterApi.dispose was null, expected non-null int.');
           api.dispose(arg_identifier!);
           return;
         });
@@ -1945,7 +1945,7 @@ class WKWebViewHostApi {
   Future<void> create(
       int arg_identifier, int arg_configurationIdentifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.create', codec,
+        'kr.co.bootpay.WKWebViewHostApi.create', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
             .send(<Object?>[arg_identifier, arg_configurationIdentifier])
@@ -1971,7 +1971,7 @@ class WKWebViewHostApi {
   Future<void> setUIDelegate(
       int arg_identifier, int? arg_uiDelegateIdentifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.setUIDelegate', codec,
+        'kr.co.bootpay.WKWebViewHostApi.setUIDelegate', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier, arg_uiDelegateIdentifier])
@@ -1997,7 +1997,7 @@ class WKWebViewHostApi {
   Future<void> setNavigationDelegate(
       int arg_identifier, int? arg_navigationDelegateIdentifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.setNavigationDelegate', codec,
+        'kr.co.bootpay.WKWebViewHostApi.setNavigationDelegate', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
             .send(<Object?>[arg_identifier, arg_navigationDelegateIdentifier])
@@ -2022,7 +2022,7 @@ class WKWebViewHostApi {
 
   Future<String?> getUrl(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.getUrl', codec,
+        'kr.co.bootpay.WKWebViewHostApi.getUrl', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -2046,7 +2046,7 @@ class WKWebViewHostApi {
 
   Future<double> getEstimatedProgress(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.getEstimatedProgress', codec,
+        'kr.co.bootpay.WKWebViewHostApi.getEstimatedProgress', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -2076,7 +2076,7 @@ class WKWebViewHostApi {
   Future<void> loadRequest(
       int arg_identifier, NSUrlRequestData arg_request) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.loadRequest', codec,
+        'kr.co.bootpay.WKWebViewHostApi.loadRequest', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
         .send(<Object?>[arg_identifier, arg_request]) as Map<Object?, Object?>?;
@@ -2101,7 +2101,7 @@ class WKWebViewHostApi {
   Future<void> loadHtmlString(
       int arg_identifier, String arg_string, String? arg_baseUrl) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.loadHtmlString', codec,
+        'kr.co.bootpay.WKWebViewHostApi.loadHtmlString', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier, arg_string, arg_baseUrl])
@@ -2127,7 +2127,7 @@ class WKWebViewHostApi {
   Future<void> loadFileUrl(
       int arg_identifier, String arg_url, String arg_readAccessUrl) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.loadFileUrl', codec,
+        'kr.co.bootpay.WKWebViewHostApi.loadFileUrl', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
             .send(<Object?>[arg_identifier, arg_url, arg_readAccessUrl])
@@ -2152,7 +2152,7 @@ class WKWebViewHostApi {
 
   Future<void> loadFlutterAsset(int arg_identifier, String arg_key) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.loadFlutterAsset', codec,
+        'kr.co.bootpay.WKWebViewHostApi.loadFlutterAsset', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
         .send(<Object?>[arg_identifier, arg_key]) as Map<Object?, Object?>?;
@@ -2176,7 +2176,7 @@ class WKWebViewHostApi {
 
   Future<bool> canGoBack(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.canGoBack', codec,
+        'kr.co.bootpay.WKWebViewHostApi.canGoBack', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -2205,7 +2205,7 @@ class WKWebViewHostApi {
 
   Future<bool> canGoForward(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.canGoForward', codec,
+        'kr.co.bootpay.WKWebViewHostApi.canGoForward', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -2234,7 +2234,7 @@ class WKWebViewHostApi {
 
   Future<void> goBack(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.goBack', codec,
+        'kr.co.bootpay.WKWebViewHostApi.goBack', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -2258,7 +2258,7 @@ class WKWebViewHostApi {
 
   Future<void> goForward(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.goForward', codec,
+        'kr.co.bootpay.WKWebViewHostApi.goForward', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -2282,7 +2282,7 @@ class WKWebViewHostApi {
 
   Future<void> reload(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.reload', codec,
+        'kr.co.bootpay.WKWebViewHostApi.reload', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -2306,7 +2306,7 @@ class WKWebViewHostApi {
 
   Future<String?> getTitle(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.getTitle', codec,
+        'kr.co.bootpay.WKWebViewHostApi.getTitle', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -2331,7 +2331,7 @@ class WKWebViewHostApi {
   Future<void> setAllowsBackForwardNavigationGestures(
       int arg_identifier, bool arg_allow) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.setAllowsBackForwardNavigationGestures',
+        'kr.co.bootpay.WKWebViewHostApi.setAllowsBackForwardNavigationGestures',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
@@ -2357,7 +2357,7 @@ class WKWebViewHostApi {
   Future<void> setCustomUserAgent(
       int arg_identifier, String? arg_userAgent) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.setCustomUserAgent', codec,
+        'kr.co.bootpay.WKWebViewHostApi.setCustomUserAgent', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier, arg_userAgent])
@@ -2383,7 +2383,7 @@ class WKWebViewHostApi {
   Future<Object?> evaluateJavaScript(
       int arg_identifier, String arg_javaScriptString) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKWebViewHostApi.evaluateJavaScript', codec,
+        'kr.co.bootpay.WKWebViewHostApi.evaluateJavaScript', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier, arg_javaScriptString])
@@ -2424,7 +2424,7 @@ class WKUIDelegateHostApi {
 
   Future<void> create(int arg_identifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKUIDelegateHostApi.create', codec,
+        'kr.co.bootpay.WKUIDelegateHostApi.create', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_identifier]) as Map<Object?, Object?>?;
@@ -2492,28 +2492,28 @@ abstract class WKUIDelegateFlutterApi {
       {BinaryMessenger? binaryMessenger}) {
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.WKUIDelegateFlutterApi.onCreateWebView', codec,
+          'kr.co.bootpay.WKUIDelegateFlutterApi.onCreateWebView', codec,
           binaryMessenger: binaryMessenger);
       if (api == null) {
         channel.setMessageHandler(null);
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-              'Argument for dev.flutter.pigeon.WKUIDelegateFlutterApi.onCreateWebView was null.');
+              'Argument for kr.co.bootpay.WKUIDelegateFlutterApi.onCreateWebView was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
           assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.WKUIDelegateFlutterApi.onCreateWebView was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKUIDelegateFlutterApi.onCreateWebView was null, expected non-null int.');
           final int? arg_webViewIdentifier = (args[1] as int?);
           assert(arg_webViewIdentifier != null,
-              'Argument for dev.flutter.pigeon.WKUIDelegateFlutterApi.onCreateWebView was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKUIDelegateFlutterApi.onCreateWebView was null, expected non-null int.');
           final int? arg_configurationIdentifier = (args[2] as int?);
           assert(arg_configurationIdentifier != null,
-              'Argument for dev.flutter.pigeon.WKUIDelegateFlutterApi.onCreateWebView was null, expected non-null int.');
+              'Argument for kr.co.bootpay.WKUIDelegateFlutterApi.onCreateWebView was null, expected non-null int.');
           final WKNavigationActionData? arg_navigationAction =
               (args[3] as WKNavigationActionData?);
           assert(arg_navigationAction != null,
-              'Argument for dev.flutter.pigeon.WKUIDelegateFlutterApi.onCreateWebView was null, expected non-null WKNavigationActionData.');
+              'Argument for kr.co.bootpay.WKUIDelegateFlutterApi.onCreateWebView was null, expected non-null WKNavigationActionData.');
           api.onCreateWebView(arg_identifier!, arg_webViewIdentifier!,
               arg_configurationIdentifier!, arg_navigationAction!);
           return;
@@ -2567,7 +2567,7 @@ class WKHttpCookieStoreHostApi {
   Future<void> createFromWebsiteDataStore(
       int arg_identifier, int arg_websiteDataStoreIdentifier) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKHttpCookieStoreHostApi.createFromWebsiteDataStore',
+        'kr.co.bootpay.WKHttpCookieStoreHostApi.createFromWebsiteDataStore',
         codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
@@ -2594,7 +2594,7 @@ class WKHttpCookieStoreHostApi {
   Future<void> setCookie(
       int arg_identifier, NSHttpCookieData arg_cookie) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WKHttpCookieStoreHostApi.setCookie', codec,
+        'kr.co.bootpay.WKHttpCookieStoreHostApi.setCookie', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap = await channel
         .send(<Object?>[arg_identifier, arg_cookie]) as Map<Object?, Object?>?;

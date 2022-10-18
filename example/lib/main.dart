@@ -125,18 +125,6 @@ class _WebViewExampleState extends State<_WebViewExample> {
     );
   }
 
-  JavascriptChannel _alertJavascriptChannel(BuildContext context) {
-    return JavascriptChannel(
-        name: 'Alert',
-        onMessageReceived: (JavascriptMessage message) {
-          print(message.message);
-          // Toast.show(message.message, context,
-          //     duration: Toast.LENGTH_LONG,
-          //     gravity: Toast.CENTER,
-          //     backgroundColor: Colors.black38,
-          //     backgroundRadius: 5);
-        });
-  }
 
   Widget favoriteButton() {
     return FutureBuilder<WebViewController>(
