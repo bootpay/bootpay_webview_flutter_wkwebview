@@ -105,7 +105,7 @@ class _WebViewExampleState extends State<_WebViewExample> {
         ],
       ),
       body: WebView(
-        initialUrl: 'https://dev-js.bootapi.com/test/payment/',
+        initialUrl: 'https://flutter.dev/',
         onWebViewCreated: (WebViewController controller) {
           _controller.complete(controller);
         },
