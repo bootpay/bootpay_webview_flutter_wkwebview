@@ -11,7 +11,7 @@ import 'package:bootpay_webview_flutter_platform_interface/src/types/javascript_
     as _i9;
 import 'package:bootpay_webview_flutter_platform_interface/src/types/types.dart'
     as _i10;
-import 'package:bootpay_webview_flutter_platform_interface/webview_flutter_platform_interface.dart'
+import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutter_platform_interface.dart'
     as _i8;
 import 'package:bootpay_webview_flutter_wkwebview/src/foundation/foundation.dart'
     as _i7;

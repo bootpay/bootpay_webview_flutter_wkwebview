@@ -8,7 +8,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
-import 'package:bootpay_webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutter_platform_interface.dart';
 import 'package:bootpay_webview_flutter_wkwebview/bootpay_webview_flutter_wkwebview.dart';
 
 import 'navigation_decision.dart';
