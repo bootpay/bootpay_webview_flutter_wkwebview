@@ -1,4 +1,4 @@
-ass
+*.class
 *.lock
 *.log
 *.pyc
