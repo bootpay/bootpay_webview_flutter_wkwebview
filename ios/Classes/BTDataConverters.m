@@ -162,7 +162,8 @@ BTWKNavigationActionData *BTWKNavigationActionDataFromNavigationAction(
     WKNavigationAction *action) {
   return [BTWKNavigationActionData
       makeWithRequest:BTNSUrlRequestDataFromNSURLRequest(action.request)
-          targetFrame:BTWKFrameInfoDataFromWKFrameInfo(action.targetFrame)];
+          targetFrame:BTWKFrameInfoDataFromWKFrameInfo(action.targetFrame)
+       navigationType:BTWKNavigationTypeFromWKNavigationType(action.navigationType)];
 }
 
 BTNSUrlRequestData *BTNSUrlRequestDataFromNSURLRequest(NSURLRequest *request) {
@@ -217,4 +218,21 @@ BTNSKeyValueChangeKeyEnumData *BTNSKeyValueChangeKeyEnumDataFromNSKeyValueChange
 
 BTWKScriptMessageData *BTWKScriptMessageDataFromWKScriptMessage(WKScriptMessage *message) {
   return [BTWKScriptMessageData makeWithName:message.name body:message.body];
+}
+
+BTWKNavigationType BTWKNavigationTypeFromWKNavigationType(WKNavigationType type) {
+  switch (type) {
+    case WKNavigationTypeLinkActivated:
+      return BTWKNavigationTypeLinkActivated;
+    case WKNavigationTypeFormSubmitted:
+      return BTWKNavigationTypeFormResubmitted;
+    case WKNavigationTypeBackForward:
+      return BTWKNavigationTypeBackForward;
+    case WKNavigationTypeReload:
+      return BTWKNavigationTypeReload;
+    case WKNavigationTypeFormResubmitted:
+      return BTWKNavigationTypeFormResubmitted;
+    case WKNavigationTypeOther:
+      return BTWKNavigationTypeOther;
+  }
 }

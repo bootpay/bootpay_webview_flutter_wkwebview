@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// TODO(a14n): remove this import once Flutter 3.1 or later reaches stable (including flutter/flutter#104231)
+// ignore: unnecessary_import
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
@@ -246,9 +248,9 @@ class NSObject with Copyable {
     BinaryMessenger? binaryMessenger,
     InstanceManager? instanceManager,
   }) : _api = NSObjectHostApiImpl(
-    binaryMessenger: binaryMessenger,
-    instanceManager: instanceManager,
-  ) {
+          binaryMessenger: binaryMessenger,
+          instanceManager: instanceManager,
+        ) {
     // Ensures FlutterApis for the Foundation library are set up.
     FoundationFlutterApis.instance.ensureSetUp();
   }
@@ -260,7 +262,7 @@ class NSObject with Copyable {
 
   /// Global instance of [InstanceManager].
   static final InstanceManager globalInstanceManager =
-  InstanceManager(onWeakReferenceRemoved: (int instanceId) {
+      InstanceManager(onWeakReferenceRemoved: (int instanceId) {
     NSObjectHostApiImpl().dispose(instanceId);
   });
 
@@ -280,17 +282,17 @@ class NSObject with Copyable {
   /// See [withWeakRefenceTo].
   /// {@endtemplate}
   final void Function(
-      String keyPath,
-      NSObject object,
-      Map<NSKeyValueChangeKey, Object?> change,
-      )? observeValue;
+    String keyPath,
+    NSObject object,
+    Map<NSKeyValueChangeKey, Object?> change,
+  )? observeValue;
 
   /// Registers the observer object to receive KVO notifications.
   Future<void> addObserver(
-      NSObject observer, {
-        required String keyPath,
-        required Set<NSKeyValueObservingOptions> options,
-      }) {
+    NSObject observer, {
+    required String keyPath,
+    required Set<NSKeyValueObservingOptions> options,
+  }) {
     assert(options.isNotEmpty);
     return _api.addObserverForInstances(
       this,

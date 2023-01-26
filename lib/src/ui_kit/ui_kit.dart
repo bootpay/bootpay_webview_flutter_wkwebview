@@ -22,10 +22,10 @@ import 'ui_kit_api_impls.dart';
 class UIScrollView extends UIView {
   /// Constructs a [UIScrollView] that is owned by [webView].
   factory UIScrollView.fromWebView(
-      WKWebView webView, {
-        BinaryMessenger? binaryMessenger,
-        InstanceManager? instanceManager,
-      }) {
+    WKWebView webView, {
+    BinaryMessenger? binaryMessenger,
+    InstanceManager? instanceManager,
+  }) {
     final UIScrollView scrollView = UIScrollView.detached(
       binaryMessenger: binaryMessenger,
       instanceManager: instanceManager,
@@ -47,9 +47,9 @@ class UIScrollView extends UIView {
     super.binaryMessenger,
     super.instanceManager,
   })  : _scrollViewApi = UIScrollViewHostApiImpl(
-    binaryMessenger: binaryMessenger,
-    instanceManager: instanceManager,
-  ),
+          binaryMessenger: binaryMessenger,
+          instanceManager: instanceManager,
+        ),
         super.detached();
 
   final UIScrollViewHostApiImpl _scrollViewApi;
@@ -103,9 +103,9 @@ class UIView extends NSObject {
     super.binaryMessenger,
     super.instanceManager,
   })  : _viewApi = UIViewHostApiImpl(
-    binaryMessenger: binaryMessenger,
-    instanceManager: instanceManager,
-  ),
+          binaryMessenger: binaryMessenger,
+          instanceManager: instanceManager,
+        ),
         super.detached();
 
   final UIViewHostApiImpl _viewApi;

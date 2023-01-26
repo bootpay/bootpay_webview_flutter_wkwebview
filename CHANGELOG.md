@@ -1,3 +1,6 @@
+## 3.0.2
+* refork 3.0.2
+
 ## 2.9.51
 * bootpay_webview_flutter_platform_interface version update 
 

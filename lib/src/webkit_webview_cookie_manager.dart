@@ -2,11 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutter_platform_interface.dart';
+import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutter_platform_interface.dart';
 import 'package:flutter/foundation.dart';
-import 'package:bootpay_webview_flutter_platform_interface/v4/bootpay_webview_flutter_platform_interface.dart';
 
-import '../../foundation/foundation.dart';
-import '../../web_kit/web_kit.dart';
+import 'foundation/foundation.dart';
+import 'web_kit/web_kit.dart';
 import 'webkit_proxy.dart';
 
 /// Object specifying creation parameters for a [WebKitWebViewCookieManager].

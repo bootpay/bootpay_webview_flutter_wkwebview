@@ -150,5 +150,14 @@ extern BTNSKeyValueChangeKeyEnumData *BTNSKeyValueChangeKeyEnumDataFromNSKeyValu
  * @return A BTWKScriptMessageData.
  */
 extern BTWKScriptMessageData *BTWKScriptMessageDataFromWKScriptMessage(WKScriptMessage *message);
+/**
+ * Converts a WKNavigationType to an FWFWKNavigationType.
+ *
+ * @param type The object containing information to create a FWFWKNavigationType
+ *
+ * @return A FWFWKNavigationType.
+ */
+
+extern BTWKNavigationType BTWKNavigationTypeFromWKNavigationType(WKNavigationType type);
 
 NS_ASSUME_NONNULL_END

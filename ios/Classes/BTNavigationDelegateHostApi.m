@@ -229,11 +229,11 @@
     WKWebView *popupView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, webView.bounds.size.width, webView.bounds.size.height) configuration:configuration];
 
 
-    [popupView autoresizingMask];
     popupView.navigationDelegate = self;
     popupView.UIDelegate = self;
 
     [webView.superview addSubview:popupView];
+    [popupView autoresizingMask];
 
     return popupView;
 }
