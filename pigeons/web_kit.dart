@@ -166,6 +166,42 @@ class NSHttpCookiePropertyKeyEnumData {
   late NSHttpCookiePropertyKeyEnum value;
 }
 
+/// An object that contains information about an action that causes navigation
+/// to occur.
+///
+/// Wraps [WKNavigationType](https://developer.apple.com/documentation/webkit/wknavigationaction?language=objc).
+enum WKNavigationType {
+  /// A link activation.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wknavigationtype/wknavigationtypelinkactivated?language=objc.
+  linkActivated,
+
+  /// A request to submit a form.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wknavigationtype/wknavigationtypeformsubmitted?language=objc.
+  submitted,
+
+  /// A request for the frame’s next or previous item.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wknavigationtype/wknavigationtypebackforward?language=objc.
+  backForward,
+
+  /// A request to reload the webpage.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wknavigationtype/wknavigationtypereload?language=objc.
+  reload,
+
+  /// A request to resubmit a form.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wknavigationtype/wknavigationtypeformresubmitted?language=objc.
+  formResubmitted,
+
+  /// A navigation request that originates for some other reason.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wknavigationtype/wknavigationtypeother?language=objc.
+  other,
+}
+
 /// Mirror of NSURLRequest.
 ///
 /// See https://developer.apple.com/documentation/foundation/nsurlrequest?language=objc.
@@ -191,6 +227,7 @@ class WKUserScriptData {
 class WKNavigationActionData {
   late NSUrlRequestData request;
   late WKFrameInfoData targetFrame;
+  late WKNavigationType navigationType;
 }
 
 /// Mirror of WKFrameInfo.
@@ -239,9 +276,9 @@ abstract class WKWebsiteDataStoreHostApi {
     'createFromWebViewConfigurationWithIdentifier:configurationIdentifier:',
   )
   void createFromWebViewConfiguration(
-    int identifier,
-    int configurationIdentifier,
-  );
+      int identifier,
+      int configurationIdentifier,
+      );
 
   @ObjCSelector('createDefaultDataStoreWithIdentifier:')
   void createDefaultDataStore(int identifier);
@@ -251,10 +288,10 @@ abstract class WKWebsiteDataStoreHostApi {
   )
   @async
   bool removeDataOfTypes(
-    int identifier,
-    List<WKWebsiteDataTypeEnumData> dataTypes,
-    double modificationTimeInSecondsSinceEpoch,
-  );
+      int identifier,
+      List<WKWebsiteDataTypeEnumData> dataTypes,
+      double modificationTimeInSecondsSinceEpoch,
+      );
 }
 
 /// Mirror of UIView.
@@ -307,9 +344,9 @@ abstract class WKWebViewConfigurationHostApi {
     'setMediaTypesRequiresUserActionForConfigurationWithIdentifier:forTypes:',
   )
   void setMediaTypesRequiringUserActionForPlayback(
-    int identifier,
-    List<WKAudiovisualMediaTypeEnumData> types,
-  );
+      int identifier,
+      List<WKAudiovisualMediaTypeEnumData> types,
+      );
 }
 
 /// Handles callbacks from an WKWebViewConfiguration instance.
@@ -330,18 +367,18 @@ abstract class WKUserContentControllerHostApi {
     'createFromWebViewConfigurationWithIdentifier:configurationIdentifier:',
   )
   void createFromWebViewConfiguration(
-    int identifier,
-    int configurationIdentifier,
-  );
+      int identifier,
+      int configurationIdentifier,
+      );
 
   @ObjCSelector(
     'addScriptMessageHandlerForControllerWithIdentifier:handlerIdentifier:ofName:',
   )
   void addScriptMessageHandler(
-    int identifier,
-    int handlerIdentifier,
-    String name,
-  );
+      int identifier,
+      int handlerIdentifier,
+      String name,
+      );
 
   @ObjCSelector('removeScriptMessageHandlerForControllerWithIdentifier:name:')
   void removeScriptMessageHandler(int identifier, String name);
@@ -365,9 +402,9 @@ abstract class WKPreferencesHostApi {
     'createFromWebViewConfigurationWithIdentifier:configurationIdentifier:',
   )
   void createFromWebViewConfiguration(
-    int identifier,
-    int configurationIdentifier,
-  );
+      int identifier,
+      int configurationIdentifier,
+      );
 
   @ObjCSelector('setJavaScriptEnabledForPreferencesWithIdentifier:isEnabled:')
   void setJavaScriptEnabled(int identifier, bool enabled);
@@ -391,10 +428,10 @@ abstract class WKScriptMessageHandlerFlutterApi {
     'didReceiveScriptMessageForHandlerWithIdentifier:userContentControllerIdentifier:message:',
   )
   void didReceiveScriptMessage(
-    int identifier,
-    int userContentControllerIdentifier,
-    WKScriptMessageData message,
-  );
+      int identifier,
+      int userContentControllerIdentifier,
+      WKScriptMessageData message,
+      );
 }
 
 /// Mirror of WKNavigationDelegate.
@@ -415,55 +452,55 @@ abstract class WKNavigationDelegateFlutterApi {
     'didFinishNavigationForDelegateWithIdentifier:webViewIdentifier:URL:',
   )
   void didFinishNavigation(
-    int identifier,
-    int webViewIdentifier,
-    String? url,
-  );
+      int identifier,
+      int webViewIdentifier,
+      String? url,
+      );
 
   @ObjCSelector(
     'didStartProvisionalNavigationForDelegateWithIdentifier:webViewIdentifier:URL:',
   )
   void didStartProvisionalNavigation(
-    int identifier,
-    int webViewIdentifier,
-    String? url,
-  );
+      int identifier,
+      int webViewIdentifier,
+      String? url,
+      );
 
   @ObjCSelector(
     'decidePolicyForNavigationActionForDelegateWithIdentifier:webViewIdentifier:navigationAction:',
   )
   @async
   WKNavigationActionPolicyEnumData decidePolicyForNavigationAction(
-    int identifier,
-    int webViewIdentifier,
-    WKNavigationActionData navigationAction,
-  );
+      int identifier,
+      int webViewIdentifier,
+      WKNavigationActionData navigationAction,
+      );
 
   @ObjCSelector(
     'didFailNavigationForDelegateWithIdentifier:webViewIdentifier:error:',
   )
   void didFailNavigation(
-    int identifier,
-    int webViewIdentifier,
-    NSErrorData error,
-  );
+      int identifier,
+      int webViewIdentifier,
+      NSErrorData error,
+      );
 
   @ObjCSelector(
     'didFailProvisionalNavigationForDelegateWithIdentifier:webViewIdentifier:error:',
   )
   void didFailProvisionalNavigation(
-    int identifier,
-    int webViewIdentifier,
-    NSErrorData error,
-  );
+      int identifier,
+      int webViewIdentifier,
+      NSErrorData error,
+      );
 
   @ObjCSelector(
     'webViewWebContentProcessDidTerminateForDelegateWithIdentifier:webViewIdentifier:',
   )
   void webViewWebContentProcessDidTerminate(
-    int identifier,
-    int webViewIdentifier,
-  );
+      int identifier,
+      int webViewIdentifier,
+      );
 }
 
 /// Mirror of NSObject.
@@ -478,11 +515,11 @@ abstract class NSObjectHostApi {
     'addObserverForObjectWithIdentifier:observerIdentifier:keyPath:options:',
   )
   void addObserver(
-    int identifier,
-    int observerIdentifier,
-    String keyPath,
-    List<NSKeyValueObservingOptionsEnumData> options,
-  );
+      int identifier,
+      int observerIdentifier,
+      String keyPath,
+      List<NSKeyValueObservingOptionsEnumData> options,
+      );
 
   @ObjCSelector(
     'removeObserverForObjectWithIdentifier:observerIdentifier:keyPath:',
@@ -499,17 +536,17 @@ abstract class NSObjectFlutterApi {
     'observeValueForObjectWithIdentifier:keyPath:objectIdentifier:changeKeys:changeValues:',
   )
   void observeValue(
-    int identifier,
-    String keyPath,
-    int objectIdentifier,
-    // TODO(bparrishMines): Change to a map when Objective-C data classes conform
-    // to `NSCopying`. See https://github.com/flutter/flutter/issues/103383.
-    // `NSDictionary`s are unable to use data classes as keys because they don't
-    // conform to `NSCopying`. This splits the map of properties into a list of
-    // keys and values with the ordered maintained.
-    List<NSKeyValueChangeKeyEnumData?> changeKeys,
-    List<Object?> changeValues,
-  );
+      int identifier,
+      String keyPath,
+      int objectIdentifier,
+      // TODO(bparrishMines): Change to a map when Objective-C data classes conform
+      // to `NSCopying`. See https://github.com/flutter/flutter/issues/103383.
+      // `NSDictionary`s are unable to use data classes as keys because they don't
+      // conform to `NSCopying`. This splits the map of properties into a list of
+      // keys and values with the ordered maintained.
+      List<NSKeyValueChangeKeyEnumData?> changeKeys,
+      List<Object?> changeValues,
+      );
 
   @ObjCSelector('disposeObjectWithIdentifier:')
   void dispose(int identifier);
@@ -596,11 +633,11 @@ abstract class WKUIDelegateFlutterApi {
     'onCreateWebViewForDelegateWithIdentifier:webViewIdentifier:configurationIdentifier:navigationAction:',
   )
   void onCreateWebView(
-    int identifier,
-    int webViewIdentifier,
-    int configurationIdentifier,
-    WKNavigationActionData navigationAction,
-  );
+      int identifier,
+      int webViewIdentifier,
+      int configurationIdentifier,
+      WKNavigationActionData navigationAction,
+      );
 }
 
 /// Mirror of WKHttpCookieStore.
@@ -610,9 +647,9 @@ abstract class WKUIDelegateFlutterApi {
 abstract class WKHttpCookieStoreHostApi {
   @ObjCSelector('createFromWebsiteDataStoreWithIdentifier:dataStoreIdentifier:')
   void createFromWebsiteDataStore(
-    int identifier,
-    int websiteDataStoreIdentifier,
-  );
+      int identifier,
+      int websiteDataStoreIdentifier,
+      );
 
   @ObjCSelector('setCookieForStoreWithIdentifier:cookie:')
   @async
