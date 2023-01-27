@@ -9,10 +9,10 @@ import 'webkit_webview_controller.dart';
 import 'webkit_webview_cookie_manager.dart';
 
 /// Implementation of [WebViewPlatform] using the WebKit API.
-class WebKitWebViewPlatform extends WebViewPlatform {
+class BTWebKitWebViewPlatform extends WebViewPlatform {
   /// Registers this class as the default instance of [WebViewPlatform].
   static void registerWith() {
-    WebViewPlatform.instance = WebKitWebViewPlatform();
+    WebViewPlatform.instance = BTWebKitWebViewPlatform();
   }
 
   @override
