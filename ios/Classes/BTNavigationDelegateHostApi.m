@@ -119,6 +119,7 @@
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+  [self updateBlindViewIfNaverLogin:webView];
   [self.navigationDelegateAPI didFinishNavigationForDelegate:self
                                                      webView:webView
                                                          URL:webView.URL.absoluteString
@@ -199,27 +200,21 @@
 #pragma mark - bootpay logic
 //
 - (void) updateBlindViewIfNaverLogin:(WKWebView*)webView :(NSString*)url {
+    [webView evaluateJavaScript:@"document.getElementById('back').remove()" completionHandler: nil];
+    /*
     if ([url hasPrefix:@"https://nid.naver.com"]) {
         if(_topBlindView == nil) { _topBlindView = [[UIView alloc] init]; }
         else { [_topBlindView removeFromSuperview]; }
         [_topBlindView setFrame:CGRectMake(0, 0, webView.frame.size.width, 50)];
         [_topBlindView setBackgroundColor:[UIColor redColor]];
         [webView.superview addSubview:_topBlindView];
-
-
-//        if(_topBlindButton == nil) { _topBlindButton = [UIButton buttonWithType: UIButtonTypeCustom]; }
-//        else { [_topBlindButton removeFromSuperview]; }
-//        [_topBlindButton setFrame:CGRectMake(webView.frame.size.width - 50, 0, 50, 50)];
-//        [_topBlindButton setTitle:@"X" forState: UIControlStateNormal];
-//        [_topBlindButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        [_topBlindButton addTarget:self action:@selector(closeView:) forControlEvents: UIControlEventTouchUpInside];
-//        [webView addSubview:_topBlindButton];
     } else {
         if(_topBlindView != nil) { [_topBlindView removeFromSuperview]; }
         _topBlindView = nil;
         if(_topBlindButton != nil) { [_topBlindButton removeFromSuperview]; }
         _topBlindButton = nil;
     }
+    */
 }
 
 
