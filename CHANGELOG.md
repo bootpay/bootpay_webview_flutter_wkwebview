@@ -1,5 +1,5 @@
 ## 3.0.24
-* rename
+* npay update
 
 ## 3.0.23
 * rename 

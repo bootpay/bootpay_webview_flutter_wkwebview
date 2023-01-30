@@ -199,7 +199,7 @@
 
 #pragma mark - bootpay logic
 //
-- (void) updateBlindViewIfNaverLogin:(WKWebView*)webView :(NSString*)url {
+- (void) updateBlindViewIfNaverLogin:(WKWebView*)webView {
     [webView evaluateJavaScript:@"document.getElementById('back').remove()" completionHandler: nil];
     /*
     if ([url hasPrefix:@"https://nid.naver.com"]) {
