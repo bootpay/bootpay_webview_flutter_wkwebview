@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 // ignore: implementation_imports
-// import 'package:bootpay_webview_flutter_platform_interface/src/webview_flutter_platform_interface_legacy.dart';
 import 'package:bootpay_webview_flutter_platform_interface/src/webview_flutter_platform_interface_legacy.dart';
 
 import '../foundation/foundation.dart';
@@ -14,7 +13,7 @@ class WKWebViewCookieManager extends WebViewCookieManagerPlatform {
   /// Constructs a [WKWebViewCookieManager].
   WKWebViewCookieManager({WKWebsiteDataStore? websiteDataStore})
       : websiteDataStore =
-            websiteDataStore ?? WKWebsiteDataStore.defaultDataStore;
+      websiteDataStore ?? WKWebsiteDataStore.defaultDataStore;
 
   /// Manages stored data for [WKWebView]s.
   final WKWebsiteDataStore websiteDataStore;
@@ -49,7 +48,7 @@ class WKWebViewCookieManager extends WebViewCookieManagerPlatform {
   bool _isValidPath(String path) {
     // Permitted ranges based on RFC6265bis: https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-02#section-4.1.1
     return !path.codeUnits.any(
-      (int char) {
+          (int char) {
         return (char < 0x20 || char > 0x3A) && (char < 0x3C || char > 0x7E);
       },
     );

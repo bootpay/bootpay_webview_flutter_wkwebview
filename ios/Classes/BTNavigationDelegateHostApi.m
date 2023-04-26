@@ -28,7 +28,7 @@
 - (void)didFinishNavigationForDelegate:(BTNavigationDelegate *)instance
                                webView:(WKWebView *)webView
                                    URL:(NSString *)URL
-                            completion:(void (^)(NSError *_Nullable))completion {
+                            completion:(void (^)(FlutterError *_Nullable))completion {
   NSNumber *webViewIdentifier =
       @([self.instanceManager identifierWithStrongReferenceForInstance:webView]);
   [self didFinishNavigationForDelegateWithIdentifier:@([self identifierForDelegate:instance])
@@ -40,7 +40,7 @@
 - (void)didStartProvisionalNavigationForDelegate:(BTNavigationDelegate *)instance
                                          webView:(WKWebView *)webView
                                              URL:(NSString *)URL
-                                      completion:(void (^)(NSError *_Nullable))completion {
+                                      completion:(void (^)(FlutterError *_Nullable))completion {
   NSNumber *webViewIdentifier =
       @([self.instanceManager identifierWithStrongReferenceForInstance:webView]);
   [self didStartProvisionalNavigationForDelegateWithIdentifier:@([self
@@ -56,11 +56,11 @@
                               navigationAction:(WKNavigationAction *)navigationAction
                                     completion:
                                         (void (^)(BTWKNavigationActionPolicyEnumData *_Nullable,
-                                                  NSError *_Nullable))completion {
+                                                  FlutterError *_Nullable))completion {
   NSNumber *webViewIdentifier =
       @([self.instanceManager identifierWithStrongReferenceForInstance:webView]);
   BTWKNavigationActionData *navigationActionData =
-      BTWKNavigationActionDataFromNavigationAction(navigationAction);
+      BTWKNavigationActionDataFromNativeWKNavigationAction(navigationAction);
   [self
       decidePolicyForNavigationActionForDelegateWithIdentifier:@([self
                                                                    identifierForDelegate:instance])
@@ -72,31 +72,32 @@
 - (void)didFailNavigationForDelegate:(BTNavigationDelegate *)instance
                              webView:(WKWebView *)webView
                                error:(NSError *)error
-                          completion:(void (^)(NSError *_Nullable))completion {
+                          completion:(void (^)(FlutterError *_Nullable))completion {
   NSNumber *webViewIdentifier =
       @([self.instanceManager identifierWithStrongReferenceForInstance:webView]);
   [self didFailNavigationForDelegateWithIdentifier:@([self identifierForDelegate:instance])
                                  webViewIdentifier:webViewIdentifier
-                                             error:BTNSErrorDataFromNSError(error)
+                                             error:BTNSErrorDataFromNativeNSError(error)
                                         completion:completion];
 }
 
 - (void)didFailProvisionalNavigationForDelegate:(BTNavigationDelegate *)instance
                                         webView:(WKWebView *)webView
                                           error:(NSError *)error
-                                     completion:(void (^)(NSError *_Nullable))completion {
+                                     completion:(void (^)(FlutterError *_Nullable))completion {
   NSNumber *webViewIdentifier =
       @([self.instanceManager identifierWithStrongReferenceForInstance:webView]);
   [self
       didFailProvisionalNavigationForDelegateWithIdentifier:@([self identifierForDelegate:instance])
                                           webViewIdentifier:webViewIdentifier
-                                                      error:BTNSErrorDataFromNSError(error)
+                                                      error:BTNSErrorDataFromNativeNSError(error)
                                                  completion:completion];
 }
 
 - (void)webViewWebContentProcessDidTerminateForDelegate:(BTNavigationDelegate *)instance
                                                 webView:(WKWebView *)webView
-                                             completion:(void (^)(NSError *_Nullable))completion {
+                                             completion:
+                                                 (void (^)(FlutterError *_Nullable))completion {
   NSNumber *webViewIdentifier =
       @([self.instanceManager identifierWithStrongReferenceForInstance:webView]);
   [self webViewWebContentProcessDidTerminateForDelegateWithIdentifier:
@@ -119,11 +120,10 @@
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-  [self updateBlindViewIfNaverLogin:webView];
   [self.navigationDelegateAPI didFinishNavigationForDelegate:self
                                                      webView:webView
                                                          URL:webView.URL.absoluteString
-                                                  completion:^(NSError *error) {
+                                                  completion:^(FlutterError *error) {
                                                     NSAssert(!error, @"%@", error);
                                                   }];
 }
@@ -132,7 +132,7 @@
   [self.navigationDelegateAPI didStartProvisionalNavigationForDelegate:self
                                                                webView:webView
                                                                    URL:webView.URL.absoluteString
-                                                            completion:^(NSError *error) {
+                                                            completion:^(FlutterError *error) {
                                                               NSAssert(!error, @"%@", error);
                                                             }];
 }
@@ -140,29 +140,16 @@
 - (void)webView:(WKWebView *)webView
     decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
                     decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-
-  NSString *url = navigationAction.request.URL.absoluteString;
-  _beforeUrl = url;
-
-  if([self isItunesURL:url]) {
-    [self startAppToApp:[NSURL URLWithString:url]];
-    decisionHandler(WKNavigationActionPolicyCancel);
-  } else if(![url hasPrefix:@"http"]) {
-    [self startAppToApp:[NSURL URLWithString:url]];
-    decisionHandler(WKNavigationActionPolicyCancel);
-  } else {
-
-    [self.navigationDelegateAPI
+  [self.navigationDelegateAPI
       decidePolicyForNavigationActionForDelegate:self
                                          webView:webView
                                 navigationAction:navigationAction
                                       completion:^(BTWKNavigationActionPolicyEnumData *policy,
-                                                   NSError *error) {
+                                                   FlutterError *error) {
                                         NSAssert(!error, @"%@", error);
                                         decisionHandler(
-                                            BTWKNavigationActionPolicyFromEnumData(policy));
+                                            BTNativeWKNavigationActionPolicyFromEnumData(policy));
                                       }];
-  }
 }
 
 - (void)webView:(WKWebView *)webView
@@ -171,7 +158,7 @@
   [self.navigationDelegateAPI didFailNavigationForDelegate:self
                                                    webView:webView
                                                      error:error
-                                                completion:^(NSError *error) {
+                                                completion:^(FlutterError *error) {
                                                   NSAssert(!error, @"%@", error);
                                                 }];
 }
@@ -182,18 +169,20 @@
   [self.navigationDelegateAPI didFailProvisionalNavigationForDelegate:self
                                                               webView:webView
                                                                 error:error
-                                                           completion:^(NSError *error) {
+                                                           completion:^(FlutterError *error) {
                                                              NSAssert(!error, @"%@", error);
                                                            }];
 }
 
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
-  [self.navigationDelegateAPI webViewWebContentProcessDidTerminateForDelegate:self
-                                                                      webView:webView
-                                                                   completion:^(NSError *error) {
-                                                                     NSAssert(!error, @"%@", error);
-                                                                   }];
+  [self.navigationDelegateAPI
+      webViewWebContentProcessDidTerminateForDelegate:self
+                                              webView:webView
+                                           completion:^(FlutterError *error) {
+                                             NSAssert(!error, @"%@", error);
+                                           }];
 }
+
 
 
 
@@ -292,16 +281,16 @@
     [webview loadRequest:request];
 }
 
-- (void) naverLoginBugFix:(WKWebView*)webView {
-    if([_beforeUrl hasPrefix:@"naversearchthirdlogin://"]) {
-        NSString* value = [self getQueryStringParameter:_beforeUrl :@"session"];
-        if(value != nil && [value length] > 0) {
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://nid.naver.com/login/scheme.redirect?session=%@", value]];
-            NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-            [webView loadRequest:request];
-        }
-    }
-}
+//- (void) naverLoginBugFix:(WKWebView*)webView {
+//    if([_beforeUrl hasPrefix:@"naversearchthirdlogin://"]) {
+//        NSString* value = [self getQueryStringParameter:_beforeUrl :@"session"];
+//        if(value != nil && [value length] > 0) {
+//            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://nid.naver.com/login/scheme.redirect?session=%@", value]];
+//            NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+//            [webView loadRequest:request];
+//        }
+//    }
+//}
 
 - (NSString*) getQueryStringParameter:(NSString*)url :(NSString*)param {
     NSMutableDictionary *queryStringDictionary = [[NSMutableDictionary alloc] init];

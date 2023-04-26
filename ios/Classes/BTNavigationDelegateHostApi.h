@@ -20,9 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BTNavigationDelegateFlutterApiImpl : BTWKNavigationDelegateFlutterApi
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
                         instanceManager:(BTInstanceManager *)instanceManager;
-
-
-
 @end
 
 /**
@@ -33,12 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
                         instanceManager:(BTInstanceManager *)instanceManager;
-
-@property NSString* beforeUrl;
-
-@property UIView* topBlindView;
-@property UIButton* topBlindButton;
-
 @end
 
 /**
@@ -49,9 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BTNavigationDelegateHostApiImpl : NSObject <BTWKNavigationDelegateHostApi>
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
                         instanceManager:(BTInstanceManager *)instanceManager;
-
-
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return An NSURLRequest or nil if data could not be converted.
  */
-extern NSURLRequest *_Nullable BTNSURLRequestFromRequestData(BTNSUrlRequestData *data);
+extern NSURLRequest *_Nullable BTNativeNSURLRequestFromRequestData(BTNSUrlRequestData *data);
 
 /**
  * Converts an BTNSHttpCookieData to an NSHTTPCookie.
@@ -24,7 +24,7 @@ extern NSURLRequest *_Nullable BTNSURLRequestFromRequestData(BTNSUrlRequestData 
  *
  * @return An NSHTTPCookie or nil if data could not be converted.
  */
-extern NSHTTPCookie *_Nullable BTNSHTTPCookieFromCookieData(BTNSHttpCookieData *data);
+extern NSHTTPCookie *_Nullable BTNativeNSHTTPCookieFromCookieData(BTNSHttpCookieData *data);
 
 /**
  * Converts an BTNSKeyValueObservingOptionsEnumData to an NSKeyValueObservingOptions.
@@ -33,7 +33,7 @@ extern NSHTTPCookie *_Nullable BTNSHTTPCookieFromCookieData(BTNSHttpCookieData *
  *
  * @return An NSKeyValueObservingOptions or -1 if data could not be converted.
  */
-extern NSKeyValueObservingOptions BTNSKeyValueObservingOptionsFromEnumData(
+extern NSKeyValueObservingOptions BTNativeNSKeyValueObservingOptionsFromEnumData(
     BTNSKeyValueObservingOptionsEnumData *data);
 
 /**
@@ -43,7 +43,7 @@ extern NSKeyValueObservingOptions BTNSKeyValueObservingOptionsFromEnumData(
  *
  * @return An NSHttpCookiePropertyKey or nil if data could not be converted.
  */
-extern NSHTTPCookiePropertyKey _Nullable BTNSHTTPCookiePropertyKeyFromEnumData(
+extern NSHTTPCookiePropertyKey _Nullable BTNativeNSHTTPCookiePropertyKeyFromEnumData(
     BTNSHttpCookiePropertyKeyEnumData *data);
 
 /**
@@ -53,7 +53,7 @@ extern NSHTTPCookiePropertyKey _Nullable BTNSHTTPCookiePropertyKeyFromEnumData(
  *
  * @return A WKUserScript or nil if data could not be converted.
  */
-extern WKUserScript *BTWKUserScriptFromScriptData(BTWKUserScriptData *data);
+extern WKUserScript *BTNativeWKUserScriptFromScriptData(BTWKUserScriptData *data);
 
 /**
  * Converts an BTWKUserScriptInjectionTimeEnumData to a WKUserScriptInjectionTime.
@@ -62,7 +62,7 @@ extern WKUserScript *BTWKUserScriptFromScriptData(BTWKUserScriptData *data);
  *
  * @return A WKUserScriptInjectionTime or -1 if data could not be converted.
  */
-extern WKUserScriptInjectionTime BTWKUserScriptInjectionTimeFromEnumData(
+extern WKUserScriptInjectionTime BTNativeWKUserScriptInjectionTimeFromEnumData(
     BTWKUserScriptInjectionTimeEnumData *data);
 
 /**
@@ -72,8 +72,7 @@ extern WKUserScriptInjectionTime BTWKUserScriptInjectionTimeFromEnumData(
  *
  * @return A WKAudiovisualMediaType or -1 if data could not be converted.
  */
-API_AVAILABLE(ios(10.0))
-extern WKAudiovisualMediaTypes BTWKAudiovisualMediaTypeFromEnumData(
+extern WKAudiovisualMediaTypes BTNativeWKAudiovisualMediaTypeFromEnumData(
     BTWKAudiovisualMediaTypeEnumData *data);
 
 /**
@@ -83,7 +82,8 @@ extern WKAudiovisualMediaTypes BTWKAudiovisualMediaTypeFromEnumData(
  *
  * @return A WKWebsiteDataType or nil if data could not be converted.
  */
-extern NSString *_Nullable BTWKWebsiteDataTypeFromEnumData(BTWKWebsiteDataTypeEnumData *data);
+extern NSString *_Nullable BTNativeWKWebsiteDataTypeFromEnumData(
+    BTWKWebsiteDataTypeEnumData *data);
 
 /**
  * Converts a WKNavigationAction to an BTWKNavigationActionData.
@@ -92,7 +92,7 @@ extern NSString *_Nullable BTWKWebsiteDataTypeFromEnumData(BTWKWebsiteDataTypeEn
  *
  * @return A BTWKNavigationActionData.
  */
-extern BTWKNavigationActionData *BTWKNavigationActionDataFromNavigationAction(
+extern BTWKNavigationActionData *BTWKNavigationActionDataFromNativeWKNavigationAction(
     WKNavigationAction *action);
 
 /**
@@ -102,7 +102,7 @@ extern BTWKNavigationActionData *BTWKNavigationActionDataFromNavigationAction(
  *
  * @return A BTNSUrlRequestData.
  */
-extern BTNSUrlRequestData *BTNSUrlRequestDataFromNSURLRequest(NSURLRequest *request);
+extern BTNSUrlRequestData *BTNSUrlRequestDataFromNativeNSURLRequest(NSURLRequest *request);
 
 /**
  * Converts a WKFrameInfo to an BTWKFrameInfoData.
@@ -111,7 +111,7 @@ extern BTNSUrlRequestData *BTNSUrlRequestDataFromNSURLRequest(NSURLRequest *requ
  *
  * @return A BTWKFrameInfoData.
  */
-extern BTWKFrameInfoData *BTWKFrameInfoDataFromWKFrameInfo(WKFrameInfo *info);
+extern BTWKFrameInfoData *BTWKFrameInfoDataFromNativeWKFrameInfo(WKFrameInfo *info);
 
 /**
  * Converts an BTWKNavigationActionPolicyEnumData to a WKNavigationActionPolicy.
@@ -120,7 +120,7 @@ extern BTWKFrameInfoData *BTWKFrameInfoDataFromWKFrameInfo(WKFrameInfo *info);
  *
  * @return A WKNavigationActionPolicy or -1 if data could not be converted.
  */
-extern WKNavigationActionPolicy BTWKNavigationActionPolicyFromEnumData(
+extern WKNavigationActionPolicy BTNativeWKNavigationActionPolicyFromEnumData(
     BTWKNavigationActionPolicyEnumData *data);
 
 /**
@@ -130,7 +130,7 @@ extern WKNavigationActionPolicy BTWKNavigationActionPolicyFromEnumData(
  *
  * @return A BTNSErrorData.
  */
-extern BTNSErrorData *BTNSErrorDataFromNSError(NSError *error);
+extern BTNSErrorData *BTNSErrorDataFromNativeNSError(NSError *error);
 
 /**
  * Converts an NSKeyValueChangeKey to a BTNSKeyValueChangeKeyEnumData.
@@ -139,7 +139,7 @@ extern BTNSErrorData *BTNSErrorDataFromNSError(NSError *error);
  *
  * @return A BTNSKeyValueChangeKeyEnumData or nil if data could not be converted.
  */
-extern BTNSKeyValueChangeKeyEnumData *BTNSKeyValueChangeKeyEnumDataFromNSKeyValueChangeKey(
+extern BTNSKeyValueChangeKeyEnumData *BTNSKeyValueChangeKeyEnumDataFromNativeNSKeyValueChangeKey(
     NSKeyValueChangeKey key);
 
 /**
@@ -149,15 +149,48 @@ extern BTNSKeyValueChangeKeyEnumData *BTNSKeyValueChangeKeyEnumDataFromNSKeyValu
  *
  * @return A BTWKScriptMessageData.
  */
-extern BTWKScriptMessageData *BTWKScriptMessageDataFromWKScriptMessage(WKScriptMessage *message);
-/**
- * Converts a WKNavigationType to an FWFWKNavigationType.
- *
- * @param type The object containing information to create a FWFWKNavigationType
- *
- * @return A FWFWKNavigationType.
- */
+extern BTWKScriptMessageData *BTWKScriptMessageDataFromNativeWKScriptMessage(
+    WKScriptMessage *message);
 
-extern BTWKNavigationType BTWKNavigationTypeFromWKNavigationType(WKNavigationType type);
+/**
+ * Converts a WKNavigationType to an BTWKNavigationType.
+ *
+ * @param type The object containing information to create a BTWKNavigationType
+ *
+ * @return A BTWKNavigationType.
+ */
+extern BTWKNavigationType BTWKNavigationTypeFromNativeWKNavigationType(WKNavigationType type);
+
+/**
+ * Converts a WKSecurityOrigin to an BTWKSecurityOriginData.
+ *
+ * @param origin The object containing information to create an BTWKSecurityOriginData.
+ *
+ * @return An BTWKSecurityOriginData.
+ */
+extern BTWKSecurityOriginData *BTWKSecurityOriginDataFromNativeWKSecurityOrigin(
+    WKSecurityOrigin *origin);
+
+/**
+ * Converts an BTWKPermissionDecisionData to a WKPermissionDecision.
+ *
+ * @param data The data object containing information to create a WKPermissionDecision.
+ *
+ * @return A WKPermissionDecision or -1 if data could not be converted.
+ */
+API_AVAILABLE(ios(15.0))
+extern WKPermissionDecision BTNativeWKPermissionDecisionFromData(
+    BTWKPermissionDecisionData *data);
+
+/**
+ * Converts an WKMediaCaptureType to a BTWKMediaCaptureTypeData.
+ *
+ * @param type The data object containing information to create a BTWKMediaCaptureTypeData.
+ *
+ * @return A BTWKMediaCaptureTypeData or nil if data could not be converted.
+ */
+API_AVAILABLE(ios(15.0))
+extern BTWKMediaCaptureTypeData *BTWKMediaCaptureTypeDataFromNativeWKMediaCaptureType(
+    WKMediaCaptureType type);
 
 NS_ASSUME_NONNULL_END

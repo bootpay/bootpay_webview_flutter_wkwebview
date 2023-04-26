@@ -13,6 +13,7 @@
 #import "BTScrollViewHostApi.h"
 #import "BTUIDelegateHostApi.h"
 #import "BTUIViewHostApi.h"
+#import "BTURLHostApi.h"
 #import "BTUserContentControllerHostApi.h"
 #import "BTWebViewConfigurationHostApi.h"
 #import "BTWebViewHostApi.h"
@@ -59,10 +60,10 @@
                     instanceManager:[[BTInstanceManager alloc] init]];
 
         dispatch_async(dispatch_get_main_queue(), ^{
-          [objectApi disposeObjectWithIdentifier:@(identifier)
-                                      completion:^(NSError *error) {
-                                        NSAssert(!error, @"%@", error);
-                                      }];
+            [objectApi disposeObjectWithIdentifier:@(identifier)
+                                                  completion:^(FlutterError *error) {
+                                                    NSAssert(!error, @"%@", error);
+                                                  }];
         });
       }];
   BTWKHttpCookieStoreHostApiSetup(
@@ -100,6 +101,10 @@
   BTWKWebViewHostApiSetup(registrar.messenger, [[BTWebViewHostApiImpl alloc]
                                                     initWithBinaryMessenger:registrar.messenger
                                                             instanceManager:instanceManager]);
+  BTNSUrlHostApiSetup(registrar.messenger,
+                       [[BTURLHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
+                                                          instanceManager:instanceManager]);
+
 
   BTWebViewFactory *webviewFactory = [[BTWebViewFactory alloc] initWithManager:instanceManager];
   [registrar registerViewFactory:webviewFactory withId:@"kr.co.bootpay/webview"];

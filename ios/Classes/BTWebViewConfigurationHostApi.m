@@ -22,7 +22,7 @@
 }
 
 - (void)createWithConfiguration:(WKWebViewConfiguration *)configuration
-                     completion:(void (^)(NSError *_Nullable))completion {
+                     completion:(void (^)(FlutterError *_Nullable))completion {
   long identifier = [self.instanceManager addHostCreatedInstance:configuration];
   [self createWithIdentifier:@(identifier) completion:completion];
 }
@@ -38,19 +38,7 @@
   }
   return self;
 }
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
-                       context:(void *)context {
-  [self.objectApi observeValueForObject:self
-                                keyPath:keyPath
-                                 object:object
-                                 change:change
-                             completion:^(NSError *error) {
-                               NSAssert(!error, @"%@", error);
-                             }];
-}
+ 
 @end
 
 @interface BTWebViewConfigurationHostApiImpl ()
@@ -117,28 +105,10 @@
 
   WKWebViewConfiguration *configuration =
       (WKWebViewConfiguration *)[self webViewConfigurationForIdentifier:identifier];
-  if (@available(iOS 10.0, *)) {
-    WKAudiovisualMediaTypes typesInt = 0;
-    for (BTWKAudiovisualMediaTypeEnumData *data in types) {
-      typesInt |= BTWKAudiovisualMediaTypeFromEnumData(data);
-    }
-    [configuration setMediaTypesRequiringUserActionForPlayback:typesInt];
-  } else {
-    for (BTWKAudiovisualMediaTypeEnumData *data in types) {
-      switch (data.value) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        case BTWKAudiovisualMediaTypeEnumNone:
-          configuration.requiresUserActionForMediaPlayback = false;
-          break;
-        case BTWKAudiovisualMediaTypeEnumAudio:
-        case BTWKAudiovisualMediaTypeEnumVideo:
-        case BTWKAudiovisualMediaTypeEnumAll:
-          configuration.requiresUserActionForMediaPlayback = true;
-          break;
-#pragma clang diagnostic pop
-      }
-    }
+  WKAudiovisualMediaTypes typesInt = 0;
+  for (BTWKAudiovisualMediaTypeEnumData *data in types) {
+    typesInt |= BTNativeWKAudiovisualMediaTypeFromEnumData(data);
   }
+  [configuration setMediaTypesRequiringUserActionForPlayback:typesInt];
 }
 @end

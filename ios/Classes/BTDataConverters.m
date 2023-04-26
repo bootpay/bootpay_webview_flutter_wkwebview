@@ -6,7 +6,7 @@
 
 #import <Flutter/Flutter.h>
 
-NSURLRequest *_Nullable BTNSURLRequestFromRequestData(BTNSUrlRequestData *data) {
+NSURLRequest *_Nullable BTNativeNSURLRequestFromRequestData(BTNSUrlRequestData *data) {
   NSURL *url = [NSURL URLWithString:data.url];
   if (!url) {
     return nil;
@@ -28,11 +28,11 @@ NSURLRequest *_Nullable BTNSURLRequestFromRequestData(BTNSUrlRequestData *data) 
   return request;
 }
 
-extern NSHTTPCookie *_Nullable BTNSHTTPCookieFromCookieData(BTNSHttpCookieData *data) {
+extern NSHTTPCookie *_Nullable BTNativeNSHTTPCookieFromCookieData(BTNSHttpCookieData *data) {
   NSMutableDictionary<NSHTTPCookiePropertyKey, id> *properties = [NSMutableDictionary dictionary];
   for (int i = 0; i < data.propertyKeys.count; i++) {
     NSHTTPCookiePropertyKey cookieKey =
-        BTNSHTTPCookiePropertyKeyFromEnumData(data.propertyKeys[i]);
+        BTNativeNSHTTPCookiePropertyKeyFromEnumData(data.propertyKeys[i]);
     if (!cookieKey) {
       // Some keys aren't supported on all versions, so this ignores keys
       // that require a higher version or are unsupported.
@@ -43,7 +43,7 @@ extern NSHTTPCookie *_Nullable BTNSHTTPCookieFromCookieData(BTNSHttpCookieData *
   return [NSHTTPCookie cookieWithProperties:properties];
 }
 
-NSKeyValueObservingOptions BTNSKeyValueObservingOptionsFromEnumData(
+NSKeyValueObservingOptions BTNativeNSKeyValueObservingOptionsFromEnumData(
     BTNSKeyValueObservingOptionsEnumData *data) {
   switch (data.value) {
     case BTNSKeyValueObservingOptionsEnumNewValue:
@@ -59,7 +59,7 @@ NSKeyValueObservingOptions BTNSKeyValueObservingOptionsFromEnumData(
   return -1;
 }
 
-NSHTTPCookiePropertyKey _Nullable BTNSHTTPCookiePropertyKeyFromEnumData(
+NSHTTPCookiePropertyKey _Nullable BTNativeNSHTTPCookiePropertyKeyFromEnumData(
     BTNSHttpCookiePropertyKeyEnumData *data) {
   switch (data.value) {
     case BTNSHttpCookiePropertyKeyEnumComment:
@@ -99,14 +99,14 @@ NSHTTPCookiePropertyKey _Nullable BTNSHTTPCookiePropertyKeyFromEnumData(
   return nil;
 }
 
-extern WKUserScript *BTWKUserScriptFromScriptData(BTWKUserScriptData *data) {
+extern WKUserScript *BTNativeWKUserScriptFromScriptData(BTWKUserScriptData *data) {
   return [[WKUserScript alloc]
         initWithSource:data.source
-         injectionTime:BTWKUserScriptInjectionTimeFromEnumData(data.injectionTime)
+         injectionTime:BTNativeWKUserScriptInjectionTimeFromEnumData(data.injectionTime)
       forMainFrameOnly:data.isMainFrameOnly.boolValue];
 }
 
-WKUserScriptInjectionTime BTWKUserScriptInjectionTimeFromEnumData(
+WKUserScriptInjectionTime BTNativeWKUserScriptInjectionTimeFromEnumData(
     BTWKUserScriptInjectionTimeEnumData *data) {
   switch (data.value) {
     case BTWKUserScriptInjectionTimeEnumAtDocumentStart:
@@ -118,8 +118,7 @@ WKUserScriptInjectionTime BTWKUserScriptInjectionTimeFromEnumData(
   return -1;
 }
 
-API_AVAILABLE(ios(10.0))
-WKAudiovisualMediaTypes BTWKAudiovisualMediaTypeFromEnumData(
+WKAudiovisualMediaTypes BTNativeWKAudiovisualMediaTypeFromEnumData(
     BTWKAudiovisualMediaTypeEnumData *data) {
   switch (data.value) {
     case BTWKAudiovisualMediaTypeEnumNone:
@@ -135,7 +134,7 @@ WKAudiovisualMediaTypes BTWKAudiovisualMediaTypeFromEnumData(
   return -1;
 }
 
-NSString *_Nullable BTWKWebsiteDataTypeFromEnumData(BTWKWebsiteDataTypeEnumData *data) {
+NSString *_Nullable BTNativeWKWebsiteDataTypeFromEnumData(BTWKWebsiteDataTypeEnumData *data) {
   switch (data.value) {
     case BTWKWebsiteDataTypeEnumCookies:
       return WKWebsiteDataTypeCookies;
@@ -158,15 +157,15 @@ NSString *_Nullable BTWKWebsiteDataTypeFromEnumData(BTWKWebsiteDataTypeEnumData 
   return nil;
 }
 
-BTWKNavigationActionData *BTWKNavigationActionDataFromNavigationAction(
+BTWKNavigationActionData *BTWKNavigationActionDataFromNativeWKNavigationAction(
     WKNavigationAction *action) {
   return [BTWKNavigationActionData
-      makeWithRequest:BTNSUrlRequestDataFromNSURLRequest(action.request)
-          targetFrame:BTWKFrameInfoDataFromWKFrameInfo(action.targetFrame)
-       navigationType:BTWKNavigationTypeFromWKNavigationType(action.navigationType)];
+      makeWithRequest:BTNSUrlRequestDataFromNativeNSURLRequest(action.request)
+          targetFrame:BTWKFrameInfoDataFromNativeWKFrameInfo(action.targetFrame)
+       navigationType:BTWKNavigationTypeFromNativeWKNavigationType(action.navigationType)];
 }
 
-BTNSUrlRequestData *BTNSUrlRequestDataFromNSURLRequest(NSURLRequest *request) {
+BTNSUrlRequestData *BTNSUrlRequestDataFromNativeNSURLRequest(NSURLRequest *request) {
   return [BTNSUrlRequestData
               makeWithUrl:request.URL.absoluteString
                httpMethod:request.HTTPMethod
@@ -176,11 +175,11 @@ BTNSUrlRequestData *BTNSUrlRequestDataFromNSURLRequest(NSURLRequest *request) {
       allHttpHeaderFields:request.allHTTPHeaderFields ? request.allHTTPHeaderFields : @{}];
 }
 
-BTWKFrameInfoData *BTWKFrameInfoDataFromWKFrameInfo(WKFrameInfo *info) {
+BTWKFrameInfoData *BTWKFrameInfoDataFromNativeWKFrameInfo(WKFrameInfo *info) {
   return [BTWKFrameInfoData makeWithIsMainFrame:@(info.isMainFrame)];
 }
 
-WKNavigationActionPolicy BTWKNavigationActionPolicyFromEnumData(
+WKNavigationActionPolicy BTNativeWKNavigationActionPolicyFromEnumData(
     BTWKNavigationActionPolicyEnumData *data) {
   switch (data.value) {
     case BTWKNavigationActionPolicyEnumAllow:
@@ -192,13 +191,13 @@ WKNavigationActionPolicy BTWKNavigationActionPolicyFromEnumData(
   return -1;
 }
 
-BTNSErrorData *BTNSErrorDataFromNSError(NSError *error) {
+BTNSErrorData *BTNSErrorDataFromNativeNSError(NSError *error) {
   return [BTNSErrorData makeWithCode:@(error.code)
                                domain:error.domain
                  localizedDescription:error.localizedDescription];
 }
 
-BTNSKeyValueChangeKeyEnumData *BTNSKeyValueChangeKeyEnumDataFromNSKeyValueChangeKey(
+BTNSKeyValueChangeKeyEnumData *BTNSKeyValueChangeKeyEnumDataFromNativeNSKeyValueChangeKey(
     NSKeyValueChangeKey key) {
   if ([key isEqualToString:NSKeyValueChangeIndexesKey]) {
     return [BTNSKeyValueChangeKeyEnumData makeWithValue:BTNSKeyValueChangeKeyEnumIndexes];
@@ -216,11 +215,11 @@ BTNSKeyValueChangeKeyEnumData *BTNSKeyValueChangeKeyEnumDataFromNSKeyValueChange
   return nil;
 }
 
-BTWKScriptMessageData *BTWKScriptMessageDataFromWKScriptMessage(WKScriptMessage *message) {
+BTWKScriptMessageData *BTWKScriptMessageDataFromNativeWKScriptMessage(WKScriptMessage *message) {
   return [BTWKScriptMessageData makeWithName:message.name body:message.body];
 }
 
-BTWKNavigationType BTWKNavigationTypeFromWKNavigationType(WKNavigationType type) {
+BTWKNavigationType BTWKNavigationTypeFromNativeWKNavigationType(WKNavigationType type) {
   switch (type) {
     case WKNavigationTypeLinkActivated:
       return BTWKNavigationTypeLinkActivated;
@@ -235,4 +234,40 @@ BTWKNavigationType BTWKNavigationTypeFromWKNavigationType(WKNavigationType type)
     case WKNavigationTypeOther:
       return BTWKNavigationTypeOther;
   }
+}
+
+BTWKSecurityOriginData *BTWKSecurityOriginDataFromNativeWKSecurityOrigin(
+    WKSecurityOrigin *origin) {
+  return [BTWKSecurityOriginData makeWithHost:origin.host
+                                          port:@(origin.port)
+                                      protocol:origin.protocol];
+}
+
+WKPermissionDecision BTNativeWKPermissionDecisionFromData(BTWKPermissionDecisionData *data) {
+  switch (data.value) {
+    case BTWKPermissionDecisionDeny:
+      return WKPermissionDecisionDeny;
+    case BTWKPermissionDecisionGrant:
+      return WKPermissionDecisionGrant;
+    case BTWKPermissionDecisionPrompt:
+      return WKPermissionDecisionPrompt;
+  }
+
+  return -1;
+}
+
+BTWKMediaCaptureTypeData *BTWKMediaCaptureTypeDataFromNativeWKMediaCaptureType(
+    WKMediaCaptureType type) {
+  switch (type) {
+    case WKMediaCaptureTypeCamera:
+      return [BTWKMediaCaptureTypeData makeWithValue:BTWKMediaCaptureTypeCamera];
+    case WKMediaCaptureTypeMicrophone:
+      return [BTWKMediaCaptureTypeData makeWithValue:BTWKMediaCaptureTypeMicrophone];
+    case WKMediaCaptureTypeCameraAndMicrophone:
+      return [BTWKMediaCaptureTypeData makeWithValue:BTWKMediaCaptureTypeCameraAndMicrophone];
+    default:
+      return [BTWKMediaCaptureTypeData makeWithValue:BTWKMediaCaptureTypeUnknown];
+  }
+
+  return nil;
 }

@@ -12,7 +12,6 @@
 @end
 
 @implementation BTWebView
-
 - (instancetype)initWithFrame:(CGRect)frame
                 configuration:(nonnull WKWebViewConfiguration *)configuration
               binaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
@@ -21,11 +20,10 @@
   if (self) {
     _objectApi = [[BTObjectFlutterApiImpl alloc] initWithBinaryMessenger:binaryMessenger
                                                           instanceManager:instanceManager];
-    if (@available(iOS 11.0, *)) {
-      self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-      if (@available(iOS 13.0, *)) {
-        self.scrollView.automaticallyAdjustsScrollIndicatorInsets = NO;
-      }
+
+    self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    if (@available(iOS 13.0, *)) {
+      self.scrollView.automaticallyAdjustsScrollIndicatorInsets = NO;
     }
   }
   return self;
@@ -35,16 +33,15 @@
   [super setFrame:frame];
   // Prevents the contentInsets from being adjusted by iOS and gives control to Flutter.
   self.scrollView.contentInset = UIEdgeInsetsZero;
-  if (@available(iOS 11, *)) {
-    // Above iOS 11, adjust contentInset to compensate the adjustedContentInset so the sum will
-    // always be 0.
-    if (UIEdgeInsetsEqualToEdgeInsets(self.scrollView.adjustedContentInset, UIEdgeInsetsZero)) {
-      return;
-    }
-    UIEdgeInsets insetToAdjust = self.scrollView.adjustedContentInset;
-    self.scrollView.contentInset = UIEdgeInsetsMake(-insetToAdjust.top, -insetToAdjust.left,
-                                                    -insetToAdjust.bottom, -insetToAdjust.right);
+
+  // Adjust contentInset to compensate the adjustedContentInset so the sum will
+  // always be 0.
+  if (UIEdgeInsetsEqualToEdgeInsets(self.scrollView.adjustedContentInset, UIEdgeInsetsZero)) {
+    return;
   }
+  UIEdgeInsets insetToAdjust = self.scrollView.adjustedContentInset;
+  self.scrollView.contentInset = UIEdgeInsetsMake(-insetToAdjust.top, -insetToAdjust.left,
+                                                  -insetToAdjust.bottom, -insetToAdjust.right);
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -55,7 +52,7 @@
                                 keyPath:keyPath
                                  object:object
                                  change:change
-                             completion:^(NSError *error) {
+                             completion:^(FlutterError *error) {
                                NSAssert(!error, @"%@", error);
                              }];
 }
@@ -127,7 +124,7 @@
                                     request:(nonnull BTNSUrlRequestData *)request
                                       error:
                                           (FlutterError *_Nullable __autoreleasing *_Nonnull)error {
-  NSURLRequest *urlRequest = BTNSURLRequestFromRequestData(request);
+  NSURLRequest *urlRequest = BTNativeNSURLRequestFromRequestData(request);
   if (!urlRequest) {
     *error = [FlutterError errorWithCode:@"BTURLRequestParsingError"
                                  message:@"Failed instantiating an NSURLRequest."
@@ -193,7 +190,7 @@
          } else {
            flutterError = [FlutterError errorWithCode:@"BTEvaluateJavaScriptError"
                                               message:@"Failed evaluating JavaScript."
-                                              details:BTNSErrorDataFromNSError(error)];
+                                              details:BTNSErrorDataFromNativeNSError(error)];
          }
 
          completion(returnValue, flutterError);

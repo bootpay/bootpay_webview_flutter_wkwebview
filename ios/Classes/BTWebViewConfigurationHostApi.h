@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
                         instanceManager:(BTInstanceManager *)instanceManager;
 
 - (void)createWithConfiguration:(WKWebViewConfiguration *)configuration
-                     completion:(void (^)(NSError *_Nullable))completion;
+                     completion:(void (^)(FlutterError *_Nullable))completion;
 @end
 
 /**

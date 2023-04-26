@@ -3,9 +3,14 @@
 // found in the LICENSE file.
 
 #import "BTObjectHostApi.h"
+#import <objc/runtime.h>
 #import "BTDataConverters.h"
+#import "BTURLHostApi.h"
 
 @interface BTObjectFlutterApiImpl ()
+// BinaryMessenger must be weak to prevent a circular reference with the host API it
+// references.
+@property(nonatomic, weak) id<FlutterBinaryMessenger> binaryMessenger;
 // InstanceManager must be weak to prevent a circular reference with the object it stores.
 @property(nonatomic, weak) BTInstanceManager *instanceManager;
 @end
@@ -15,6 +20,7 @@
                         instanceManager:(BTInstanceManager *)instanceManager {
   self = [self initWithBinaryMessenger:binaryMessenger];
   if (self) {
+    _binaryMessenger = binaryMessenger;
     _instanceManager = instanceManager;
   }
   return self;
@@ -28,13 +34,31 @@
                       keyPath:(NSString *)keyPath
                        object:(NSObject *)object
                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
-                   completion:(void (^)(NSError *_Nullable))completion {
+                   completion:(void (^)(FlutterError *_Nullable))completion {
   NSMutableArray<BTNSKeyValueChangeKeyEnumData *> *changeKeys = [NSMutableArray array];
   NSMutableArray<id> *changeValues = [NSMutableArray array];
 
   [change enumerateKeysAndObjectsUsingBlock:^(NSKeyValueChangeKey key, id value, BOOL *stop) {
-    [changeKeys addObject:BTNSKeyValueChangeKeyEnumDataFromNSKeyValueChangeKey(key)];
-    [changeValues addObject:value];
+    [changeKeys addObject:BTNSKeyValueChangeKeyEnumDataFromNativeNSKeyValueChangeKey(key)];
+    BOOL isIdentifier = NO;
+    if ([self.instanceManager containsInstance:value]) {
+      isIdentifier = YES;
+    } else if (object_getClass(value) == [NSURL class]) {
+      BTURLFlutterApiImpl *flutterApi =
+          [[BTURLFlutterApiImpl alloc] initWithBinaryMessenger:self.binaryMessenger
+                                                instanceManager:self.instanceManager];
+      [flutterApi create:value
+              completion:^(FlutterError *error) {
+                NSAssert(!error, @"%@", error);
+              }];
+      isIdentifier = YES;
+    }
+
+    id returnValue = isIdentifier
+                         ? @([self.instanceManager identifierWithStrongReferenceForInstance:value])
+                         : value;
+    [changeValues addObject:[BTObjectOrIdentifier makeWithValue:returnValue
+                                                    isIdentifier:@(isIdentifier)]];
   }];
 
   NSNumber *objectIdentifier =
@@ -67,7 +91,7 @@
                                 keyPath:keyPath
                                  object:object
                                  change:change
-                             completion:^(NSError *error) {
+                             completion:^(FlutterError *error) {
                                NSAssert(!error, @"%@", error);
                              }];
 }
@@ -100,7 +124,7 @@
                                      error:(FlutterError *_Nullable *_Nonnull)error {
   NSKeyValueObservingOptions optionsInt = 0;
   for (BTNSKeyValueObservingOptionsEnumData *data in options) {
-    optionsInt |= BTNSKeyValueObservingOptionsFromEnumData(data);
+    optionsInt |= BTNativeNSKeyValueObservingOptionsFromEnumData(data);
   }
   [[self objectForIdentifier:identifier] addObserver:[self objectForIdentifier:observer]
                                           forKeyPath:keyPath

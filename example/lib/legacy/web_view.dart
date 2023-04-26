@@ -9,12 +9,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 // ignore: implementation_imports
-// import 'package:bootpay_webview_flutter_platform_interface/src/types/types.dart';
-// import 'package:bootpay_webview_flutter_platform_interface/src/webview_flutter_platform_interface_legacy.dart';
 import 'package:bootpay_webview_flutter_platform_interface/src/webview_flutter_platform_interface_legacy.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/webview_flutter_wkwebview_legacy.dart';
 // ignore: implementation_imports
-// import 'package:bootpay_webview_flutter_wkwebview/src/webview_flutter_wkwebview_legacy.dart';
+import 'package:bootpay_webview_flutter_wkwebview/src/webview_flutter_wkwebview_legacy.dart';
 
 import 'navigation_decision.dart';
 import 'navigation_request.dart';
@@ -57,7 +54,7 @@ class WebView extends StatefulWidget {
   ///
   /// The `javascriptMode` and `autoMediaPlaybackPolicy` parameters must not be null.
   const WebView({
-    Key? key,
+    super.key,
     this.onWebViewCreated,
     this.initialUrl,
     this.initialCookies = const <WebViewCookie>[],
@@ -79,8 +76,7 @@ class WebView extends StatefulWidget {
     this.backgroundColor,
   })  : assert(javascriptMode != null),
         assert(initialMediaPlaybackPolicy != null),
-        assert(allowsInlineMediaPlayback != null),
-        super(key: key);
+        assert(allowsInlineMediaPlayback != null);
 
   /// The WebView platform that's used by this WebView.
   static final WebViewPlatform platform = CupertinoWebView();
@@ -250,7 +246,7 @@ class WebView extends StatefulWidget {
 
 class _WebViewState extends State<WebView> {
   final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
+  Completer<WebViewController>();
   late final JavascriptChannelRegistry _javascriptChannelRegistry;
   late final _PlatformCallbacksHandler _platformCallbacksHandler;
 
@@ -292,7 +288,7 @@ class _WebViewState extends State<WebView> {
         initialUrl: widget.initialUrl,
         webSettings: _webSettingsFromWidget(widget),
         javascriptChannelNames:
-            _javascriptChannelRegistry.channels.keys.toSet(),
+        _javascriptChannelRegistry.channels.keys.toSet(),
         autoMediaPlaybackPolicy: widget.initialMediaPlaybackPolicy,
         userAgent: widget.userAgent,
         cookies: widget.initialCookies,
@@ -309,10 +305,10 @@ class _WebViewState extends State<WebView> {
 /// callback for a [WebView] widget.
 class WebViewController {
   WebViewController._(
-    this._widget,
-    this._webViewPlatformController,
-    this._javascriptChannelRegistry,
-  ) : assert(_webViewPlatformController != null) {
+      this._widget,
+      this._webViewPlatformController,
+      this._javascriptChannelRegistry,
+      ) : assert(_webViewPlatformController != null) {
     _settings = _webSettingsFromWidget(_widget);
   }
 
@@ -340,8 +336,8 @@ class WebViewController {
   ///
   /// Throws an ArgumentError if the [absoluteFilePath] does not exist.
   Future<void> loadFile(
-    String absoluteFilePath,
-  ) {
+      String absoluteFilePath,
+      ) {
     assert(absoluteFilePath.isNotEmpty);
     return _webViewPlatformController.loadFile(absoluteFilePath);
   }
@@ -351,9 +347,9 @@ class WebViewController {
   /// The [baseUrl] parameter is used when resolving relative URLs within the
   /// HTML string.
   Future<void> loadHtmlString(
-    String html, {
-    String? baseUrl,
-  }) {
+      String html, {
+        String? baseUrl,
+      }) {
     assert(html.isNotEmpty);
     return _webViewPlatformController.loadHtmlString(
       html,
@@ -370,9 +366,9 @@ class WebViewController {
   ///
   /// Throws an ArgumentError if `url` is not a valid URL string.
   Future<void> loadUrl(
-    String url, {
-    Map<String, String>? headers,
-  }) async {
+      String url, {
+        Map<String, String>? headers,
+      }) async {
     assert(url != null);
     _validateUrlString(url);
     return _webViewPlatformController.loadUrl(url, headers);
@@ -453,7 +449,7 @@ class WebViewController {
 
   Future<void> _updateSettings(WebSettings newSettings) {
     final WebSettings update =
-        _clearUnchangedWebSettings(_settings, newSettings);
+    _clearUnchangedWebSettings(_settings, newSettings);
     _settings = newSettings;
     return _webViewPlatformController.updateSettings(update);
   }
@@ -461,12 +457,12 @@ class WebViewController {
   Future<void> _updateJavascriptChannels(
       Set<JavascriptChannel>? newChannels) async {
     final Set<String> currentChannels =
-        _javascriptChannelRegistry.channels.keys.toSet();
+    _javascriptChannelRegistry.channels.keys.toSet();
     final Set<String> newChannelNames = _extractChannelNames(newChannels);
     final Set<String> channelsToAdd =
-        newChannelNames.difference(currentChannels);
+    newChannelNames.difference(currentChannels);
     final Set<String> channelsToRemove =
-        currentChannels.difference(newChannelNames);
+    currentChannels.difference(newChannelNames);
     if (channelsToRemove.isNotEmpty) {
       await _webViewPlatformController
           .removeJavascriptChannels(channelsToRemove);

@@ -9,7 +9,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 // ignore: implementation_imports
-// import 'package:bootpay_webview_flutter_platform_interface/src/webview_flutter_platform_interface_legacy.dart';
 import 'package:bootpay_webview_flutter_platform_interface/src/webview_flutter_platform_interface_legacy.dart';
 
 import '../foundation/foundation.dart';
@@ -44,7 +43,7 @@ class CupertinoWebView implements WebViewPlatform {
           },
           gestureRecognizers: gestureRecognizers,
           creationParams:
-              NSObject.globalInstanceManager.getIdentifier(controller.webView),
+          NSObject.globalInstanceManager.getIdentifier(controller.webView),
           creationParamsCodec: const StandardMessageCodec(),
         );
       },

@@ -2,9 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutter_platform_interface.dart';
-import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutter_platform_interface.dart';
 import 'package:flutter/foundation.dart';
+import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutter_platform_interface.dart';
 
 import 'foundation/foundation.dart';
 import 'web_kit/web_kit.dart';
@@ -21,11 +20,11 @@ class WebKitWebViewCookieManagerCreationParams
   /// Constructs a [WebKitWebViewCookieManagerCreationParams] using a
   /// [PlatformWebViewCookieManagerCreationParams].
   WebKitWebViewCookieManagerCreationParams.fromPlatformWebViewCookieManagerCreationParams(
-    // Recommended placeholder to prevent being broken by platform interface.
-    // ignore: avoid_unused_constructor_parameters
-    PlatformWebViewCookieManagerCreationParams params, {
-    @visibleForTesting WebKitProxy? webKitProxy,
-  }) : this(webKitProxy: webKitProxy);
+      // Recommended placeholder to prevent being broken by platform interface.
+      // ignore: avoid_unused_constructor_parameters
+      PlatformWebViewCookieManagerCreationParams params, {
+        @visibleForTesting WebKitProxy? webKitProxy,
+      }) : this(webKitProxy: webKitProxy);
 
   /// Handles constructing objects and calling static methods for the WebKit
   /// native library.
@@ -34,7 +33,7 @@ class WebKitWebViewCookieManagerCreationParams
 
   /// Manages stored data for [WKWebView]s.
   late final WKWebsiteDataStore _websiteDataStore =
-      webKitProxy.defaultWebsiteDataStore();
+  webKitProxy.defaultWebsiteDataStore();
 }
 
 /// An implementation of [PlatformWebViewCookieManager] with the WebKit api.
@@ -42,11 +41,11 @@ class WebKitWebViewCookieManager extends PlatformWebViewCookieManager {
   /// Constructs a [WebKitWebViewCookieManager].
   WebKitWebViewCookieManager(PlatformWebViewCookieManagerCreationParams params)
       : super.implementation(
-          params is WebKitWebViewCookieManagerCreationParams
-              ? params
-              : WebKitWebViewCookieManagerCreationParams
-                  .fromPlatformWebViewCookieManagerCreationParams(params),
-        );
+    params is WebKitWebViewCookieManagerCreationParams
+        ? params
+        : WebKitWebViewCookieManagerCreationParams
+        .fromPlatformWebViewCookieManagerCreationParams(params),
+  );
 
   WebKitWebViewCookieManagerCreationParams get _webkitParams =>
       params as WebKitWebViewCookieManagerCreationParams;
@@ -82,7 +81,7 @@ class WebKitWebViewCookieManager extends PlatformWebViewCookieManager {
   bool _isValidPath(String path) {
     // Permitted ranges based on RFC6265bis: https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-02#section-4.1.1
     return !path.codeUnits.any(
-      (int char) {
+          (int char) {
         return (char < 0x20 || char > 0x3A) && (char < 0x3C || char > 0x7E);
       },
     );

@@ -31,22 +31,23 @@
   return [self.instanceManager identifierWithStrongReferenceForInstance:instance];
 }
 
+
 - (void)onCreateWebViewForDelegate:(BTUIDelegate *)instance
                            webView:(WKWebView *)webView
                      configuration:(WKWebViewConfiguration *)configuration
                   navigationAction:(WKNavigationAction *)navigationAction
-                        completion:(void (^)(NSError *_Nullable))completion {
-  if (![self.instanceManager containsInstance:configuration]) {
-    [self.webViewConfigurationFlutterApi createWithConfiguration:configuration
-                                                      completion:^(NSError *error) {
-                                                        NSAssert(!error, @"%@", error);
-                                                      }];
-  }
+                        completion:(void (^)(FlutterError *_Nullable))completion {
+    if (![self.instanceManager containsInstance:configuration]) {
+      [self.webViewConfigurationFlutterApi createWithConfiguration:configuration
+                                                        completion:^(FlutterError *error) {
+                                                          NSAssert(!error, @"%@", error);
+                                                        }];
+    }
 
   NSNumber *configurationIdentifier =
       @([self.instanceManager identifierWithStrongReferenceForInstance:configuration]);
   BTWKNavigationActionData *navigationActionData =
-      BTWKNavigationActionDataFromNavigationAction(navigationAction);
+      BTWKNavigationActionDataFromNativeWKNavigationAction(navigationAction);
 
   [self onCreateWebViewForDelegateWithIdentifier:@([self identifierForDelegate:instance])
                                webViewIdentifier:
@@ -55,6 +56,41 @@
                          configurationIdentifier:configurationIdentifier
                                 navigationAction:navigationActionData
                                       completion:completion];
+}
+
+
+- (void)requestMediaCapturePermissionForDelegateWithIdentifier:(BTUIDelegate *)instance
+                                                       webView:(WKWebView *)webView
+                                                        origin:(WKSecurityOrigin *)origin
+                                                         frame:(WKFrameInfo *)frame
+                                                          type:(BTWKMediaCaptureType)type
+                                                    completion:
+                                                        (void (^)(WKPermissionDecision))completion
+    API_AVAILABLE(ios(15.0)) {
+  [self
+      requestMediaCapturePermissionForDelegateWithIdentifier:@([self
+                                                                 identifierForDelegate:instance])
+                                           webViewIdentifier:
+                                               @([self.instanceManager
+                                                   identifierWithStrongReferenceForInstance:
+                                                       webView])
+                                                      origin:
+                                                          BTWKSecurityOriginDataFromNativeWKSecurityOrigin(
+                                                              origin)
+                                                       frame:
+                                                           BTWKFrameInfoDataFromNativeWKFrameInfo(
+                                                               frame)
+                                                        type:
+                                                            BTWKMediaCaptureTypeDataFromNativeWKMediaCaptureType(
+                                                                type)
+                                                  completion:^(
+                                                      BTWKPermissionDecisionData *decision,
+                                                      FlutterError *error) {
+                                                    NSAssert(!error, @"%@", error);
+                                                    completion(
+                                                        BTNativeWKPermissionDecisionFromData(
+                                                            decision));
+                                                  }];
 }
 @end
 
@@ -101,6 +137,23 @@
    return popupView;
 }
 
+
+- (void)webView:(WKWebView *)webView
+    requestMediaCapturePermissionForOrigin:(WKSecurityOrigin *)origin
+                          initiatedByFrame:(WKFrameInfo *)frame
+                                      type:(WKMediaCaptureType)type
+                           decisionHandler:(void (^)(WKPermissionDecision))decisionHandler
+    API_AVAILABLE(ios(15.0)) {
+  [self.UIDelegateAPI
+      requestMediaCapturePermissionForDelegateWithIdentifier:self
+                                                     webView:webView
+                                                      origin:origin
+                                                       frame:frame
+                                                        type:type
+                                                  completion:^(WKPermissionDecision decision) {
+                                                    decisionHandler(decision);
+                                                  }];
+}
 
 - (void)webViewDidClose:(WKWebView *)webView {
     [webView removeFromSuperview];

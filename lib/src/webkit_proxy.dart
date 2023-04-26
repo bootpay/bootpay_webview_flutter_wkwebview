@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'common/instance_manager.dart';
 import 'foundation/foundation.dart';
 import 'web_kit/web_kit.dart';
 
@@ -32,25 +33,26 @@ class WebKitProxy {
 
   /// Constructs a [WKWebView].
   final WKWebView Function(
-    WKWebViewConfiguration configuration, {
-    void Function(
-      String keyPath,
-      NSObject object,
-      Map<NSKeyValueChangeKey, Object?> change,
-    )?
-        observeValue,
-  }) createWebView;
+      WKWebViewConfiguration configuration, {
+      void Function(
+          String keyPath,
+          NSObject object,
+          Map<NSKeyValueChangeKey, Object?> change,
+          )? observeValue,
+      InstanceManager? instanceManager,
+      }) createWebView;
 
   /// Constructs a [WKWebViewConfiguration].
-  final WKWebViewConfiguration Function() createWebViewConfiguration;
+  final WKWebViewConfiguration Function({
+  InstanceManager? instanceManager,
+  }) createWebViewConfiguration;
 
   /// Constructs a [WKScriptMessageHandler].
   final WKScriptMessageHandler Function({
-    required void Function(
+  required void Function(
       WKUserContentController userContentController,
       WKScriptMessage message,
-    )
-        didReceiveScriptMessage,
+      ) didReceiveScriptMessage,
   }) createScriptMessageHandler;
 
   /// The default [WKWebsiteDataStore].
@@ -58,27 +60,33 @@ class WebKitProxy {
 
   /// Constructs a [WKNavigationDelegate].
   final WKNavigationDelegate Function({
-    void Function(WKWebView webView, String? url)? didFinishNavigation,
-    void Function(WKWebView webView, String? url)?
-        didStartProvisionalNavigation,
-    Future<WKNavigationActionPolicy> Function(
+  void Function(WKWebView webView, String? url)? didFinishNavigation,
+  void Function(WKWebView webView, String? url)?
+  didStartProvisionalNavigation,
+  Future<WKNavigationActionPolicy> Function(
       WKWebView webView,
       WKNavigationAction navigationAction,
-    )?
-        decidePolicyForNavigationAction,
-    void Function(WKWebView webView, NSError error)? didFailNavigation,
-    void Function(WKWebView webView, NSError error)?
-        didFailProvisionalNavigation,
-    void Function(WKWebView webView)? webViewWebContentProcessDidTerminate,
+      )? decidePolicyForNavigationAction,
+  void Function(WKWebView webView, NSError error)? didFailNavigation,
+  void Function(WKWebView webView, NSError error)?
+  didFailProvisionalNavigation,
+  void Function(WKWebView webView)? webViewWebContentProcessDidTerminate,
   }) createNavigationDelegate;
 
-  /// Contructs a [WKUIDelegate].
+  /// Constructs a [WKUIDelegate].
   final WKUIDelegate Function({
-    void Function(
+  void Function(
       WKWebView webView,
       WKWebViewConfiguration configuration,
       WKNavigationAction navigationAction,
-    )?
-        onCreateWebView,
+      )? onCreateWebView,
+  Future<WKPermissionDecision> Function(
+      WKUIDelegate instance,
+      WKWebView webView,
+      WKSecurityOrigin origin,
+      WKFrameInfo frame,
+      WKMediaCaptureType type,
+      )? requestMediaCapturePermission,
+  InstanceManager? instanceManager,
   }) createUIDelegate;
 }

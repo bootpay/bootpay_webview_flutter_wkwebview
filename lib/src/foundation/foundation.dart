@@ -235,6 +235,42 @@ class NSHttpCookie {
   final Map<NSHttpCookiePropertyKey, Object> properties;
 }
 
+/// An object that represents the location of a resource, such as an item on a
+/// remote server or the path to a local file.
+///
+/// See https://developer.apple.com/documentation/foundation/nsurl?language=objc.
+class NSUrl extends NSObject {
+  /// Instantiates a [NSUrl] without creating and attaching to an instance
+  /// of the associated native class.
+  ///
+  /// This should only be used outside of tests by subclasses created by this
+  /// library or to create a copy for an [InstanceManager].
+  @protected
+  NSUrl.detached({super.binaryMessenger, super.instanceManager})
+      : _nsUrlHostApi = NSUrlHostApiImpl(
+    binaryMessenger: binaryMessenger,
+    instanceManager: instanceManager,
+  ),
+        super.detached();
+
+  final NSUrlHostApiImpl _nsUrlHostApi;
+
+  /// The URL string for the receiver as an absolute URL. (read-only)
+  ///
+  /// Represents [NSURL.absoluteString](https://developer.apple.com/documentation/foundation/nsurl/1409868-absolutestring?language=objc).
+  Future<String?> getAbsoluteString() {
+    return _nsUrlHostApi.getAbsoluteStringFromInstances(this);
+  }
+
+  @override
+  NSObject copy() {
+    return NSUrl.detached(
+      binaryMessenger: _nsUrlHostApi.binaryMessenger,
+      instanceManager: _nsUrlHostApi.instanceManager,
+    );
+  }
+}
+
 /// The root class of most Objective-C class hierarchies.
 @immutable
 class NSObject with Copyable {
@@ -248,9 +284,9 @@ class NSObject with Copyable {
     BinaryMessenger? binaryMessenger,
     InstanceManager? instanceManager,
   }) : _api = NSObjectHostApiImpl(
-          binaryMessenger: binaryMessenger,
-          instanceManager: instanceManager,
-        ) {
+    binaryMessenger: binaryMessenger,
+    instanceManager: instanceManager,
+  ) {
     // Ensures FlutterApis for the Foundation library are set up.
     FoundationFlutterApis.instance.ensureSetUp();
   }
@@ -262,7 +298,7 @@ class NSObject with Copyable {
 
   /// Global instance of [InstanceManager].
   static final InstanceManager globalInstanceManager =
-      InstanceManager(onWeakReferenceRemoved: (int instanceId) {
+  InstanceManager(onWeakReferenceRemoved: (int instanceId) {
     NSObjectHostApiImpl().dispose(instanceId);
   });
 
@@ -279,20 +315,20 @@ class NSObject with Copyable {
   /// Otherwise, use [NSObject.dispose] to release the associated Objective-C
   /// object manually.
   ///
-  /// See [withWeakRefenceTo].
+  /// See [withWeakReferenceTo].
   /// {@endtemplate}
   final void Function(
-    String keyPath,
-    NSObject object,
-    Map<NSKeyValueChangeKey, Object?> change,
-  )? observeValue;
+      String keyPath,
+      NSObject object,
+      Map<NSKeyValueChangeKey, Object?> change,
+      )? observeValue;
 
   /// Registers the observer object to receive KVO notifications.
   Future<void> addObserver(
-    NSObject observer, {
-    required String keyPath,
-    required Set<NSKeyValueObservingOptions> options,
-  }) {
+      NSObject observer, {
+        required String keyPath,
+        required Set<NSKeyValueObservingOptions> options,
+      }) {
     assert(options.isNotEmpty);
     return _api.addObserverForInstances(
       this,

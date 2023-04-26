@@ -26,7 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BTWebView : WKWebView <FlutterPlatformView>
 @property(readonly, nonnull, nonatomic) BTObjectFlutterApiImpl *objectApi;
 
-
 - (instancetype)initWithFrame:(CGRect)frame
                 configuration:(nonnull WKWebViewConfiguration *)configuration
               binaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger

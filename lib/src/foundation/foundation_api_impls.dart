@@ -6,16 +6,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import '../common/instance_manager.dart';
-import '../common/web_kit.pigeon.dart';
+import '../common/web_kit.g.dart';
 import 'foundation.dart';
 
 Iterable<NSKeyValueObservingOptionsEnumData>
-    _toNSKeyValueObservingOptionsEnumData(
-  Iterable<NSKeyValueObservingOptions> options,
-) {
+_toNSKeyValueObservingOptionsEnumData(
+    Iterable<NSKeyValueObservingOptions> options,
+    ) {
   return options.map<NSKeyValueObservingOptionsEnumData>((
-    NSKeyValueObservingOptions option,
-  ) {
+      NSKeyValueObservingOptions option,
+      ) {
     late final NSKeyValueObservingOptionsEnum? value;
     switch (option) {
       case NSKeyValueObservingOptions.newValue:
@@ -39,7 +39,7 @@ Iterable<NSKeyValueObservingOptionsEnumData>
 extension _NSKeyValueChangeKeyEnumDataConverter on NSKeyValueChangeKeyEnumData {
   NSKeyValueChangeKey toNSKeyValueChangeKey() {
     return NSKeyValueChangeKey.values.firstWhere(
-      (NSKeyValueChangeKey element) => element.name == value.name,
+          (NSKeyValueChangeKey element) => element.name == value.name,
     );
   }
 }
@@ -52,7 +52,9 @@ class FoundationFlutterApis {
     BinaryMessenger? binaryMessenger,
     InstanceManager? instanceManager,
   })  : _binaryMessenger = binaryMessenger,
-        object = NSObjectFlutterApiImpl(
+        object = NSObjectFlutterApiImpl(instanceManager: instanceManager),
+        url = NSUrlFlutterApiImpl(
+          binaryMessenger: binaryMessenger,
           instanceManager: instanceManager,
         );
 
@@ -76,6 +78,10 @@ class FoundationFlutterApis {
   @visibleForTesting
   final NSObjectFlutterApiImpl object;
 
+  /// Flutter Api for [NSUrl].
+  @visibleForTesting
+  final NSUrlFlutterApiImpl url;
+
   /// Ensures all the Flutter APIs have been set up to receive calls from native code.
   void ensureSetUp() {
     if (!_hasBeenSetUp) {
@@ -83,6 +89,7 @@ class FoundationFlutterApis {
         object,
         binaryMessenger: _binaryMessenger,
       );
+      NSUrlFlutterApi.setup(url, binaryMessenger: _binaryMessenger);
       _hasBeenSetUp = true;
     }
   }
@@ -108,11 +115,11 @@ class NSObjectHostApiImpl extends NSObjectHostApi {
 
   /// Calls [addObserver] with the ids of the provided object instances.
   Future<void> addObserverForInstances(
-    NSObject instance,
-    NSObject observer,
-    String keyPath,
-    Set<NSKeyValueObservingOptions> options,
-  ) {
+      NSObject instance,
+      NSObject observer,
+      String keyPath,
+      Set<NSKeyValueObservingOptions> options,
+      ) {
     return addObserver(
       instanceManager.getIdentifier(instance)!,
       instanceManager.getIdentifier(observer)!,
@@ -123,10 +130,10 @@ class NSObjectHostApiImpl extends NSObjectHostApi {
 
   /// Calls [removeObserver] with the ids of the provided object instances.
   Future<void> removeObserverForInstances(
-    NSObject instance,
-    NSObject observer,
-    String keyPath,
-  ) {
+      NSObject instance,
+      NSObject observer,
+      String keyPath,
+      ) {
     return removeObserver(
       instanceManager.getIdentifier(instance)!,
       instanceManager.getIdentifier(observer)!,
@@ -150,29 +157,95 @@ class NSObjectFlutterApiImpl extends NSObjectFlutterApi {
 
   @override
   void observeValue(
-    int identifier,
-    String keyPath,
-    int objectIdentifier,
-    List<NSKeyValueChangeKeyEnumData?> changeKeys,
-    List<Object?> changeValues,
-  ) {
+      int identifier,
+      String keyPath,
+      int objectIdentifier,
+      List<NSKeyValueChangeKeyEnumData?> changeKeys,
+      List<ObjectOrIdentifier?> changeValues,
+      ) {
     final void Function(String, NSObject, Map<NSKeyValueChangeKey, Object?>)?
-        function = _getObject(identifier).observeValue;
+    function = _getObject(identifier).observeValue;
     function?.call(
       keyPath,
       instanceManager.getInstanceWithWeakReference(objectIdentifier)!
-          as NSObject,
+      as NSObject,
       Map<NSKeyValueChangeKey, Object?>.fromIterables(
-          changeKeys.map<NSKeyValueChangeKey>(
-        (NSKeyValueChangeKeyEnumData? data) {
-          return data!.toNSKeyValueChangeKey();
-        },
-      ), changeValues),
+        changeKeys.map<NSKeyValueChangeKey>(
+              (NSKeyValueChangeKeyEnumData? data) {
+            return data!.toNSKeyValueChangeKey();
+          },
+        ),
+        changeValues.map<Object?>((ObjectOrIdentifier? value) {
+          if (value != null && value.isIdentifier) {
+            return instanceManager.getInstanceWithWeakReference(
+              value.value! as int,
+            );
+          }
+          return value?.value;
+        }),
+      ),
     );
   }
 
   @override
   void dispose(int identifier) {
     instanceManager.remove(identifier);
+  }
+}
+
+/// Host api implementation for [NSUrl].
+class NSUrlHostApiImpl extends NSUrlHostApi {
+  /// Constructs an [NSUrlHostApiImpl].
+  NSUrlHostApiImpl({
+    this.binaryMessenger,
+    InstanceManager? instanceManager,
+  })  : instanceManager = instanceManager ?? NSObject.globalInstanceManager,
+        super(binaryMessenger: binaryMessenger);
+
+  /// Sends binary data across the Flutter platform barrier.
+  ///
+  /// If it is null, the default BinaryMessenger will be used which routes to
+  /// the host platform.
+  final BinaryMessenger? binaryMessenger;
+
+  /// Maintains instances stored to communicate with Objective-C objects.
+  final InstanceManager instanceManager;
+
+  /// Calls [getAbsoluteString] with the ids of the provided object instances.
+  Future<String?> getAbsoluteStringFromInstances(NSUrl instance) {
+    return getAbsoluteString(instanceManager.getIdentifier(instance)!);
+  }
+}
+
+/// Flutter API implementation for [NSUrl].
+///
+/// This class may handle instantiating and adding Dart instances that are
+/// attached to a native instance or receiving callback methods from an
+/// overridden native class.
+class NSUrlFlutterApiImpl implements NSUrlFlutterApi {
+  /// Constructs a [NSUrlFlutterApiImpl].
+  NSUrlFlutterApiImpl({
+    this.binaryMessenger,
+    InstanceManager? instanceManager,
+  }) : instanceManager = instanceManager ?? NSObject.globalInstanceManager;
+
+  /// Receives binary data across the Flutter platform barrier.
+  ///
+  /// If it is null, the default BinaryMessenger will be used which routes to
+  /// the host platform.
+  final BinaryMessenger? binaryMessenger;
+
+  /// Maintains instances stored to communicate with native language objects.
+  final InstanceManager instanceManager;
+
+  @override
+  void create(int identifier) {
+    instanceManager.addHostCreatedInstance(
+      NSUrl.detached(
+        binaryMessenger: binaryMessenger,
+        instanceManager: instanceManager,
+      ),
+      identifier,
+    );
   }
 }

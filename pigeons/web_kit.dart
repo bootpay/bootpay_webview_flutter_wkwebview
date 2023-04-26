@@ -1,29 +1,49 @@
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+//
+// import 'package:pigeon/pigeon.dart';
+//
+// @ConfigurePigeon(
+//   PigeonOptions(
+//     dartOut: 'lib/src/common/web_kit.pigeon.dart',
+//     dartTestOut: 'test/src/common/test_web_kit.pigeon.dart',
+//     dartOptions: DartOptions(copyrightHeader: <String>[
+//       'Copyright 2013 The Flutter Authors. All rights reserved.',
+//       'Use of this source code is governed by a BSD-style license that can be',
+//       'found in the LICENSE file.',
+//     ]),
+//     objcHeaderOut: 'ios/Classes/BTGeneratedWebKitApis.h',
+//     objcSourceOut: 'ios/Classes/BTGeneratedWebKitApis.m',
+//     objcOptions: ObjcOptions(
+//       header: 'ios/Classes/BTGeneratedWebKitApis.h',
+//       prefix: 'BT',
+//       copyrightHeader: <String>[
+//         'Copyright 2013 The Flutter Authors. All rights reserved.',
+//         'Use of this source code is governed by a BSD-style license that can be',
+//         'found in the LICENSE file.',
+//       ],
+//     ),
+//   ),
+// )
+
+// Copyright 2013 The Flutter Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(
   PigeonOptions(
-    dartOut: 'lib/src/common/web_kit.pigeon.dart',
-    dartTestOut: 'test/src/common/test_web_kit.pigeon.dart',
-    dartOptions: DartOptions(copyrightHeader: <String>[
-      'Copyright 2013 The Flutter Authors. All rights reserved.',
-      'Use of this source code is governed by a BSD-style license that can be',
-      'found in the LICENSE file.',
-    ]),
+    dartOut: 'lib/src/common/web_kit.g.dart',
+    dartTestOut: 'test/src/common/test_web_kit.g.dart',
     objcHeaderOut: 'ios/Classes/BTGeneratedWebKitApis.h',
     objcSourceOut: 'ios/Classes/BTGeneratedWebKitApis.m',
     objcOptions: ObjcOptions(
-      header: 'ios/Classes/BTGeneratedWebKitApis.h',
+      headerIncludePath: 'ios/Classes/BTGeneratedWebKitApis.h',
       prefix: 'BT',
-      copyrightHeader: <String>[
-        'Copyright 2013 The Flutter Authors. All rights reserved.',
-        'Use of this source code is governed by a BSD-style license that can be',
-        'found in the LICENSE file.',
-      ],
     ),
+    copyrightHeader: 'pigeons/copyright.txt',
   ),
 )
 
@@ -202,6 +222,64 @@ enum WKNavigationType {
   other,
 }
 
+/// Possible permission decisions for device resource access.
+///
+/// See https://developer.apple.com/documentation/webkit/wkpermissiondecision?language=objc.
+enum WKPermissionDecision {
+  /// Deny permission for the requested resource.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wkpermissiondecision/wkpermissiondecisiondeny?language=objc.
+  deny,
+
+  /// Deny permission for the requested resource.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wkpermissiondecision/wkpermissiondecisiongrant?language=objc.
+  grant,
+
+  /// Prompt the user for permission for the requested resource.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wkpermissiondecision/wkpermissiondecisionprompt?language=objc.
+  prompt,
+}
+
+// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
+class WKPermissionDecisionData {
+  late WKPermissionDecision value;
+}
+
+/// List of the types of media devices that can capture audio, video, or both.
+///
+/// See https://developer.apple.com/documentation/webkit/wkmediacapturetype?language=objc.
+enum WKMediaCaptureType {
+  /// A media device that can capture video.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wkmediacapturetype/wkmediacapturetypecamera?language=objc.
+  camera,
+
+  /// A media device or devices that can capture audio and video.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wkmediacapturetype/wkmediacapturetypecameraandmicrophone?language=objc.
+  cameraAndMicrophone,
+
+  /// A media device that can capture audio.
+  ///
+  /// See https://developer.apple.com/documentation/webkit/wkmediacapturetype/wkmediacapturetypemicrophone?language=objc.
+  microphone,
+
+  /// An unknown media device.
+  ///
+  /// This does not represent an actual value provided by the platform and only
+  /// indicates a value was provided that we don't currently support.
+  unknown,
+}
+
+// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
+class WKMediaCaptureTypeData {
+  late WKMediaCaptureType value;
+}
+
 /// Mirror of NSURLRequest.
 ///
 /// See https://developer.apple.com/documentation/foundation/nsurlrequest?language=objc.
@@ -254,6 +332,15 @@ class WKScriptMessageData {
   late Object? body;
 }
 
+/// Mirror of WKSecurityOrigin.
+///
+/// See https://developer.apple.com/documentation/webkit/wksecurityorigin?language=objc.
+class WKSecurityOriginData {
+  late String host;
+  late int port;
+  late String protocol;
+}
+
 /// Mirror of NSHttpCookieData.
 ///
 /// See https://developer.apple.com/documentation/foundation/nshttpcookie?language=objc.
@@ -265,6 +352,17 @@ class NSHttpCookieData {
   // keys and values with the ordered maintained.
   late List<NSHttpCookiePropertyKeyEnumData?> propertyKeys;
   late List<Object?> propertyValues;
+}
+
+/// An object that can represent either a value supported by
+/// `StandardMessageCodec`, a data class in this pigeon file, or an identifier
+/// of an object stored in an `InstanceManager`.
+class ObjectOrIdentifier {
+  late Object? value;
+
+  /// Whether value is an int that is used to retrieve an instance stored in an
+  /// `InstanceManager`.
+  late bool isIdentifier;
 }
 
 /// Mirror of WKWebsiteDataStore.
@@ -349,7 +447,7 @@ abstract class WKWebViewConfigurationHostApi {
       );
 }
 
-/// Handles callbacks from an WKWebViewConfiguration instance.
+/// Handles callbacks from a WKWebViewConfiguration instance.
 ///
 /// See https://developer.apple.com/documentation/webkit/wkwebviewconfiguration?language=objc.
 @FlutterApi()
@@ -419,7 +517,7 @@ abstract class WKScriptMessageHandlerHostApi {
   void create(int identifier);
 }
 
-/// Handles callbacks from an WKScriptMessageHandler instance.
+/// Handles callbacks from a WKScriptMessageHandler instance.
 ///
 /// See https://developer.apple.com/documentation/webkit/wkscriptmessagehandler?language=objc.
 @FlutterApi()
@@ -443,7 +541,7 @@ abstract class WKNavigationDelegateHostApi {
   void create(int identifier);
 }
 
-/// Handles callbacks from an WKNavigationDelegate instance.
+/// Handles callbacks from a WKNavigationDelegate instance.
 ///
 /// See https://developer.apple.com/documentation/webkit/wknavigationdelegate?language=objc.
 @FlutterApi()
@@ -545,7 +643,7 @@ abstract class NSObjectFlutterApi {
       // conform to `NSCopying`. This splits the map of properties into a list of
       // keys and values with the ordered maintained.
       List<NSKeyValueChangeKeyEnumData?> changeKeys,
-      List<Object?> changeValues,
+      List<ObjectOrIdentifier> changeValues,
       );
 
   @ObjCSelector('disposeObjectWithIdentifier:')
@@ -624,7 +722,7 @@ abstract class WKUIDelegateHostApi {
   void create(int identifier);
 }
 
-/// Handles callbacks from an WKUIDelegate instance.
+/// Handles callbacks from a WKUIDelegate instance.
 ///
 /// See https://developer.apple.com/documentation/webkit/wkuidelegate?language=objc.
 @FlutterApi()
@@ -637,6 +735,19 @@ abstract class WKUIDelegateFlutterApi {
       int webViewIdentifier,
       int configurationIdentifier,
       WKNavigationActionData navigationAction,
+      );
+
+  /// Callback to Dart function `WKUIDelegate.requestMediaCapturePermission`.
+  @ObjCSelector(
+    'requestMediaCapturePermissionForDelegateWithIdentifier:webViewIdentifier:origin:frame:type:',
+  )
+  @async
+  WKPermissionDecisionData requestMediaCapturePermission(
+      int identifier,
+      int webViewIdentifier,
+      WKSecurityOriginData origin,
+      WKFrameInfoData frame,
+      WKMediaCaptureTypeData type,
       );
 }
 
@@ -654,4 +765,30 @@ abstract class WKHttpCookieStoreHostApi {
   @ObjCSelector('setCookieForStoreWithIdentifier:cookie:')
   @async
   void setCookie(int identifier, NSHttpCookieData cookie);
+}
+
+/// Host API for `NSUrl`.
+///
+/// This class may handle instantiating and adding native object instances that
+/// are attached to a Dart instance or method calls on the associated native
+/// class or an instance of the class.
+///
+/// See https://developer.apple.com/documentation/foundation/nsurl?language=objc.
+@HostApi(dartHostTestHandler: 'TestNSUrlHostApi')
+abstract class NSUrlHostApi {
+  @ObjCSelector('absoluteStringForNSURLWithIdentifier:')
+  String? getAbsoluteString(int identifier);
+}
+
+/// Flutter API for `NSUrl`.
+///
+/// This class may handle instantiating and adding Dart instances that are
+/// attached to a native instance or receiving callback methods from an
+/// overridden native class.
+///
+/// See https://developer.apple.com/documentation/foundation/nsurl?language=objc.
+@FlutterApi()
+abstract class NSUrlFlutterApi {
+  @ObjCSelector('createWithIdentifier:')
+  void create(int identifier);
 }

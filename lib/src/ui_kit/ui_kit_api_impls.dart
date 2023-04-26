@@ -11,7 +11,7 @@ import 'package:flutter/painting.dart' show Color;
 import 'package:flutter/services.dart';
 
 import '../common/instance_manager.dart';
-import '../common/web_kit.pigeon.dart';
+import '../common/web_kit.g.dart';
 import '../foundation/foundation.dart';
 import '../web_kit/web_kit.dart';
 import 'ui_kit.dart';
@@ -36,9 +36,9 @@ class UIScrollViewHostApiImpl extends UIScrollViewHostApi {
 
   /// Calls [createFromWebView] with the ids of the provided object instances.
   Future<void> createFromWebViewForInstances(
-    UIScrollView instance,
-    WKWebView webView,
-  ) {
+      UIScrollView instance,
+      WKWebView webView,
+      ) {
     return createFromWebView(
       instanceManager.addDartCreatedInstance(instance),
       instanceManager.getIdentifier(webView)!,
@@ -47,8 +47,8 @@ class UIScrollViewHostApiImpl extends UIScrollViewHostApi {
 
   /// Calls [getContentOffset] with the ids of the provided object instances.
   Future<Point<double>> getContentOffsetForInstances(
-    UIScrollView instance,
-  ) async {
+      UIScrollView instance,
+      ) async {
     final List<double?> point = await getContentOffset(
       instanceManager.getIdentifier(instance)!,
     );
@@ -57,9 +57,9 @@ class UIScrollViewHostApiImpl extends UIScrollViewHostApi {
 
   /// Calls [scrollBy] with the ids of the provided object instances.
   Future<void> scrollByForInstances(
-    UIScrollView instance,
-    Point<double> offset,
-  ) {
+      UIScrollView instance,
+      Point<double> offset,
+      ) {
     return scrollBy(
       instanceManager.getIdentifier(instance)!,
       offset.x,
@@ -69,9 +69,9 @@ class UIScrollViewHostApiImpl extends UIScrollViewHostApi {
 
   /// Calls [setContentOffset] with the ids of the provided object instances.
   Future<void> setContentOffsetForInstances(
-    UIScrollView instance,
-    Point<double> offset,
-  ) async {
+      UIScrollView instance,
+      Point<double> offset,
+      ) async {
     return setContentOffset(
       instanceManager.getIdentifier(instance)!,
       offset.x,
@@ -100,9 +100,9 @@ class UIViewHostApiImpl extends UIViewHostApi {
 
   /// Calls [setBackgroundColor] with the ids of the provided object instances.
   Future<void> setBackgroundColorForInstances(
-    UIView instance,
-    Color? color,
-  ) async {
+      UIView instance,
+      Color? color,
+      ) async {
     return setBackgroundColor(
       instanceManager.getIdentifier(instance)!,
       color?.value,
@@ -111,9 +111,9 @@ class UIViewHostApiImpl extends UIViewHostApi {
 
   /// Calls [setOpaque] with the ids of the provided object instances.
   Future<void> setOpaqueForInstances(
-    UIView instance,
-    bool opaque,
-  ) async {
+      UIView instance,
+      bool opaque,
+      ) async {
     return setOpaque(instanceManager.getIdentifier(instance)!, opaque);
   }
 }

@@ -21,7 +21,7 @@ void main() {
   group('WebKitWebViewCookieManager', () {
     test('clearCookies', () {
       final MockWKWebsiteDataStore mockWKWebsiteDataStore =
-          MockWKWebsiteDataStore();
+      MockWKWebsiteDataStore();
 
       final WebKitWebViewCookieManager manager = WebKitWebViewCookieManager(
         WebKitWebViewCookieManagerCreationParams(
@@ -50,7 +50,7 @@ void main() {
 
     test('setCookie', () async {
       final MockWKWebsiteDataStore mockWKWebsiteDataStore =
-          MockWKWebsiteDataStore();
+      MockWKWebsiteDataStore();
 
       final MockWKHttpCookieStore mockCookieStore = MockWKHttpCookieStore();
       when(mockWKWebsiteDataStore.httpCookieStore).thenReturn(mockCookieStore);
@@ -83,7 +83,7 @@ void main() {
 
     test('setCookie throws argument error with invalid path', () async {
       final MockWKWebsiteDataStore mockWKWebsiteDataStore =
-          MockWKWebsiteDataStore();
+      MockWKWebsiteDataStore();
 
       final MockWKHttpCookieStore mockCookieStore = MockWKHttpCookieStore();
       when(mockWKWebsiteDataStore.httpCookieStore).thenReturn(mockCookieStore);
@@ -97,7 +97,7 @@ void main() {
       );
 
       expect(
-        () => manager.setCookie(
+            () => manager.setCookie(
           WebViewCookie(
             name: 'a',
             value: 'b',

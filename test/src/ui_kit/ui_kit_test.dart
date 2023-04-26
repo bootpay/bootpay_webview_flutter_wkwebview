@@ -12,7 +12,7 @@ import 'package:bootpay_webview_flutter_wkwebview/src/common/instance_manager.da
 import 'package:bootpay_webview_flutter_wkwebview/src/ui_kit/ui_kit.dart';
 import 'package:bootpay_webview_flutter_wkwebview/src/web_kit/web_kit.dart';
 
-import '../common/test_web_kit.pigeon.dart';
+import '../common/test_web_kit.g.dart';
 import 'ui_kit_test.mocks.dart';
 
 @GenerateMocks(<Type>[

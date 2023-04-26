@@ -9,7 +9,7 @@
 /// final JavascriptChannelRegistry javascriptChannelRegistry = ...
 ///
 /// final WKScriptMessageHandler handler = WKScriptMessageHandler(
-///   didReceiveScriptMessage: withWeakRefenceTo(
+///   didReceiveScriptMessage: withWeakReferenceTo(
 ///     javascriptChannelRegistry,
 ///     (WeakReference<JavascriptChannelRegistry> weakReference) {
 ///       return (
@@ -25,10 +25,10 @@
 ///   ),
 /// );
 /// ```
-S withWeakRefenceTo<T extends Object, S extends Object>(
-  T reference,
-  S Function(WeakReference<T> weakReference) onCreate,
-) {
+S withWeakReferenceTo<T extends Object, S extends Object>(
+    T reference,
+    S Function(WeakReference<T> weakReference) onCreate,
+    ) {
   final WeakReference<T> weakReference = WeakReference<T>(reference);
   return onCreate(weakReference);
 }

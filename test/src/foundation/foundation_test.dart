@@ -8,15 +8,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:bootpay_webview_flutter_wkwebview/src/common/instance_manager.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/common/web_kit.pigeon.dart';
+import 'package:bootpay_webview_flutter_wkwebview/src/common/web_kit.g.dart';
 import 'package:bootpay_webview_flutter_wkwebview/src/foundation/foundation.dart';
 import 'package:bootpay_webview_flutter_wkwebview/src/foundation/foundation_api_impls.dart';
 
-import '../common/test_web_kit.pigeon.dart';
+import '../common/test_web_kit.g.dart';
 import 'foundation_test.mocks.dart';
 
 @GenerateMocks(<Type>[
   TestNSObjectHostApi,
+  TestNSUrlHostApi,
 ])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +62,7 @@ void main() {
         );
 
         final List<NSKeyValueObservingOptionsEnumData?> optionsData =
-            verify(mockPlatformHostApi.addObserver(
+        verify(mockPlatformHostApi.addObserver(
           instanceManager.getIdentifier(object),
           instanceManager.getIdentifier(observer),
           'aKeyPath',
@@ -97,7 +98,7 @@ void main() {
       test('NSObjectHostApi.dispose', () async {
         int? callbackIdentifier;
         final InstanceManager instanceManager =
-            InstanceManager(onWeakReferenceRemoved: (int identifier) {
+        InstanceManager(onWeakReferenceRemoved: (int identifier) {
           callbackIdentifier = identifier;
         });
 
@@ -112,7 +113,7 @@ void main() {
 
       test('observeValue', () async {
         final Completer<List<Object?>> argsCompleter =
-            Completer<List<Object?>>();
+        Completer<List<Object?>>();
 
         FoundationFlutterApis.instance = FoundationFlutterApis(
           instanceManager: instanceManager,
@@ -121,10 +122,10 @@ void main() {
         object = NSObject.detached(
           instanceManager: instanceManager,
           observeValue: (
-            String keyPath,
-            NSObject object,
-            Map<NSKeyValueChangeKey, Object?> change,
-          ) {
+              String keyPath,
+              NSObject object,
+              Map<NSKeyValueChangeKey, Object?> change,
+              ) {
             argsCompleter.complete(<Object?>[keyPath, object, change]);
           },
         );
@@ -137,7 +138,9 @@ void main() {
           <NSKeyValueChangeKeyEnumData>[
             NSKeyValueChangeKeyEnumData(value: NSKeyValueChangeKeyEnum.oldValue)
           ],
-          <Object?>['value'],
+          <ObjectOrIdentifier?>[
+            ObjectOrIdentifier(isIdentifier: false, value: 'value'),
+          ],
         );
 
         expect(
@@ -147,6 +150,55 @@ void main() {
             object,
             <NSKeyValueChangeKey, Object?>{
               NSKeyValueChangeKey.oldValue: 'value',
+            },
+          ]),
+        );
+      });
+
+      test('observeValue returns object in an `InstanceManager`', () async {
+        final Completer<List<Object?>> argsCompleter =
+        Completer<List<Object?>>();
+
+        FoundationFlutterApis.instance = FoundationFlutterApis(
+          instanceManager: instanceManager,
+        );
+
+        object = NSObject.detached(
+          instanceManager: instanceManager,
+          observeValue: (
+              String keyPath,
+              NSObject object,
+              Map<NSKeyValueChangeKey, Object?> change,
+              ) {
+            argsCompleter.complete(<Object?>[keyPath, object, change]);
+          },
+        );
+        instanceManager.addHostCreatedInstance(object, 1);
+
+        final NSObject returnedObject = NSObject.detached(
+          instanceManager: instanceManager,
+        );
+        instanceManager.addHostCreatedInstance(returnedObject, 2);
+
+        FoundationFlutterApis.instance.object.observeValue(
+          1,
+          'keyPath',
+          1,
+          <NSKeyValueChangeKeyEnumData>[
+            NSKeyValueChangeKeyEnumData(value: NSKeyValueChangeKeyEnum.oldValue)
+          ],
+          <ObjectOrIdentifier?>[
+            ObjectOrIdentifier(isIdentifier: true, value: 2),
+          ],
+        );
+
+        expect(
+          argsCompleter.future,
+          completion(<Object?>[
+            'keyPath',
+            object,
+            <NSKeyValueChangeKey, Object?>{
+              NSKeyValueChangeKey.oldValue: returnedObject,
             },
           ]),
         );
@@ -164,6 +216,33 @@ void main() {
         FoundationFlutterApis.instance.object.dispose(1);
 
         expect(instanceManager.containsIdentifier(1), isFalse);
+      });
+    });
+
+    group('NSUrl', () {
+      // Ensure the test host api is removed after each test run.
+      tearDown(() => TestNSUrlHostApi.setup(null));
+
+      test('getAbsoluteString', () async {
+        final MockTestNSUrlHostApi mockApi = MockTestNSUrlHostApi();
+        TestNSUrlHostApi.setup(mockApi);
+
+        final NSUrl url = NSUrl.detached(instanceManager: instanceManager);
+        instanceManager.addHostCreatedInstance(url, 0);
+
+        when(mockApi.getAbsoluteString(0)).thenReturn('myString');
+
+        expect(await url.getAbsoluteString(), 'myString');
+      });
+
+      test('Flutter API create', () {
+        final NSUrlFlutterApi flutterApi = NSUrlFlutterApiImpl(
+          instanceManager: instanceManager,
+        );
+
+        flutterApi.create(0);
+
+        expect(instanceManager.getInstanceWithWeakReference(0), isA<NSUrl>());
       });
     });
   });
