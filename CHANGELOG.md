@@ -1,3 +1,6 @@
+# 3.4.1
+* deeplink bug fixed
+
 # 3.4.0
 * clone version 3.4.0
 
