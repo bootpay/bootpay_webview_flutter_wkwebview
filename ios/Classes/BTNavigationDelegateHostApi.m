@@ -140,16 +140,28 @@
 - (void)webView:(WKWebView *)webView
     decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
                     decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-  [self.navigationDelegateAPI
-      decidePolicyForNavigationActionForDelegate:self
-                                         webView:webView
-                                navigationAction:navigationAction
-                                      completion:^(BTWKNavigationActionPolicyEnumData *policy,
-                                                   FlutterError *error) {
-                                        NSAssert(!error, @"%@", error);
-                                        decisionHandler(
-                                            BTNativeWKNavigationActionPolicyFromEnumData(policy));
-                                      }];
+
+  NSString *url = navigationAction.request.URL.absoluteString;
+
+  if([self isItunesURL:url]) {
+    [self startAppToApp:[NSURL URLWithString:url]];
+    decisionHandler(WKNavigationActionPolicyCancel);
+  } else if(![url hasPrefix:@"http"]) {
+    [self startAppToApp:[NSURL URLWithString:url]];
+    decisionHandler(WKNavigationActionPolicyCancel);
+  } else {
+
+      [self.navigationDelegateAPI
+           decidePolicyForNavigationActionForDelegate:self
+                                              webView:webView
+                                     navigationAction:navigationAction
+                                           completion:^(BTWKNavigationActionPolicyEnumData *policy,
+                                                        FlutterError *error) {
+                                             NSAssert(!error, @"%@", error);
+                                             decisionHandler(
+                                                 BTNativeWKNavigationActionPolicyFromEnumData(policy));
+                                           }];
+  }
 }
 
 - (void)webView:(WKWebView *)webView

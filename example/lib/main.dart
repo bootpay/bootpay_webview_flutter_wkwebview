@@ -146,7 +146,8 @@ Page resource error:
         },
       )
       ..loadRequest(LoadRequestParams(
-        uri: Uri.parse('https://flutter.dev'),
+        // uri: Uri.parse('https://flutter.dev'),
+        uri: Uri.parse('https://dev-js.bootapi.com/test/payment/'),
       ));
   }
 
