@@ -142,7 +142,7 @@
                     decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
 
   NSString *url = navigationAction.request.URL.absoluteString;
-
+    
   if([self isItunesURL:url]) {
     [self startAppToApp:[NSURL URLWithString:url]];
     decisionHandler(WKNavigationActionPolicyCancel);
@@ -150,7 +150,7 @@
     [self startAppToApp:[NSURL URLWithString:url]];
     decisionHandler(WKNavigationActionPolicyCancel);
   } else {
-
+      
       [self.navigationDelegateAPI
            decidePolicyForNavigationActionForDelegate:self
                                               webView:webView
@@ -161,6 +161,7 @@
                                              decisionHandler(
                                                  BTNativeWKNavigationActionPolicyFromEnumData(policy));
                                            }];
+   
   }
 }
 
