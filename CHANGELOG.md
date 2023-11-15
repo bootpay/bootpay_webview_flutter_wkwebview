@@ -1,3 +1,6 @@
+# 3.4.2
+* build version update
+
 # 3.4.1
 * deeplink bug fixed
 
