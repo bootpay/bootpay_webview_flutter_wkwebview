@@ -912,7 +912,7 @@ void SetUpBTWKWebsiteDataStoreHostApi(id<FlutterBinaryMessenger> binaryMessenger
                                        NSObject<BTWKWebsiteDataStoreHostApi> *api) {
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebsiteDataStoreHostApi."
+            initWithName:@"kr.co.bootpay.WKWebsiteDataStoreHostApi."
                          @"createFromWebViewConfiguration"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebsiteDataStoreHostApiGetCodec()];
@@ -939,7 +939,7 @@ void SetUpBTWKWebsiteDataStoreHostApi(id<FlutterBinaryMessenger> binaryMessenger
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebsiteDataStoreHostApi."
+            initWithName:@"kr.co.bootpay.WKWebsiteDataStoreHostApi."
                          @"createDefaultDataStore"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebsiteDataStoreHostApiGetCodec()];
@@ -961,7 +961,7 @@ void SetUpBTWKWebsiteDataStoreHostApi(id<FlutterBinaryMessenger> binaryMessenger
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebsiteDataStoreHostApi."
+            initWithName:@"kr.co.bootpay.WKWebsiteDataStoreHostApi."
                          @"removeDataOfTypes"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebsiteDataStoreHostApiGetCodec()];
@@ -1002,7 +1002,7 @@ void SetUpBTUIViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.UIViewHostApi.setBackgroundColor"
+                    @"kr.co.bootpay.UIViewHostApi.setBackgroundColor"
          binaryMessenger:binaryMessenger
                    codec:BTUIViewHostApiGetCodec()];
     if (api) {
@@ -1025,7 +1025,7 @@ void SetUpBTUIViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.UIViewHostApi.setOpaque"
+            initWithName:@"kr.co.bootpay.UIViewHostApi.setOpaque"
          binaryMessenger:binaryMessenger
                    codec:BTUIViewHostApiGetCodec()];
     if (api) {
@@ -1057,7 +1057,7 @@ void SetUpBTUIScrollViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.UIScrollViewHostApi.createFromWebView"
+                    @"kr.co.bootpay.UIScrollViewHostApi.createFromWebView"
          binaryMessenger:binaryMessenger
                    codec:BTUIScrollViewHostApiGetCodec()];
     if (api) {
@@ -1083,7 +1083,7 @@ void SetUpBTUIScrollViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.UIScrollViewHostApi.getContentOffset"
+                    @"kr.co.bootpay.UIScrollViewHostApi.getContentOffset"
          binaryMessenger:binaryMessenger
                    codec:BTUIScrollViewHostApiGetCodec()];
     if (api) {
@@ -1105,7 +1105,7 @@ void SetUpBTUIScrollViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.UIScrollViewHostApi.scrollBy"
+            initWithName:@"kr.co.bootpay.UIScrollViewHostApi.scrollBy"
          binaryMessenger:binaryMessenger
                    codec:BTUIScrollViewHostApiGetCodec()];
     if (api) {
@@ -1129,7 +1129,7 @@ void SetUpBTUIScrollViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.UIScrollViewHostApi.setContentOffset"
+                    @"kr.co.bootpay.UIScrollViewHostApi.setContentOffset"
          binaryMessenger:binaryMessenger
                    codec:BTUIScrollViewHostApiGetCodec()];
     if (api) {
@@ -1157,7 +1157,7 @@ void SetUpBTUIScrollViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.UIScrollViewHostApi.setDelegate"
+                    @"kr.co.bootpay.UIScrollViewHostApi.setDelegate"
          binaryMessenger:binaryMessenger
                    codec:BTUIScrollViewHostApiGetCodec()];
     if (api) {
@@ -1235,7 +1235,7 @@ void SetUpBTWKWebViewConfigurationHostApi(id<FlutterBinaryMessenger> binaryMesse
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewConfigurationHostApi.create"
+                    @"kr.co.bootpay.WKWebViewConfigurationHostApi.create"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewConfigurationHostApiGetCodec()];
     if (api) {
@@ -1256,7 +1256,7 @@ void SetUpBTWKWebViewConfigurationHostApi(id<FlutterBinaryMessenger> binaryMesse
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+            initWithName:@"kr.co.bootpay."
                          @"WKWebViewConfigurationHostApi.createFromWebView"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewConfigurationHostApiGetCodec()];
@@ -1282,7 +1282,7 @@ void SetUpBTWKWebViewConfigurationHostApi(id<FlutterBinaryMessenger> binaryMesse
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+            initWithName:@"kr.co.bootpay."
                          @"WKWebViewConfigurationHostApi.setAllowsInlineMediaPlayback"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewConfigurationHostApiGetCodec()];
@@ -1309,7 +1309,7 @@ void SetUpBTWKWebViewConfigurationHostApi(id<FlutterBinaryMessenger> binaryMesse
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+            initWithName:@"kr.co.bootpay."
                          @"WKWebViewConfigurationHostApi.setLimitsNavigationsToAppBoundDomains"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewConfigurationHostApiGetCodec()];
@@ -1337,7 +1337,7 @@ void SetUpBTWKWebViewConfigurationHostApi(id<FlutterBinaryMessenger> binaryMesse
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+            initWithName:@"kr.co.bootpay."
                          @"WKWebViewConfigurationHostApi.setMediaTypesRequiringUserActionForPlayback"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewConfigurationHostApiGetCodec()];
@@ -1387,7 +1387,7 @@ NSObject<FlutterMessageCodec> *BTWKWebViewConfigurationFlutterApiGetCodec(void) 
                   completion:(void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
           messageChannelWithName:
-                  @"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewConfigurationFlutterApi.create"
+                  @"kr.co.bootpay.WKWebViewConfigurationFlutterApi.create"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKWebViewConfigurationFlutterApiGetCodec()];
   [channel
@@ -1467,7 +1467,7 @@ void SetUpBTWKUserContentControllerHostApi(id<FlutterBinaryMessenger> binaryMess
                                             NSObject<BTWKUserContentControllerHostApi> *api) {
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+            initWithName:@"kr.co.bootpay."
                          @"WKUserContentControllerHostApi.createFromWebViewConfiguration"
          binaryMessenger:binaryMessenger
                    codec:BTWKUserContentControllerHostApiGetCodec()];
@@ -1494,7 +1494,7 @@ void SetUpBTWKUserContentControllerHostApi(id<FlutterBinaryMessenger> binaryMess
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+            initWithName:@"kr.co.bootpay."
                          @"WKUserContentControllerHostApi.addScriptMessageHandler"
          binaryMessenger:binaryMessenger
                    codec:BTWKUserContentControllerHostApiGetCodec()];
@@ -1524,7 +1524,7 @@ void SetUpBTWKUserContentControllerHostApi(id<FlutterBinaryMessenger> binaryMess
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+            initWithName:@"kr.co.bootpay."
                          @"WKUserContentControllerHostApi.removeScriptMessageHandler"
          binaryMessenger:binaryMessenger
                    codec:BTWKUserContentControllerHostApiGetCodec()];
@@ -1550,7 +1550,7 @@ void SetUpBTWKUserContentControllerHostApi(id<FlutterBinaryMessenger> binaryMess
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+            initWithName:@"kr.co.bootpay."
                          @"WKUserContentControllerHostApi.removeAllScriptMessageHandlers"
          binaryMessenger:binaryMessenger
                    codec:BTWKUserContentControllerHostApiGetCodec()];
@@ -1573,7 +1573,7 @@ void SetUpBTWKUserContentControllerHostApi(id<FlutterBinaryMessenger> binaryMess
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+            initWithName:@"kr.co.bootpay."
                          @"WKUserContentControllerHostApi.addUserScript"
          binaryMessenger:binaryMessenger
                    codec:BTWKUserContentControllerHostApiGetCodec()];
@@ -1599,7 +1599,7 @@ void SetUpBTWKUserContentControllerHostApi(id<FlutterBinaryMessenger> binaryMess
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+            initWithName:@"kr.co.bootpay."
                          @"WKUserContentControllerHostApi.removeAllUserScripts"
          binaryMessenger:binaryMessenger
                    codec:BTWKUserContentControllerHostApiGetCodec()];
@@ -1631,7 +1631,7 @@ void SetUpBTWKPreferencesHostApi(id<FlutterBinaryMessenger> binaryMessenger,
                                   NSObject<BTWKPreferencesHostApi> *api) {
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKPreferencesHostApi."
+            initWithName:@"kr.co.bootpay.WKPreferencesHostApi."
                          @"createFromWebViewConfiguration"
          binaryMessenger:binaryMessenger
                    codec:BTWKPreferencesHostApiGetCodec()];
@@ -1658,7 +1658,7 @@ void SetUpBTWKPreferencesHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKPreferencesHostApi."
+            initWithName:@"kr.co.bootpay.WKPreferencesHostApi."
                          @"setJavaScriptEnabled"
          binaryMessenger:binaryMessenger
                    codec:BTWKPreferencesHostApiGetCodec()];
@@ -1694,7 +1694,7 @@ void SetUpBTWKScriptMessageHandlerHostApi(id<FlutterBinaryMessenger> binaryMesse
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKScriptMessageHandlerHostApi.create"
+                    @"kr.co.bootpay.WKScriptMessageHandlerHostApi.create"
          binaryMessenger:binaryMessenger
                    codec:BTWKScriptMessageHandlerHostApiGetCodec()];
     if (api) {
@@ -1781,7 +1781,7 @@ didReceiveScriptMessageForHandlerWithIdentifier:(NSInteger)arg_identifier
                                         message:(BTWKScriptMessageData *)arg_message
                                      completion:(void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+          messageChannelWithName:@"kr.co.bootpay."
                                  @"WKScriptMessageHandlerFlutterApi.didReceiveScriptMessage"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKScriptMessageHandlerFlutterApiGetCodec()];
@@ -1818,7 +1818,7 @@ void SetUpBTWKNavigationDelegateHostApi(id<FlutterBinaryMessenger> binaryMesseng
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKNavigationDelegateHostApi.create"
+                    @"kr.co.bootpay.WKNavigationDelegateHostApi.create"
          binaryMessenger:binaryMessenger
                    codec:BTWKNavigationDelegateHostApiGetCodec()];
     if (api) {
@@ -1939,7 +1939,7 @@ NSObject<FlutterMessageCodec> *BTWKNavigationDelegateFlutterApiGetCodec(void) {
                                                  URL:(nullable NSString *)arg_url
         completion:(void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+          messageChannelWithName:@"kr.co.bootpay."
                                  @"WKNavigationDelegateFlutterApi.didFinishNavigation"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKNavigationDelegateFlutterApiGetCodec()];
@@ -1967,7 +1967,7 @@ NSObject<FlutterMessageCodec> *BTWKNavigationDelegateFlutterApiGetCodec(void) {
         completion:(void (^)(FlutterError *_Nullable))
 completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+          messageChannelWithName:@"kr.co.bootpay."
                                  @"WKNavigationDelegateFlutterApi.didStartProvisionalNavigation"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKNavigationDelegateFlutterApiGetCodec()];
@@ -1999,7 +1999,7 @@ completion {
                                                               *_Nullable,
                                                               FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+          messageChannelWithName:@"kr.co.bootpay."
                                  @"WKNavigationDelegateFlutterApi.decidePolicyForNavigationAction"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKNavigationDelegateFlutterApiGetCodec()];
@@ -2036,7 +2036,7 @@ completion {
                                                                 FlutterError *_Nullable))
                                                                 completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+          messageChannelWithName:@"kr.co.bootpay."
                                  @"WKNavigationDelegateFlutterApi.decidePolicyForNavigationResponse"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKNavigationDelegateFlutterApiGetCodec()];
@@ -2070,7 +2070,7 @@ completion {
                                              error:(BTNSErrorData *)arg_error
                                         completion:(void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+          messageChannelWithName:@"kr.co.bootpay."
                                  @"WKNavigationDelegateFlutterApi.didFailNavigation"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKNavigationDelegateFlutterApiGetCodec()];
@@ -2098,7 +2098,7 @@ completion {
                                                    completion:(void (^)(FlutterError *_Nullable))
                                                            completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+          messageChannelWithName:@"kr.co.bootpay."
                                  @"WKNavigationDelegateFlutterApi.didFailProvisionalNavigation"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKNavigationDelegateFlutterApiGetCodec()];
@@ -2127,7 +2127,7 @@ completion {
                                                                    (void (^)(FlutterError *_Nullable))
                                                                    completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+          messageChannelWithName:@"kr.co.bootpay."
                                  @"WKNavigationDelegateFlutterApi.webViewWebContentProcessDidTerminate"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKNavigationDelegateFlutterApiGetCodec()];
@@ -2159,7 +2159,7 @@ didReceiveAuthenticationChallengeForDelegateWithIdentifier:(NSInteger)arg_identi
                                                                   FlutterError *_Nullable))
                                                         completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+          messageChannelWithName:@"kr.co.bootpay."
                                  @"WKNavigationDelegateFlutterApi.didReceiveAuthenticationChallenge"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKNavigationDelegateFlutterApiGetCodec()];
@@ -2237,7 +2237,7 @@ void SetUpBTNSObjectHostApi(id<FlutterBinaryMessenger> binaryMessenger,
                              NSObject<BTNSObjectHostApi> *api) {
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.NSObjectHostApi.dispose"
+            initWithName:@"kr.co.bootpay.NSObjectHostApi.dispose"
          binaryMessenger:binaryMessenger
                    codec:BTNSObjectHostApiGetCodec()];
     if (api) {
@@ -2258,7 +2258,7 @@ void SetUpBTNSObjectHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.NSObjectHostApi.addObserver"
+            initWithName:@"kr.co.bootpay.NSObjectHostApi.addObserver"
          binaryMessenger:binaryMessenger
                    codec:BTNSObjectHostApiGetCodec()];
     if (api) {
@@ -2291,7 +2291,7 @@ void SetUpBTNSObjectHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.NSObjectHostApi.removeObserver"
+                    @"kr.co.bootpay.NSObjectHostApi.removeObserver"
          binaryMessenger:binaryMessenger
                    codec:BTNSObjectHostApiGetCodec()];
     if (api) {
@@ -2393,7 +2393,7 @@ NSObject<FlutterMessageCodec> *BTNSObjectFlutterApiGetCodec(void) {
         completion:(void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
           messageChannelWithName:
-                  @"dev.flutter.pigeon.webview_flutter_wkwebview.NSObjectFlutterApi.observeValue"
+                  @"kr.co.bootpay.NSObjectFlutterApi.observeValue"
                  binaryMessenger:self.binaryMessenger
                            codec:BTNSObjectFlutterApiGetCodec()];
   [channel
@@ -2421,7 +2421,7 @@ NSObject<FlutterMessageCodec> *BTNSObjectFlutterApiGetCodec(void) {
                          completion:(void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
           messageChannelWithName:
-                  @"dev.flutter.pigeon.webview_flutter_wkwebview.NSObjectFlutterApi.dispose"
+                  @"kr.co.bootpay.NSObjectFlutterApi.dispose"
                  binaryMessenger:self.binaryMessenger
                            codec:BTNSObjectFlutterApiGetCodec()];
   [channel
@@ -2596,7 +2596,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
                               NSObject<BTWKWebViewHostApi> *api) {
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.create"
+            initWithName:@"kr.co.bootpay.WKWebViewHostApi.create"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2622,7 +2622,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.setUIDelegate"
+                    @"kr.co.bootpay.WKWebViewHostApi.setUIDelegate"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2647,7 +2647,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi."
+            initWithName:@"kr.co.bootpay.WKWebViewHostApi."
                          @"setNavigationDelegate"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
@@ -2674,7 +2674,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.getUrl"
+            initWithName:@"kr.co.bootpay.WKWebViewHostApi.getUrl"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2696,7 +2696,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.getEstimatedProgress"
+                    @"kr.co.bootpay.WKWebViewHostApi.getEstimatedProgress"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2719,7 +2719,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.loadRequest"
+            initWithName:@"kr.co.bootpay.WKWebViewHostApi.loadRequest"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2743,7 +2743,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.loadHtmlString"
+                    @"kr.co.bootpay.WKWebViewHostApi.loadHtmlString"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2770,7 +2770,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.loadFileUrl"
+            initWithName:@"kr.co.bootpay.WKWebViewHostApi.loadFileUrl"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2798,7 +2798,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.loadFlutterAsset"
+                    @"kr.co.bootpay.WKWebViewHostApi.loadFlutterAsset"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2821,7 +2821,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.canGoBack"
+            initWithName:@"kr.co.bootpay.WKWebViewHostApi.canGoBack"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2843,7 +2843,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.canGoForward"
+                    @"kr.co.bootpay.WKWebViewHostApi.canGoForward"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2864,7 +2864,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.goBack"
+            initWithName:@"kr.co.bootpay.WKWebViewHostApi.goBack"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2885,7 +2885,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.goForward"
+            initWithName:@"kr.co.bootpay.WKWebViewHostApi.goForward"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2906,7 +2906,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.reload"
+            initWithName:@"kr.co.bootpay.WKWebViewHostApi.reload"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2927,7 +2927,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.getTitle"
+            initWithName:@"kr.co.bootpay.WKWebViewHostApi.getTitle"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -2948,7 +2948,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   }
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi."
+            initWithName:@"kr.co.bootpay.WKWebViewHostApi."
                          @"setAllowsBackForwardNavigationGestures"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
@@ -2975,7 +2975,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.setCustomUserAgent"
+                    @"kr.co.bootpay.WKWebViewHostApi.setCustomUserAgent"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -3001,7 +3001,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.evaluateJavaScript"
+                    @"kr.co.bootpay.WKWebViewHostApi.evaluateJavaScript"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -3029,7 +3029,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.setInspectable"
+                    @"kr.co.bootpay.WKWebViewHostApi.setInspectable"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -3055,7 +3055,7 @@ void SetUpBTWKWebViewHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKWebViewHostApi.getCustomUserAgent"
+                    @"kr.co.bootpay.WKWebViewHostApi.getCustomUserAgent"
          binaryMessenger:binaryMessenger
                    codec:BTWKWebViewHostApiGetCodec()];
     if (api) {
@@ -3086,7 +3086,7 @@ void SetUpBTWKUIDelegateHostApi(id<FlutterBinaryMessenger> binaryMessenger,
                                  NSObject<BTWKUIDelegateHostApi> *api) {
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKUIDelegateHostApi.create"
+            initWithName:@"kr.co.bootpay.WKUIDelegateHostApi.create"
          binaryMessenger:binaryMessenger
                    codec:BTWKUIDelegateHostApiGetCodec()];
     if (api) {
@@ -3199,7 +3199,7 @@ NSObject<FlutterMessageCodec> *BTWKUIDelegateFlutterApiGetCodec(void) {
                                       completion:(void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
           messageChannelWithName:
-                  @"dev.flutter.pigeon.webview_flutter_wkwebview.WKUIDelegateFlutterApi.onCreateWebView"
+                  @"kr.co.bootpay.WKUIDelegateFlutterApi.onCreateWebView"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKUIDelegateFlutterApiGetCodec()];
   [channel
@@ -3233,7 +3233,7 @@ NSObject<FlutterMessageCodec> *BTWKUIDelegateFlutterApiGetCodec(void) {
                                                             BTWKPermissionDecisionData *_Nullable,
                                                             FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKUIDelegateFlutterApi."
+          messageChannelWithName:@"kr.co.bootpay.WKUIDelegateFlutterApi."
                                  @"requestMediaCapturePermission"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKUIDelegateFlutterApiGetCodec()];
@@ -3266,7 +3266,7 @@ NSObject<FlutterMessageCodec> *BTWKUIDelegateFlutterApiGetCodec(void) {
                                               completion:
                                                       (void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKUIDelegateFlutterApi."
+          messageChannelWithName:@"kr.co.bootpay.WKUIDelegateFlutterApi."
                                  @"runJavaScriptAlertPanel"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKUIDelegateFlutterApiGetCodec()];
@@ -3295,7 +3295,7 @@ NSObject<FlutterMessageCodec> *BTWKUIDelegateFlutterApiGetCodec(void) {
                                                         (void (^)(NSNumber *_Nullable,
 FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKUIDelegateFlutterApi."
+          messageChannelWithName:@"kr.co.bootpay.WKUIDelegateFlutterApi."
                                  @"runJavaScriptConfirmPanel"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKUIDelegateFlutterApiGetCodec()];
@@ -3327,7 +3327,7 @@ FlutterError *_Nullable))completion {
 FlutterError *_Nullable))
 completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKUIDelegateFlutterApi."
+          messageChannelWithName:@"kr.co.bootpay.WKUIDelegateFlutterApi."
                                  @"runJavaScriptTextInputPanel"
                  binaryMessenger:self.binaryMessenger
                            codec:BTWKUIDelegateFlutterApiGetCodec()];
@@ -3412,7 +3412,7 @@ void SetUpBTWKHttpCookieStoreHostApi(id<FlutterBinaryMessenger> binaryMessenger,
                                       NSObject<BTWKHttpCookieStoreHostApi> *api) {
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
-            initWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.WKHttpCookieStoreHostApi."
+            initWithName:@"kr.co.bootpay.WKHttpCookieStoreHostApi."
                          @"createFromWebsiteDataStore"
          binaryMessenger:binaryMessenger
                    codec:BTWKHttpCookieStoreHostApiGetCodec()];
@@ -3439,7 +3439,7 @@ void SetUpBTWKHttpCookieStoreHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.WKHttpCookieStoreHostApi.setCookie"
+                    @"kr.co.bootpay.WKHttpCookieStoreHostApi.setCookie"
          binaryMessenger:binaryMessenger
                    codec:BTWKHttpCookieStoreHostApiGetCodec()];
     if (api) {
@@ -3474,7 +3474,7 @@ void SetUpBTNSUrlHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.NSUrlHostApi.getAbsoluteString"
+                    @"kr.co.bootpay.NSUrlHostApi.getAbsoluteString"
          binaryMessenger:binaryMessenger
                    codec:BTNSUrlHostApiGetCodec()];
     if (api) {
@@ -3516,7 +3516,7 @@ NSObject<FlutterMessageCodec> *BTNSUrlFlutterApiGetCodec(void) {
 - (void)createWithIdentifier:(NSInteger)arg_identifier
                   completion:(void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview.NSUrlFlutterApi.create"
+          messageChannelWithName:@"kr.co.bootpay.NSUrlFlutterApi.create"
                  binaryMessenger:self.binaryMessenger
                            codec:BTNSUrlFlutterApiGetCodec()];
   [channel
@@ -3550,7 +3550,7 @@ void SetUpBTUIScrollViewDelegateHostApi(id<FlutterBinaryMessenger> binaryMesseng
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.UIScrollViewDelegateHostApi.create"
+                    @"kr.co.bootpay.UIScrollViewDelegateHostApi.create"
          binaryMessenger:binaryMessenger
                    codec:BTUIScrollViewDelegateHostApiGetCodec()];
     if (api) {
@@ -3595,7 +3595,7 @@ NSObject<FlutterMessageCodec> *BTUIScrollViewDelegateFlutterApiGetCodec(void) {
                                         y:(double)arg_y
                                completion:(void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+          messageChannelWithName:@"kr.co.bootpay."
                                  @"UIScrollViewDelegateFlutterApi.scrollViewDidScroll"
                  binaryMessenger:self.binaryMessenger
                            codec:BTUIScrollViewDelegateFlutterApiGetCodec()];
@@ -3631,7 +3631,7 @@ void SetUpBTNSUrlCredentialHostApi(id<FlutterBinaryMessenger> binaryMessenger,
   {
     FlutterBasicMessageChannel *channel = [[FlutterBasicMessageChannel alloc]
             initWithName:
-                    @"dev.flutter.pigeon.webview_flutter_wkwebview.NSUrlCredentialHostApi.createWithUser"
+                    @"kr.co.bootpay.NSUrlCredentialHostApi.createWithUser"
          binaryMessenger:binaryMessenger
                    codec:BTNSUrlCredentialHostApiGetCodec()];
     if (api) {
@@ -3686,7 +3686,7 @@ NSObject<FlutterMessageCodec> *BTNSUrlProtectionSpaceFlutterApiGetCodec(void) {
         completion:(void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
           messageChannelWithName:
-                  @"dev.flutter.pigeon.webview_flutter_wkwebview.NSUrlProtectionSpaceFlutterApi.create"
+                  @"kr.co.bootpay.NSUrlProtectionSpaceFlutterApi.create"
                  binaryMessenger:self.binaryMessenger
                            codec:BTNSUrlProtectionSpaceFlutterApiGetCodec()];
   [channel
@@ -3735,7 +3735,7 @@ NSObject<FlutterMessageCodec> *BTNSUrlAuthenticationChallengeFlutterApiGetCodec(
    protectionSpaceIdentifier:(NSInteger)arg_protectionSpaceIdentifier
                   completion:(void (^)(FlutterError *_Nullable))completion {
   FlutterBasicMessageChannel *channel = [FlutterBasicMessageChannel
-          messageChannelWithName:@"dev.flutter.pigeon.webview_flutter_wkwebview."
+          messageChannelWithName:@"kr.co.bootpay."
                                  @"NSUrlAuthenticationChallengeFlutterApi.create"
                  binaryMessenger:self.binaryMessenger
                            codec:BTNSUrlAuthenticationChallengeFlutterApiGetCodec()];
