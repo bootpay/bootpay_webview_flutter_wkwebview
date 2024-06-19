@@ -36,12 +36,16 @@
                      configuration:(WKWebViewConfiguration *)configuration
                   navigationAction:(WKNavigationAction *)navigationAction
                         completion:(void (^)(FlutterError *_Nullable))completion {
+
+    NSLog(@"onCreateWebViewForDelegate");
+
     if (![self.instanceManager containsInstance:configuration]) {
         [self.webViewConfigurationFlutterApi createWithConfiguration:configuration
                                                           completion:^(FlutterError *error) {
                                                               NSAssert(!error, @"%@", error);
                                                           }];
     }
+
 
     NSInteger configurationIdentifier =
             [self.instanceManager identifierWithStrongReferenceForInstance:configuration];
@@ -158,10 +162,12 @@ API_AVAILABLE(ios(15.0)) {
     return self;
 }
 
+/*
 - (WKWebView *)webView:(WKWebView *)webView
 createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
         forNavigationAction:(WKNavigationAction *)navigationAction
         windowFeatures:(WKWindowFeatures *)windowFeatures {
+
     [self.UIDelegateAPI onCreateWebViewForDelegate:self
                                            webView:webView
                                      configuration:configuration
@@ -170,6 +176,27 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
                                             NSAssert(!error, @"%@", error);
                                         }];
     return nil;
+}
+*/
+
+- (WKWebView *)webView:(WKWebView *)webView
+createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
+        forNavigationAction:(WKNavigationAction *)navigationAction
+        windowFeatures:(WKWindowFeatures *)windowFeatures {
+    WKWebView *popupView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, webView.bounds.size.width, webView.bounds.size.height) configuration:configuration];
+
+
+    [popupView autoresizingMask];
+    popupView.navigationDelegate = self;
+    popupView.UIDelegate = self;
+
+    [webView.superview addSubview:popupView];
+
+    return popupView;
+}
+
+- (void)webViewDidClose:(WKWebView *)webView {
+    [webView removeFromSuperview];
 }
 
 - (void)webView:(WKWebView *)webView
@@ -188,6 +215,18 @@ API_AVAILABLE(ios(15.0)) {
                                                             decisionHandler(decision);
                                                         }];
 }
+
+
+- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler {
+
+    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+        NSURLCredential *cred = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+        completionHandler(NSURLSessionAuthChallengeUseCredential, cred);
+    } else {
+        completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+    }
+}
+
 
 - (void)webView:(WKWebView *)webView
 runJavaScriptAlertPanelWithMessage:(NSString *)message

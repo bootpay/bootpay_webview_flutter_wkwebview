@@ -1,5 +1,5 @@
-# 3.13.11
-* event channel rename
+# 3.13.12
+* event channel rename, popup webview bug fixed
 
 # 3.13.1
 * clone version 3.13.1
