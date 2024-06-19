@@ -9,11 +9,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- * Host api implementation for UIView.
- *
- * Handles creating UIView that intercommunicate with a paired Dart object.
- */
+/// Host api implementation for UIView.
+///
+/// Handles creating UIView that intercommunicate with a paired Dart object.
 @interface BTUIViewHostApiImpl : NSObject <BTUIViewHostApi>
 - (instancetype)initWithInstanceManager:(BTInstanceManager *)instanceManager;
 @end

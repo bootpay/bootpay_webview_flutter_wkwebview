@@ -7,16 +7,17 @@ import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/common/instance_manager.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/common/web_kit.g.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/foundation/foundation.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/foundation/foundation_api_impls.dart';
+import 'package:webview_flutter_wkwebview/src/common/instance_manager.dart';
+import 'package:webview_flutter_wkwebview/src/common/web_kit.g.dart';
+import 'package:webview_flutter_wkwebview/src/foundation/foundation.dart';
+import 'package:webview_flutter_wkwebview/src/foundation/foundation_api_impls.dart';
 
 import '../common/test_web_kit.g.dart';
 import 'foundation_test.mocks.dart';
 
 @GenerateMocks(<Type>[
   TestNSObjectHostApi,
+  TestNSUrlCredentialHostApi,
   TestNSUrlHostApi,
 ])
 void main() {
@@ -62,7 +63,7 @@ void main() {
         );
 
         final List<NSKeyValueObservingOptionsEnumData?> optionsData =
-        verify(mockPlatformHostApi.addObserver(
+            verify(mockPlatformHostApi.addObserver(
           instanceManager.getIdentifier(object),
           instanceManager.getIdentifier(observer),
           'aKeyPath',
@@ -98,7 +99,7 @@ void main() {
       test('NSObjectHostApi.dispose', () async {
         int? callbackIdentifier;
         final InstanceManager instanceManager =
-        InstanceManager(onWeakReferenceRemoved: (int identifier) {
+            InstanceManager(onWeakReferenceRemoved: (int identifier) {
           callbackIdentifier = identifier;
         });
 
@@ -113,7 +114,7 @@ void main() {
 
       test('observeValue', () async {
         final Completer<List<Object?>> argsCompleter =
-        Completer<List<Object?>>();
+            Completer<List<Object?>>();
 
         FoundationFlutterApis.instance = FoundationFlutterApis(
           instanceManager: instanceManager,
@@ -122,10 +123,10 @@ void main() {
         object = NSObject.detached(
           instanceManager: instanceManager,
           observeValue: (
-              String keyPath,
-              NSObject object,
-              Map<NSKeyValueChangeKey, Object?> change,
-              ) {
+            String keyPath,
+            NSObject object,
+            Map<NSKeyValueChangeKey, Object?> change,
+          ) {
             argsCompleter.complete(<Object?>[keyPath, object, change]);
           },
         );
@@ -157,7 +158,7 @@ void main() {
 
       test('observeValue returns object in an `InstanceManager`', () async {
         final Completer<List<Object?>> argsCompleter =
-        Completer<List<Object?>>();
+            Completer<List<Object?>>();
 
         FoundationFlutterApis.instance = FoundationFlutterApis(
           instanceManager: instanceManager,
@@ -166,10 +167,10 @@ void main() {
         object = NSObject.detached(
           instanceManager: instanceManager,
           observeValue: (
-              String keyPath,
-              NSObject object,
-              Map<NSKeyValueChangeKey, Object?> change,
-              ) {
+            String keyPath,
+            NSObject object,
+            Map<NSKeyValueChangeKey, Object?> change,
+          ) {
             argsCompleter.complete(<Object?>[keyPath, object, change]);
           },
         );
@@ -245,5 +246,144 @@ void main() {
         expect(instanceManager.getInstanceWithWeakReference(0), isA<NSUrl>());
       });
     });
+
+    group('NSUrlCredential', () {
+      tearDown(() {
+        TestNSUrlCredentialHostApi.setup(null);
+      });
+
+      test('HostApi createWithUser', () {
+        final MockTestNSUrlCredentialHostApi mockApi =
+            MockTestNSUrlCredentialHostApi();
+        TestNSUrlCredentialHostApi.setup(mockApi);
+
+        final InstanceManager instanceManager = InstanceManager(
+          onWeakReferenceRemoved: (_) {},
+        );
+
+        const String user = 'testString';
+        const String password = 'testString2';
+
+        const NSUrlCredentialPersistence persistence =
+            NSUrlCredentialPersistence.permanent;
+
+        final NSUrlCredential instance = NSUrlCredential.withUser(
+          user: user,
+          password: password,
+          persistence: persistence,
+          instanceManager: instanceManager,
+        );
+
+        verify(mockApi.createWithUser(
+          instanceManager.getIdentifier(instance),
+          user,
+          password,
+          persistence,
+        ));
+      });
+    });
+
+    group('NSUrlProtectionSpace', () {
+      test('FlutterAPI create', () {
+        final InstanceManager instanceManager = InstanceManager(
+          onWeakReferenceRemoved: (_) {},
+        );
+
+        final NSUrlProtectionSpaceFlutterApiImpl api =
+            NSUrlProtectionSpaceFlutterApiImpl(
+          instanceManager: instanceManager,
+        );
+
+        const int instanceIdentifier = 0;
+
+        api.create(
+          instanceIdentifier,
+          'testString',
+          'testString',
+          'testAuthenticationMethod',
+        );
+
+        expect(
+          instanceManager.getInstanceWithWeakReference(instanceIdentifier),
+          isA<NSUrlProtectionSpace>(),
+        );
+      });
+    });
+
+    group('NSUrlAuthenticationChallenge', () {
+      test('FlutterAPI create', () {
+        final InstanceManager instanceManager = InstanceManager(
+          onWeakReferenceRemoved: (_) {},
+        );
+
+        final NSUrlAuthenticationChallengeFlutterApiImpl api =
+            NSUrlAuthenticationChallengeFlutterApiImpl(
+          instanceManager: instanceManager,
+        );
+
+        const int instanceIdentifier = 0;
+
+        const int protectionSpaceIdentifier = 1;
+        instanceManager.addHostCreatedInstance(
+          NSUrlProtectionSpace.detached(
+            host: null,
+            realm: null,
+            authenticationMethod: null,
+            instanceManager: instanceManager,
+          ),
+          protectionSpaceIdentifier,
+        );
+
+        api.create(instanceIdentifier, protectionSpaceIdentifier);
+
+        expect(
+          instanceManager.getInstanceWithWeakReference(instanceIdentifier),
+          isA<NSUrlAuthenticationChallenge>(),
+        );
+      });
+    });
+  });
+
+  test('NSError', () {
+    expect(
+      const NSError(
+        code: 0,
+        domain: 'domain',
+        userInfo: <String, Object?>{
+          NSErrorUserInfoKey.NSLocalizedDescription: 'desc',
+        },
+      ).toString(),
+      'desc (domain:0:{NSLocalizedDescription: desc})',
+    );
+    expect(
+      const NSError(
+        code: 0,
+        domain: 'domain',
+        userInfo: <String, Object?>{
+          NSErrorUserInfoKey.NSLocalizedDescription: '',
+        },
+      ).toString(),
+      'Error domain:0:{NSLocalizedDescription: }',
+    );
+    expect(
+      const NSError(
+        code: 255,
+        domain: 'bar',
+        userInfo: <String, Object?>{
+          NSErrorUserInfoKey.NSLocalizedDescription: 'baz',
+        },
+      ).toString(),
+      'baz (bar:255:{NSLocalizedDescription: baz})',
+    );
+    expect(
+      const NSError(
+        code: 255,
+        domain: 'bar',
+        userInfo: <String, Object?>{
+          NSErrorUserInfoKey.NSLocalizedDescription: '',
+        },
+      ).toString(),
+      'Error bar:255:{NSLocalizedDescription: }',
+    );
   });
 }

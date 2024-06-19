@@ -57,7 +57,7 @@ enum NSKeyValueObservingOptionsEnum {
   priorNotification,
 }
 
-// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// TODO(bparrishMines): Enums need be wrapped in a data class because they can't
 // be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
 class NSKeyValueObservingOptionsEnumData {
   late NSKeyValueObservingOptionsEnum value;
@@ -73,7 +73,7 @@ enum NSKeyValueChangeEnum {
   replacement,
 }
 
-// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// TODO(bparrishMines): Enums need be wrapped in a data class because they can't
 // be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
 class NSKeyValueChangeEnumData {
   late NSKeyValueChangeEnum value;
@@ -88,9 +88,10 @@ enum NSKeyValueChangeKeyEnum {
   newValue,
   notificationIsPrior,
   oldValue,
+  unknown,
 }
 
-// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// TODO(bparrishMines): Enums need be wrapped in a data class because they can't
 // be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
 class NSKeyValueChangeKeyEnumData {
   late NSKeyValueChangeKeyEnum value;
@@ -104,7 +105,7 @@ enum WKUserScriptInjectionTimeEnum {
   atDocumentEnd,
 }
 
-// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// TODO(bparrishMines): Enums need be wrapped in a data class because they can't
 // be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
 class WKUserScriptInjectionTimeEnumData {
   late WKUserScriptInjectionTimeEnum value;
@@ -120,7 +121,7 @@ enum WKAudiovisualMediaTypeEnum {
   all,
 }
 
-// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// TODO(bparrishMines): Enums need be wrapped in a data class because they can't
 // be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
 class WKAudiovisualMediaTypeEnumData {
   late WKAudiovisualMediaTypeEnum value;
@@ -140,7 +141,7 @@ enum WKWebsiteDataTypeEnum {
   indexedDBDatabases,
 }
 
-// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// TODO(bparrishMines): Enums need be wrapped in a data class because they can't
 // be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
 class WKWebsiteDataTypeEnumData {
   late WKWebsiteDataTypeEnum value;
@@ -154,10 +155,18 @@ enum WKNavigationActionPolicyEnum {
   cancel,
 }
 
-// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// TODO(bparrishMines): Enums need be wrapped in a data class because they can't
 // be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
 class WKNavigationActionPolicyEnumData {
   late WKNavigationActionPolicyEnum value;
+}
+
+/// Mirror of WKNavigationResponsePolicy.
+///
+/// See https://developer.apple.com/documentation/webkit/wknavigationactionpolicy?language=objc.
+enum WKNavigationResponsePolicyEnum {
+  allow,
+  cancel,
 }
 
 /// Mirror of NSHTTPCookiePropertyKey.
@@ -180,7 +189,7 @@ enum NSHttpCookiePropertyKeyEnum {
   version,
 }
 
-// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// TODO(bparrishMines): Enums need be wrapped in a data class because they can't
 // be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
 class NSHttpCookiePropertyKeyEnumData {
   late NSHttpCookiePropertyKeyEnum value;
@@ -220,6 +229,12 @@ enum WKNavigationType {
   ///
   /// See https://developer.apple.com/documentation/webkit/wknavigationtype/wknavigationtypeother?language=objc.
   other,
+
+  /// An unknown navigation type.
+  ///
+  /// This does not represent an actual value provided by the platform and only
+  /// indicates a value was provided that isn't currently supported.
+  unknown,
 }
 
 /// Possible permission decisions for device resource access.
@@ -242,7 +257,7 @@ enum WKPermissionDecision {
   prompt,
 }
 
-// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// TODO(bparrishMines): Enums need be wrapped in a data class because they can't
 // be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
 class WKPermissionDecisionData {
   late WKPermissionDecision value;
@@ -270,14 +285,66 @@ enum WKMediaCaptureType {
   /// An unknown media device.
   ///
   /// This does not represent an actual value provided by the platform and only
-  /// indicates a value was provided that we don't currently support.
+  /// indicates a value was provided that isn't currently supported.
   unknown,
 }
 
-// TODO(bparrishMines): Enums need be wrapped in a data class because thay can't
+// TODO(bparrishMines): Enums need be wrapped in a data class because they can't
 // be used as primitive arguments. See https://github.com/flutter/flutter/issues/87307
 class WKMediaCaptureTypeData {
   late WKMediaCaptureType value;
+}
+
+/// Responses to an authentication challenge.
+///
+/// See https://developer.apple.com/documentation/foundation/nsurlsessionauthchallengedisposition?language=objc.
+enum NSUrlSessionAuthChallengeDisposition {
+  /// Use the specified credential, which may be nil.
+  ///
+  /// See https://developer.apple.com/documentation/foundation/nsurlsessionauthchallengedisposition/nsurlsessionauthchallengeusecredential?language=objc.
+  useCredential,
+
+  /// Use the default handling for the challenge as though this delegate method
+  /// were not implemented.
+  ///
+  /// See https://developer.apple.com/documentation/foundation/nsurlsessionauthchallengedisposition/nsurlsessionauthchallengeperformdefaulthandling?language=objc.
+  performDefaultHandling,
+
+  /// Cancel the entire request.
+  ///
+  /// See https://developer.apple.com/documentation/foundation/nsurlsessionauthchallengedisposition/nsurlsessionauthchallengecancelauthenticationchallenge?language=objc.
+  cancelAuthenticationChallenge,
+
+  /// Reject this challenge, and call the authentication delegate method again
+  /// with the next authentication protection space.
+  ///
+  /// See https://developer.apple.com/documentation/foundation/nsurlsessionauthchallengedisposition/nsurlsessionauthchallengerejectprotectionspace?language=objc.
+  rejectProtectionSpace,
+}
+
+/// Specifies how long a credential will be kept.
+enum NSUrlCredentialPersistence {
+  /// The credential should not be stored.
+  ///
+  /// See https://developer.apple.com/documentation/foundation/nsurlcredentialpersistence/nsurlcredentialpersistencenone?language=objc.
+  none,
+
+  /// The credential should be stored only for this session.
+  ///
+  /// See https://developer.apple.com/documentation/foundation/nsurlcredentialpersistence/nsurlcredentialpersistenceforsession?language=objc.
+  session,
+
+  /// The credential should be stored in the keychain.
+  ///
+  /// See https://developer.apple.com/documentation/foundation/nsurlcredentialpersistence/nsurlcredentialpersistencepermanent?language=objc.
+  permanent,
+
+  /// The credential should be stored permanently in the keychain, and in
+  /// addition should be distributed to other devices based on the owning Apple
+  /// ID.
+  ///
+  /// See https://developer.apple.com/documentation/foundation/nsurlcredentialpersistence/nsurlcredentialpersistencesynchronizable?language=objc.
+  synchronizable,
 }
 
 /// Mirror of NSURLRequest.
@@ -288,6 +355,13 @@ class NSUrlRequestData {
   late String? httpMethod;
   late Uint8List? httpBody;
   late Map<String?, String?> allHttpHeaderFields;
+}
+
+/// Mirror of NSURLResponse.
+///
+/// See https://developer.apple.com/documentation/foundation/nshttpurlresponse?language=objc.
+class NSHttpUrlResponseData {
+  late int statusCode;
 }
 
 /// Mirror of WKUserScript.
@@ -308,11 +382,20 @@ class WKNavigationActionData {
   late WKNavigationType navigationType;
 }
 
+/// Mirror of WKNavigationResponse.
+///
+/// See https://developer.apple.com/documentation/webkit/wknavigationresponse.
+class WKNavigationResponseData {
+  late NSHttpUrlResponseData response;
+  late bool forMainFrame;
+}
+
 /// Mirror of WKFrameInfo.
 ///
 /// See https://developer.apple.com/documentation/webkit/wkframeinfo?language=objc.
 class WKFrameInfoData {
   late bool isMainFrame;
+  late NSUrlRequestData request;
 }
 
 /// Mirror of NSError.
@@ -321,7 +404,7 @@ class WKFrameInfoData {
 class NSErrorData {
   late int code;
   late String domain;
-  late String localizedDescription;
+  late Map<String?, Object?>? userInfo;
 }
 
 /// Mirror of WKScriptMessage.
@@ -363,6 +446,11 @@ class ObjectOrIdentifier {
   /// Whether value is an int that is used to retrieve an instance stored in an
   /// `InstanceManager`.
   late bool isIdentifier;
+}
+
+class AuthenticationChallengeResponse {
+  late NSUrlSessionAuthChallengeDisposition disposition;
+  late int? credentialIdentifier;
 }
 
 /// Mirror of WKWebsiteDataStore.
@@ -420,6 +508,10 @@ abstract class UIScrollViewHostApi {
 
   @ObjCSelector('setContentOffsetForScrollViewWithIdentifier:toX:y:')
   void setContentOffset(int identifier, double x, double y);
+
+  @ObjCSelector(
+      'setDelegateForScrollViewWithIdentifier:uiScrollViewDelegateIdentifier:')
+  void setDelegate(int identifier, int? uiScrollViewDelegateIdentifier);
 }
 
 /// Mirror of WKWebViewConfiguration.
@@ -437,6 +529,11 @@ abstract class WKWebViewConfigurationHostApi {
     'setAllowsInlineMediaPlaybackForConfigurationWithIdentifier:isAllowed:',
   )
   void setAllowsInlineMediaPlayback(int identifier, bool allow);
+
+  @ObjCSelector(
+    'setLimitsNavigationsToAppBoundDomainsForConfigurationWithIdentifier:isLimited:',
+  )
+  void setLimitsNavigationsToAppBoundDomains(int identifier, bool limit);
 
   @ObjCSelector(
     'setMediaTypesRequiresUserActionForConfigurationWithIdentifier:forTypes:',
@@ -575,6 +672,16 @@ abstract class WKNavigationDelegateFlutterApi {
       );
 
   @ObjCSelector(
+    'decidePolicyForNavigationResponseForDelegateWithIdentifier:webViewIdentifier:navigationResponse:',
+  )
+  @async
+  WKNavigationResponsePolicyEnum decidePolicyForNavigationResponse(
+      int identifier,
+      int webViewIdentifier,
+      WKNavigationResponseData navigationResponse,
+      );
+
+  @ObjCSelector(
     'didFailNavigationForDelegateWithIdentifier:webViewIdentifier:error:',
   )
   void didFailNavigation(
@@ -598,6 +705,16 @@ abstract class WKNavigationDelegateFlutterApi {
   void webViewWebContentProcessDidTerminate(
       int identifier,
       int webViewIdentifier,
+      );
+
+  @async
+  @ObjCSelector(
+    'didReceiveAuthenticationChallengeForDelegateWithIdentifier:webViewIdentifier:challengeIdentifier:',
+  )
+  AuthenticationChallengeResponse didReceiveAuthenticationChallenge(
+      int identifier,
+      int webViewIdentifier,
+      int challengeIdentifier,
       );
 }
 
@@ -705,12 +822,18 @@ abstract class WKWebViewHostApi {
   @ObjCSelector('setAllowsBackForwardForWebViewWithIdentifier:isAllowed:')
   void setAllowsBackForwardNavigationGestures(int identifier, bool allow);
 
-  @ObjCSelector('setUserAgentForWebViewWithIdentifier:userAgent:')
+  @ObjCSelector('setCustomUserAgentForWebViewWithIdentifier:userAgent:')
   void setCustomUserAgent(int identifier, String? userAgent);
 
   @ObjCSelector('evaluateJavaScriptForWebViewWithIdentifier:javaScriptString:')
   @async
   Object? evaluateJavaScript(int identifier, String javaScriptString);
+
+  @ObjCSelector('setInspectableForWebViewWithIdentifier:inspectable:')
+  void setInspectable(int identifier, bool inspectable);
+
+  @ObjCSelector('customUserAgentForWebViewWithIdentifier:')
+  String? getCustomUserAgent(int identifier);
 }
 
 /// Mirror of WKUIDelegate.
@@ -748,6 +871,40 @@ abstract class WKUIDelegateFlutterApi {
       WKSecurityOriginData origin,
       WKFrameInfoData frame,
       WKMediaCaptureTypeData type,
+      );
+
+  /// Callback to Dart function `WKUIDelegate.runJavaScriptAlertPanel`.
+  @ObjCSelector(
+    'runJavaScriptAlertPanelForDelegateWithIdentifier:message:frame:',
+  )
+  @async
+  void runJavaScriptAlertPanel(
+      int identifier,
+      String message,
+      WKFrameInfoData frame,
+      );
+
+  /// Callback to Dart function `WKUIDelegate.runJavaScriptConfirmPanel`.
+  @ObjCSelector(
+    'runJavaScriptConfirmPanelForDelegateWithIdentifier:message:frame:',
+  )
+  @async
+  bool runJavaScriptConfirmPanel(
+      int identifier,
+      String message,
+      WKFrameInfoData frame,
+      );
+
+  /// Callback to Dart function `WKUIDelegate.runJavaScriptTextInputPanel`.
+  @ObjCSelector(
+    'runJavaScriptTextInputPanelForDelegateWithIdentifier:prompt:defaultText:frame:',
+  )
+  @async
+  String runJavaScriptTextInputPanel(
+      int identifier,
+      String prompt,
+      String defaultText,
+      WKFrameInfoData frame,
       );
 }
 
@@ -791,4 +948,87 @@ abstract class NSUrlHostApi {
 abstract class NSUrlFlutterApi {
   @ObjCSelector('createWithIdentifier:')
   void create(int identifier);
+}
+
+/// Host API for `UIScrollViewDelegate`.
+///
+/// This class may handle instantiating and adding native object instances that
+/// are attached to a Dart instance or method calls on the associated native
+/// class or an instance of the class.
+///
+/// See https://developer.apple.com/documentation/uikit/uiscrollviewdelegate?language=objc.
+@HostApi(dartHostTestHandler: 'TestUIScrollViewDelegateHostApi')
+abstract class UIScrollViewDelegateHostApi {
+  @ObjCSelector('createWithIdentifier:')
+  void create(int identifier);
+}
+
+/// Flutter API for `UIScrollViewDelegate`.
+///
+/// See https://developer.apple.com/documentation/uikit/uiscrollviewdelegate?language=objc.
+@FlutterApi()
+abstract class UIScrollViewDelegateFlutterApi {
+  @ObjCSelector(
+    'scrollViewDidScrollWithIdentifier:UIScrollViewIdentifier:x:y:',
+  )
+  void scrollViewDidScroll(
+      int identifier,
+      int uiScrollViewIdentifier,
+      double x,
+      double y,
+      );
+}
+
+/// Host API for `NSUrlCredential`.
+///
+/// This class may handle instantiating and adding native object instances that
+/// are attached to a Dart instance or handle method calls on the associated
+/// native class or an instance of the class.
+///
+/// See https://developer.apple.com/documentation/foundation/nsurlcredential?language=objc.
+@HostApi(dartHostTestHandler: 'TestNSUrlCredentialHostApi')
+abstract class NSUrlCredentialHostApi {
+  /// Create a new native instance and add it to the `InstanceManager`.
+  @ObjCSelector(
+    'createWithUserWithIdentifier:user:password:persistence:',
+  )
+  void createWithUser(
+      int identifier,
+      String user,
+      String password,
+      NSUrlCredentialPersistence persistence,
+      );
+}
+
+/// Flutter API for `NSUrlProtectionSpace`.
+///
+/// This class may handle instantiating and adding Dart instances that are
+/// attached to a native instance or receiving callback methods from an
+/// overridden native class.
+///
+/// See https://developer.apple.com/documentation/foundation/nsurlprotectionspace?language=objc.
+@FlutterApi()
+abstract class NSUrlProtectionSpaceFlutterApi {
+  /// Create a new Dart instance and add it to the `InstanceManager`.
+  @ObjCSelector('createWithIdentifier:host:realm:authenticationMethod:')
+  void create(
+      int identifier,
+      String? host,
+      String? realm,
+      String? authenticationMethod,
+      );
+}
+
+/// Flutter API for `NSUrlAuthenticationChallenge`.
+///
+/// This class may handle instantiating and adding Dart instances that are
+/// attached to a native instance or receiving callback methods from an
+/// overridden native class.
+///
+/// See https://developer.apple.com/documentation/foundation/nsurlauthenticationchallenge?language=objc.
+@FlutterApi()
+abstract class NSUrlAuthenticationChallengeFlutterApi {
+  /// Create a new Dart instance and add it to the `InstanceManager`.
+  @ObjCSelector('createWithIdentifier:protectionSpaceIdentifier:')
+  void create(int identifier, int protectionSpaceIdentifier);
 }

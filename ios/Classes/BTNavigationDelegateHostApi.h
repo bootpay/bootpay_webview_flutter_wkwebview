@@ -12,19 +12,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- * Flutter api implementation for WKNavigationDelegate.
- *
- * Handles making callbacks to Dart for a WKNavigationDelegate.
- */
+/// Flutter api implementation for WKNavigationDelegate.
+///
+/// Handles making callbacks to Dart for a WKNavigationDelegate.
 @interface BTNavigationDelegateFlutterApiImpl : BTWKNavigationDelegateFlutterApi
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
                         instanceManager:(BTInstanceManager *)instanceManager;
 @end
 
-/**
- * Implementation of WKNavigationDelegate for BTNavigationDelegateHostApiImpl.
- */
+/// Implementation of WKNavigationDelegate for BTNavigationDelegateHostApiImpl.
 @interface BTNavigationDelegate : BTObject <WKNavigationDelegate>
 @property(readonly, nonnull, nonatomic) BTNavigationDelegateFlutterApiImpl *navigationDelegateAPI;
 
@@ -32,11 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
                         instanceManager:(BTInstanceManager *)instanceManager;
 @end
 
-/**
- * Host api implementation for WKNavigationDelegate.
- *
- * Handles creating WKNavigationDelegate that intercommunicate with a paired Dart object.
- */
+/// Host api implementation for WKNavigationDelegate.
+///
+/// Handles creating WKNavigationDelegate that intercommunicate with a paired Dart object.
 @interface BTNavigationDelegateHostApiImpl : NSObject <BTWKNavigationDelegateHostApi>
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
                         instanceManager:(BTInstanceManager *)instanceManager;

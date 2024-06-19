@@ -13,56 +13,54 @@
 
 @implementation BTWebsiteDataStoreHostApiImpl
 - (instancetype)initWithInstanceManager:(BTInstanceManager *)instanceManager {
-  self = [self init];
-  if (self) {
-    _instanceManager = instanceManager;
-  }
-  return self;
+    self = [self init];
+    if (self) {
+        _instanceManager = instanceManager;
+    }
+    return self;
 }
 
-- (WKWebsiteDataStore *)websiteDataStoreForIdentifier:(NSNumber *)identifier {
-  return (WKWebsiteDataStore *)[self.instanceManager instanceForIdentifier:identifier.longValue];
+- (WKWebsiteDataStore *)websiteDataStoreForIdentifier:(NSInteger)identifier {
+    return (WKWebsiteDataStore *)[self.instanceManager instanceForIdentifier:identifier];
 }
 
-- (void)createFromWebViewConfigurationWithIdentifier:(nonnull NSNumber *)identifier
-                             configurationIdentifier:(nonnull NSNumber *)configurationIdentifier
+- (void)createFromWebViewConfigurationWithIdentifier:(NSInteger)identifier
+                             configurationIdentifier:(NSInteger)configurationIdentifier
                                                error:(FlutterError *_Nullable *_Nonnull)error {
-  WKWebViewConfiguration *configuration = (WKWebViewConfiguration *)[self.instanceManager
-      instanceForIdentifier:configurationIdentifier.longValue];
-  [self.instanceManager addDartCreatedInstance:configuration.websiteDataStore
-                                withIdentifier:identifier.longValue];
+    WKWebViewConfiguration *configuration = (WKWebViewConfiguration *)[self.instanceManager
+            instanceForIdentifier:configurationIdentifier];
+    [self.instanceManager addDartCreatedInstance:configuration.websiteDataStore
+                                  withIdentifier:identifier];
 }
 
-- (void)createDefaultDataStoreWithIdentifier:(nonnull NSNumber *)identifier
+- (void)createDefaultDataStoreWithIdentifier:(NSInteger)identifier
                                        error:(FlutterError *_Nullable __autoreleasing *_Nonnull)
-                                                 error {
-  [self.instanceManager addDartCreatedInstance:[WKWebsiteDataStore defaultDataStore]
-                                withIdentifier:identifier.longValue];
+error {
+    [self.instanceManager addDartCreatedInstance:[WKWebsiteDataStore defaultDataStore]
+                                  withIdentifier:identifier];
 }
 
-- (void)
-    removeDataFromDataStoreWithIdentifier:(nonnull NSNumber *)identifier
-                                  ofTypes:
-                                      (nonnull NSArray<BTWKWebsiteDataTypeEnumData *> *)dataTypes
-                            modifiedSince:(nonnull NSNumber *)modificationTimeInSecondsSinceEpoch
-                               completion:(nonnull void (^)(NSNumber *_Nullable,
-                                                            FlutterError *_Nullable))completion {
-  NSMutableSet<NSString *> *stringDataTypes = [NSMutableSet set];
-  for (BTWKWebsiteDataTypeEnumData *type in dataTypes) {
-    [stringDataTypes addObject:BTNativeWKWebsiteDataTypeFromEnumData(type)];
-  }
+- (void)removeDataFromDataStoreWithIdentifier:(NSInteger)identifier
+                                      ofTypes:(nonnull NSArray<BTWKWebsiteDataTypeEnumData *> *)
+dataTypes
+        modifiedSince:(double)modificationTimeInSecondsSinceEpoch
+        completion:
+(nonnull void (^)(NSNumber *_Nullable,
+        FlutterError *_Nullable))completion {
+    NSMutableSet<NSString *> *stringDataTypes = [NSMutableSet set];
+    for (BTWKWebsiteDataTypeEnumData *type in dataTypes) {
+        [stringDataTypes addObject:BTNativeWKWebsiteDataTypeFromEnumData(type)];
+    }
 
-  WKWebsiteDataStore *dataStore = [self websiteDataStoreForIdentifier:identifier];
-  [dataStore
-      fetchDataRecordsOfTypes:stringDataTypes
-            completionHandler:^(NSArray<WKWebsiteDataRecord *> *records) {
-              [dataStore
-                  removeDataOfTypes:stringDataTypes
-                      modifiedSince:[NSDate dateWithTimeIntervalSince1970:
-                                                modificationTimeInSecondsSinceEpoch.doubleValue]
-                  completionHandler:^{
-                    completion([NSNumber numberWithBool:(records.count > 0)], nil);
-                  }];
-            }];
+    WKWebsiteDataStore *dataStore = [self websiteDataStoreForIdentifier:identifier];
+    [dataStore fetchDataRecordsOfTypes:stringDataTypes
+                     completionHandler:^(NSArray<WKWebsiteDataRecord *> *records) {
+        [dataStore removeDataOfTypes:stringDataTypes
+                       modifiedSince:[NSDate dateWithTimeIntervalSince1970:
+                               modificationTimeInSecondsSinceEpoch]
+                   completionHandler:^{
+                       completion([NSNumber numberWithBool:(records.count > 0)], nil);
+                   }];
+    }];
 }
 @end

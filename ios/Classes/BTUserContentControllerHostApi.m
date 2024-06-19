@@ -20,60 +20,59 @@
   return self;
 }
 
-- (WKUserContentController *)userContentControllerForIdentifier:(NSNumber *)identifier {
-  return (WKUserContentController *)[self.instanceManager
-      instanceForIdentifier:identifier.longValue];
+- (WKUserContentController *)userContentControllerForIdentifier:(NSInteger)identifier {
+  return (WKUserContentController *)[self.instanceManager instanceForIdentifier:identifier];
 }
 
-- (void)createFromWebViewConfigurationWithIdentifier:(nonnull NSNumber *)identifier
-                             configurationIdentifier:(nonnull NSNumber *)configurationIdentifier
+- (void)createFromWebViewConfigurationWithIdentifier:(NSInteger)identifier
+                             configurationIdentifier:(NSInteger)configurationIdentifier
                                                error:(FlutterError *_Nullable *_Nonnull)error {
   WKWebViewConfiguration *configuration = (WKWebViewConfiguration *)[self.instanceManager
-      instanceForIdentifier:configurationIdentifier.longValue];
+          instanceForIdentifier:configurationIdentifier];
   [self.instanceManager addDartCreatedInstance:configuration.userContentController
-                                withIdentifier:identifier.longValue];
+                                withIdentifier:identifier];
 }
 
-- (void)addScriptMessageHandlerForControllerWithIdentifier:(nonnull NSNumber *)identifier
-                                         handlerIdentifier:(nonnull NSNumber *)handler
+- (void)addScriptMessageHandlerForControllerWithIdentifier:(NSInteger)identifier
+                                         handlerIdentifier:(NSInteger)handler
                                                     ofName:(nonnull NSString *)name
-                                                     error:
-                                                         (FlutterError *_Nullable *_Nonnull)error {
+        error:
+(FlutterError *_Nullable *_Nonnull)error {
   [[self userContentControllerForIdentifier:identifier]
-      addScriptMessageHandler:(id<WKScriptMessageHandler>)[self.instanceManager
-                                  instanceForIdentifier:handler.longValue]
-                         name:name];
+          addScriptMessageHandler:(id<WKScriptMessageHandler>)[self.instanceManager
+                  instanceForIdentifier:handler]
+                             name:name];
 }
 
-- (void)removeScriptMessageHandlerForControllerWithIdentifier:(nonnull NSNumber *)identifier
+- (void)removeScriptMessageHandlerForControllerWithIdentifier:(NSInteger)identifier
                                                          name:(nonnull NSString *)name
-                                                        error:(FlutterError *_Nullable *_Nonnull)
-                                                                  error {
+        error:(FlutterError *_Nullable *_Nonnull)
+error {
   [[self userContentControllerForIdentifier:identifier] removeScriptMessageHandlerForName:name];
 }
 
-- (void)removeAllScriptMessageHandlersForControllerWithIdentifier:(nonnull NSNumber *)identifier
+- (void)removeAllScriptMessageHandlersForControllerWithIdentifier:(NSInteger)identifier
                                                             error:
-                                                                (FlutterError *_Nullable *_Nonnull)
-                                                                    error {
+                                                                    (FlutterError *_Nullable *_Nonnull)
+error {
   if (@available(iOS 14.0, *)) {
     [[self userContentControllerForIdentifier:identifier] removeAllScriptMessageHandlers];
   } else {
     *error = [FlutterError
-        errorWithCode:@"BTUnsupportedVersionError"
-              message:@"removeAllScriptMessageHandlers is only supported on versions 14+."
-              details:nil];
+            errorWithCode:@"BTUnsupportedVersionError"
+                  message:@"removeAllScriptMessageHandlers is only supported on versions 14+."
+                  details:nil];
   }
 }
 
-- (void)addUserScriptForControllerWithIdentifier:(nonnull NSNumber *)identifier
+- (void)addUserScriptForControllerWithIdentifier:(NSInteger)identifier
                                       userScript:(nonnull BTWKUserScriptData *)userScript
-                                           error:(FlutterError *_Nullable *_Nonnull)error {
+        error:(FlutterError *_Nullable *_Nonnull)error {
   [[self userContentControllerForIdentifier:identifier]
-      addUserScript:BTNativeWKUserScriptFromScriptData(userScript)];
+          addUserScript:BTNativeWKUserScriptFromScriptData(userScript)];
 }
 
-- (void)removeAllUserScriptsForControllerWithIdentifier:(nonnull NSNumber *)identifier
+- (void)removeAllUserScriptsForControllerWithIdentifier:(NSInteger)identifier
                                                   error:(FlutterError *_Nullable *_Nonnull)error {
   [[self userContentControllerForIdentifier:identifier] removeAllUserScripts];
 }

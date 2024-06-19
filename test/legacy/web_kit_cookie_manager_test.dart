@@ -5,10 +5,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:bootpay_webview_flutter_platform_interface/src/webview_flutter_platform_interface_legacy.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/foundation/foundation.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/legacy/wkwebview_cookie_manager.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/web_kit/web_kit.dart';
+import 'package:webview_flutter_platform_interface/src/webview_flutter_platform_interface_legacy.dart';
+import 'package:webview_flutter_wkwebview/src/foundation/foundation.dart';
+import 'package:webview_flutter_wkwebview/src/legacy/wkwebview_cookie_manager.dart';
+import 'package:webview_flutter_wkwebview/src/web_kit/web_kit.dart';
 
 import 'web_kit_cookie_manager_test.mocks.dart';
 
@@ -37,12 +37,12 @@ void main() {
 
     test('clearCookies', () async {
       when(mockWebsiteDataStore.removeDataOfTypes(
-          <WKWebsiteDataType>{WKWebsiteDataType.cookies}, any))
+              <WKWebsiteDataType>{WKWebsiteDataType.cookies}, any))
           .thenAnswer((_) => Future<bool>.value(true));
       expect(cookieManager.clearCookies(), completion(true));
 
       when(mockWebsiteDataStore.removeDataOfTypes(
-          <WKWebsiteDataType>{WKWebsiteDataType.cookies}, any))
+              <WKWebsiteDataType>{WKWebsiteDataType.cookies}, any))
           .thenAnswer((_) => Future<bool>.value(false));
       expect(cookieManager.clearCookies(), completion(false));
     });
@@ -53,8 +53,8 @@ void main() {
       );
 
       final NSHttpCookie cookie =
-      verify(mockWKHttpCookieStore.setCookie(captureAny)).captured.single
-      as NSHttpCookie;
+          verify(mockWKHttpCookieStore.setCookie(captureAny)).captured.single
+              as NSHttpCookie;
       expect(
         cookie.properties,
         <NSHttpCookiePropertyKey, Object>{
@@ -68,7 +68,7 @@ void main() {
 
     test('setCookie throws argument error with invalid path', () async {
       expect(
-            () => cookieManager.setCookie(
+        () => cookieManager.setCookie(
           WebViewCookie(
             name: 'a',
             value: 'b',

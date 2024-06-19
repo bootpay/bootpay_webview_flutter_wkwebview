@@ -61,7 +61,7 @@ class InstanceManager {
   // HashMap).
   final Expando<int> _identifiers = Expando<int>();
   final Map<int, WeakReference<Copyable>> _weakInstances =
-      <int, WeakReference<Copyable>>{};
+  <int, WeakReference<Copyable>>{};
   final Map<int, Copyable> _strongInstances = <int, Copyable>{};
   late final Finalizer<int> _finalizer;
   int _nextIdentifier = 0;
@@ -196,3 +196,4 @@ class InstanceManager {
     return identifier;
   }
 }
+

@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutter_platform_interface.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/foundation/foundation.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/web_kit/web_kit.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/webkit_proxy.dart';
-import 'package:bootpay_webview_flutter_wkwebview/bootpay_webview_flutter_wkwebview.dart';
+import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+import 'package:webview_flutter_wkwebview/src/foundation/foundation.dart';
+import 'package:webview_flutter_wkwebview/src/web_kit/web_kit.dart';
+import 'package:webview_flutter_wkwebview/src/webkit_proxy.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 import 'webkit_webview_cookie_manager_test.mocks.dart';
 
@@ -21,7 +21,7 @@ void main() {
   group('WebKitWebViewCookieManager', () {
     test('clearCookies', () {
       final MockWKWebsiteDataStore mockWKWebsiteDataStore =
-      MockWKWebsiteDataStore();
+          MockWKWebsiteDataStore();
 
       final WebKitWebViewCookieManager manager = WebKitWebViewCookieManager(
         WebKitWebViewCookieManagerCreationParams(
@@ -50,7 +50,7 @@ void main() {
 
     test('setCookie', () async {
       final MockWKWebsiteDataStore mockWKWebsiteDataStore =
-      MockWKWebsiteDataStore();
+          MockWKWebsiteDataStore();
 
       final MockWKHttpCookieStore mockCookieStore = MockWKHttpCookieStore();
       when(mockWKWebsiteDataStore.httpCookieStore).thenReturn(mockCookieStore);
@@ -83,7 +83,7 @@ void main() {
 
     test('setCookie throws argument error with invalid path', () async {
       final MockWKWebsiteDataStore mockWKWebsiteDataStore =
-      MockWKWebsiteDataStore();
+          MockWKWebsiteDataStore();
 
       final MockWKHttpCookieStore mockCookieStore = MockWKHttpCookieStore();
       when(mockWKWebsiteDataStore.httpCookieStore).thenReturn(mockCookieStore);
@@ -97,7 +97,7 @@ void main() {
       );
 
       expect(
-            () => manager.setCookie(
+        () => manager.setCookie(
           WebViewCookie(
             name: 'a',
             value: 'b',

@@ -10,11 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- * Host api implementation for WKPreferences.
- *
- * Handles creating WKPreferences that intercommunicate with a paired Dart object.
- */
+/// Host api implementation for WKPreferences.
+///
+/// Handles creating WKPreferences that intercommunicate with a paired Dart object.
 @interface BTPreferencesHostApiImpl : NSObject <BTWKPreferencesHostApi>
 - (instancetype)initWithInstanceManager:(BTInstanceManager *)instanceManager;
 @end

@@ -2,17 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
-// TODO(a14n): remove this import once Flutter 3.1 or later reaches stable (including flutter/flutter#106316)
-// ignore: unnecessary_import
-import 'package:flutter/painting.dart' show Color;
 import 'package:flutter/services.dart';
 
 import '../common/instance_manager.dart';
 import '../foundation/foundation.dart';
 import '../web_kit/web_kit.dart';
+import '../web_kit/web_kit_api_impls.dart';
 import 'ui_kit_api_impls.dart';
 
 /// A view that allows the scrolling and zooming of its contained views.
@@ -22,10 +21,10 @@ import 'ui_kit_api_impls.dart';
 class UIScrollView extends UIView {
   /// Constructs a [UIScrollView] that is owned by [webView].
   factory UIScrollView.fromWebView(
-      WKWebView webView, {
-        BinaryMessenger? binaryMessenger,
-        InstanceManager? instanceManager,
-      }) {
+    WKWebView webView, {
+    BinaryMessenger? binaryMessenger,
+    InstanceManager? instanceManager,
+  }) {
     final UIScrollView scrollView = UIScrollView.detached(
       binaryMessenger: binaryMessenger,
       instanceManager: instanceManager,
@@ -47,9 +46,9 @@ class UIScrollView extends UIView {
     super.binaryMessenger,
     super.instanceManager,
   })  : _scrollViewApi = UIScrollViewHostApiImpl(
-    binaryMessenger: binaryMessenger,
-    instanceManager: instanceManager,
-  ),
+          binaryMessenger: binaryMessenger,
+          instanceManager: instanceManager,
+        ),
         super.detached();
 
   final UIScrollViewHostApiImpl _scrollViewApi;
@@ -78,6 +77,13 @@ class UIScrollView extends UIView {
     return _scrollViewApi.setContentOffsetForInstances(this, offset);
   }
 
+  /// Set the delegate to this scroll view.
+  ///
+  /// Represents [UIScrollView.delegate](https://developer.apple.com/documentation/uikit/uiscrollview/1619430-delegate?language=objc).
+  Future<void> setDelegate(UIScrollViewDelegate? delegate) {
+    return _scrollViewApi.setDelegateForInstances(this, delegate);
+  }
+
   @override
   UIScrollView copy() {
     return UIScrollView.detached(
@@ -103,9 +109,9 @@ class UIView extends NSObject {
     super.binaryMessenger,
     super.instanceManager,
   })  : _viewApi = UIViewHostApiImpl(
-    binaryMessenger: binaryMessenger,
-    instanceManager: instanceManager,
-  ),
+          binaryMessenger: binaryMessenger,
+          instanceManager: instanceManager,
+        ),
         super.detached();
 
   final UIViewHostApiImpl _viewApi;
@@ -132,6 +138,62 @@ class UIView extends NSObject {
       observeValue: observeValue,
       binaryMessenger: _viewApi.binaryMessenger,
       instanceManager: _viewApi.instanceManager,
+    );
+  }
+}
+
+/// Responding to scroll view interactions.
+///
+/// Represent [UIScrollViewDelegate](https://developer.apple.com/documentation/uikit/uiscrollviewdelegate?language=objc).
+@immutable
+class UIScrollViewDelegate extends NSObject {
+  /// Constructs a [UIScrollViewDelegate].
+  UIScrollViewDelegate({
+    this.scrollViewDidScroll,
+    super.binaryMessenger,
+    super.instanceManager,
+  })  : _scrollViewDelegateApi = UIScrollViewDelegateHostApiImpl(
+          binaryMessenger: binaryMessenger,
+          instanceManager: instanceManager,
+        ),
+        super.detached() {
+    // Ensures FlutterApis for the WebKit library are set up.
+    WebKitFlutterApis.instance.ensureSetUp();
+    _scrollViewDelegateApi.createForInstance(this);
+  }
+
+  /// Constructs a [UIScrollViewDelegate] without creating the associated
+  /// Objective-C object.
+  ///
+  /// This should only be used by subclasses created by this library or to
+  /// create copies.
+  UIScrollViewDelegate.detached({
+    this.scrollViewDidScroll,
+    super.binaryMessenger,
+    super.instanceManager,
+  })  : _scrollViewDelegateApi = UIScrollViewDelegateHostApiImpl(
+          binaryMessenger: binaryMessenger,
+          instanceManager: instanceManager,
+        ),
+        super.detached();
+
+  final UIScrollViewDelegateHostApiImpl _scrollViewDelegateApi;
+
+  /// Called when scroll view did scroll.
+  ///
+  /// {@macro webview_flutter_wkwebview.foundation.callbacks}
+  final void Function(
+    UIScrollView scrollView,
+    double x,
+    double y,
+  )? scrollViewDidScroll;
+
+  @override
+  UIScrollViewDelegate copy() {
+    return UIScrollViewDelegate.detached(
+      scrollViewDidScroll: scrollViewDidScroll,
+      binaryMessenger: _scrollViewDelegateApi.binaryMessenger,
+      instanceManager: _scrollViewDelegateApi.instanceManager,
     );
   }
 }

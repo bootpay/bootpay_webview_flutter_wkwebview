@@ -4,34 +4,35 @@
 
 #import <Flutter/Flutter.h>
 #import <WebKit/WebKit.h>
+#import "BTObjectHostApi.h"
 
 #import "BTGeneratedWebKitApis.h"
 #import "BTInstanceManager.h"
-#import "BTObjectHostApi.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Flutter api implementation for WKScriptMessageHandler.
+/// Flutter api implementation for UIScrollViewDelegate.
 ///
-/// Handles making callbacks to Dart for a WKScriptMessageHandler.
-@interface BTScriptMessageHandlerFlutterApiImpl : BTWKScriptMessageHandlerFlutterApi
-- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
-                        instanceManager:(BTInstanceManager *)instanceManager;
-@end
-
-/// Implementation of WKScriptMessageHandler for BTScriptMessageHandlerHostApiImpl.
-@interface BTScriptMessageHandler : BTObject <WKScriptMessageHandler>
-@property(readonly, nonnull, nonatomic)
-BTScriptMessageHandlerFlutterApiImpl *scriptMessageHandlerAPI;
+/// Handles making callbacks to Dart for a UIScrollViewDelegate.
+@interface BTScrollViewDelegateFlutterApiImpl : BTUIScrollViewDelegateFlutterApi
 
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
                         instanceManager:(BTInstanceManager *)instanceManager;
 @end
 
-/// Host api implementation for WKScriptMessageHandler.
+/// Implementation of WKUIScrollViewDelegate for BTUIScrollViewDelegateHostApiImpl.
+@interface BTScrollViewDelegate : BTObject <UIScrollViewDelegate>
+@property(readonly, nonnull, nonatomic) BTScrollViewDelegateFlutterApiImpl *scrollViewDelegateAPI;
+
+- (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
+                        instanceManager:(BTInstanceManager *)instanceManager;
+
+@end
+
+/// Host api implementation for UIScrollViewDelegate.
 ///
-/// Handles creating WKScriptMessageHandler that intercommunicate with a paired Dart object.
-@interface BTScriptMessageHandlerHostApiImpl : NSObject <BTWKScriptMessageHandlerHostApi>
+/// Handles creating UIScrollView that intercommunicate with a paired Dart object.
+@interface BTScrollViewDelegateHostApiImpl : NSObject <BTUIScrollViewDelegateHostApi>
 - (instancetype)initWithBinaryMessenger:(id<FlutterBinaryMessenger>)binaryMessenger
                         instanceManager:(BTInstanceManager *)instanceManager;
 @end

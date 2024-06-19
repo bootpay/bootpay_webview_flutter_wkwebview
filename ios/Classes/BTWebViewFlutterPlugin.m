@@ -10,9 +10,11 @@
 #import "BTObjectHostApi.h"
 #import "BTPreferencesHostApi.h"
 #import "BTScriptMessageHandlerHostApi.h"
+#import "BTScrollViewDelegateHostApi.h"
 #import "BTScrollViewHostApi.h"
 #import "BTUIDelegateHostApi.h"
 #import "BTUIViewHostApi.h"
+#import "BTURLCredentialHostApi.h"
 #import "BTURLHostApi.h"
 #import "BTUserContentControllerHostApi.h"
 #import "BTWebViewConfigurationHostApi.h"
@@ -43,7 +45,7 @@
                                          arguments:(id _Nullable)args {
   NSNumber *identifier = (NSNumber *)args;
   BTWebView *webView =
-      (BTWebView *)[self.instanceManager instanceForIdentifier:identifier.longValue];
+  (BTWebView *)[self.instanceManager instanceForIdentifier:identifier.longValue];
   webView.frame = frame;
   return webView;
 }
@@ -54,60 +56,67 @@
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
   BTInstanceManager *instanceManager =
-      [[BTInstanceManager alloc] initWithDeallocCallback:^(long identifier) {
-        BTObjectFlutterApiImpl *objectApi = [[BTObjectFlutterApiImpl alloc]
-            initWithBinaryMessenger:registrar.messenger
-                    instanceManager:[[BTInstanceManager alloc] init]];
+          [[BTInstanceManager alloc] initWithDeallocCallback:^(long identifier) {
+              BTObjectFlutterApiImpl *objectApi = [[BTObjectFlutterApiImpl alloc]
+                      initWithBinaryMessenger:registrar.messenger
+                              instanceManager:[[BTInstanceManager alloc] init]];
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [objectApi disposeObjectWithIdentifier:@(identifier)
-                                                  completion:^(FlutterError *error) {
-                                                    NSAssert(!error, @"%@", error);
-                                                  }];
-        });
-      }];
-  BTWKHttpCookieStoreHostApiSetup(
-      registrar.messenger,
-      [[BTHTTPCookieStoreHostApiImpl alloc] initWithInstanceManager:instanceManager]);
-  BTWKNavigationDelegateHostApiSetup(
-      registrar.messenger,
-      [[BTNavigationDelegateHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
-                                                        instanceManager:instanceManager]);
-  BTNSObjectHostApiSetup(registrar.messenger,
-                          [[BTObjectHostApiImpl alloc] initWithInstanceManager:instanceManager]);
-  BTWKPreferencesHostApiSetup(registrar.messenger, [[BTPreferencesHostApiImpl alloc]
-                                                        initWithInstanceManager:instanceManager]);
-  BTWKScriptMessageHandlerHostApiSetup(
-      registrar.messenger,
-      [[BTScriptMessageHandlerHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
-                                                          instanceManager:instanceManager]);
-  BTUIScrollViewHostApiSetup(registrar.messenger, [[BTScrollViewHostApiImpl alloc]
-                                                       initWithInstanceManager:instanceManager]);
-  BTWKUIDelegateHostApiSetup(registrar.messenger, [[BTUIDelegateHostApiImpl alloc]
-                                                       initWithBinaryMessenger:registrar.messenger
-                                                               instanceManager:instanceManager]);
-  BTUIViewHostApiSetup(registrar.messenger,
-                        [[BTUIViewHostApiImpl alloc] initWithInstanceManager:instanceManager]);
-  BTWKUserContentControllerHostApiSetup(
-      registrar.messenger,
-      [[BTUserContentControllerHostApiImpl alloc] initWithInstanceManager:instanceManager]);
-  BTWKWebsiteDataStoreHostApiSetup(
-      registrar.messenger,
-      [[BTWebsiteDataStoreHostApiImpl alloc] initWithInstanceManager:instanceManager]);
-  BTWKWebViewConfigurationHostApiSetup(
-      registrar.messenger,
-      [[BTWebViewConfigurationHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
-                                                          instanceManager:instanceManager]);
-  BTWKWebViewHostApiSetup(registrar.messenger, [[BTWebViewHostApiImpl alloc]
-                                                    initWithBinaryMessenger:registrar.messenger
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  [objectApi disposeObjectWithIdentifier:identifier
+                                              completion:^(FlutterError *error) {
+                                                  NSAssert(!error, @"%@", error);
+                                              }];
+              });
+          }];
+  SetUpBTWKHttpCookieStoreHostApi(
+          registrar.messenger,
+          [[BTHTTPCookieStoreHostApiImpl alloc] initWithInstanceManager:instanceManager]);
+  SetUpBTWKNavigationDelegateHostApi(
+          registrar.messenger,
+          [[BTNavigationDelegateHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
                                                             instanceManager:instanceManager]);
-  BTNSUrlHostApiSetup(registrar.messenger,
+  SetUpBTNSObjectHostApi(registrar.messenger,
+                          [[BTObjectHostApiImpl alloc] initWithInstanceManager:instanceManager]);
+  SetUpBTWKPreferencesHostApi(registrar.messenger, [[BTPreferencesHostApiImpl alloc]
+          initWithInstanceManager:instanceManager]);
+  SetUpBTWKScriptMessageHandlerHostApi(
+          registrar.messenger,
+          [[BTScriptMessageHandlerHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
+                                                              instanceManager:instanceManager]);
+  SetUpBTUIScrollViewHostApi(registrar.messenger, [[BTScrollViewHostApiImpl alloc]
+          initWithInstanceManager:instanceManager]);
+  SetUpBTWKUIDelegateHostApi(registrar.messenger, [[BTUIDelegateHostApiImpl alloc]
+          initWithBinaryMessenger:registrar.messenger
+                  instanceManager:instanceManager]);
+  SetUpBTUIViewHostApi(registrar.messenger,
+                        [[BTUIViewHostApiImpl alloc] initWithInstanceManager:instanceManager]);
+  SetUpBTWKUserContentControllerHostApi(
+          registrar.messenger,
+          [[BTUserContentControllerHostApiImpl alloc] initWithInstanceManager:instanceManager]);
+  SetUpBTWKWebsiteDataStoreHostApi(
+          registrar.messenger,
+          [[BTWebsiteDataStoreHostApiImpl alloc] initWithInstanceManager:instanceManager]);
+  SetUpBTWKWebViewConfigurationHostApi(
+          registrar.messenger,
+          [[BTWebViewConfigurationHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
+                                                              instanceManager:instanceManager]);
+  SetUpBTWKWebViewHostApi(registrar.messenger, [[BTWebViewHostApiImpl alloc]
+          initWithBinaryMessenger:registrar.messenger
+                  instanceManager:instanceManager]);
+  SetUpBTNSUrlHostApi(registrar.messenger,
                        [[BTURLHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
                                                           instanceManager:instanceManager]);
-
+  SetUpBTUIScrollViewDelegateHostApi(
+          registrar.messenger,
+          [[BTScrollViewDelegateHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
+                                                            instanceManager:instanceManager]);
+  SetUpBTNSUrlCredentialHostApi(
+          registrar.messenger,
+          [[BTURLCredentialHostApiImpl alloc] initWithBinaryMessenger:registrar.messenger
+                                                       instanceManager:instanceManager]);
 
   BTWebViewFactory *webviewFactory = [[BTWebViewFactory alloc] initWithManager:instanceManager];
-  [registrar registerViewFactory:webviewFactory withId:@"kr.co.bootpay/webview"];
+  [registrar registerViewFactory:webviewFactory withId:@"plugins.flutter.io/webview"];
 
   // InstanceManager is published so that a strong reference is maintained.
   [registrar publish:instanceManager];

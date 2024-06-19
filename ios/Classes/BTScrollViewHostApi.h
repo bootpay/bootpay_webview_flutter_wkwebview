@@ -10,11 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- * Host api implementation for UIScrollView.
- *
- * Handles creating UIScrollView that intercommunicate with a paired Dart object.
- */
+/// Host api implementation for UIScrollView.
+///
+/// Handles creating UIScrollView that intercommunicate with a paired Dart object.
 @interface BTScrollViewHostApiImpl : NSObject <BTUIScrollViewHostApi>
 - (instancetype)initWithInstanceManager:(BTInstanceManager *)instanceManager;
 @end

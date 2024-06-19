@@ -35,7 +35,7 @@ class CupertinoWebView implements WebViewPlatform {
       javascriptChannelRegistry: javascriptChannelRegistry,
       onBuildWidget: (WebKitWebViewPlatformController controller) {
         return UiKitView(
-          viewType: 'kr.co.bootpay/webview',
+          viewType: 'plugins.flutter.io/webview',
           onPlatformViewCreated: (int id) {
             if (onWebViewPlatformCreated != null) {
               onWebViewPlatformCreated(controller);
@@ -43,7 +43,7 @@ class CupertinoWebView implements WebViewPlatform {
           },
           gestureRecognizers: gestureRecognizers,
           creationParams:
-          NSObject.globalInstanceManager.getIdentifier(controller.webView),
+              NSObject.globalInstanceManager.getIdentifier(controller.webView),
           creationParamsCodec: const StandardMessageCodec(),
         );
       },

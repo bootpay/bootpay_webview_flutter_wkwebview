@@ -20,28 +20,27 @@
   return self;
 }
 
-- (WKHTTPCookieStore *)HTTPCookieStoreForIdentifier:(NSNumber *)identifier {
-  return (WKHTTPCookieStore *)[self.instanceManager instanceForIdentifier:identifier.longValue];
+- (WKHTTPCookieStore *)HTTPCookieStoreForIdentifier:(NSInteger)identifier {
+  return (WKHTTPCookieStore *)[self.instanceManager instanceForIdentifier:identifier];
 }
 
-- (void)createFromWebsiteDataStoreWithIdentifier:(nonnull NSNumber *)identifier
-                             dataStoreIdentifier:(nonnull NSNumber *)websiteDataStoreIdentifier
+- (void)createFromWebsiteDataStoreWithIdentifier:(NSInteger)identifier
+                             dataStoreIdentifier:(NSInteger)websiteDataStoreIdentifier
                                            error:(FlutterError *_Nullable __autoreleasing *_Nonnull)
-                                                     error {
-  WKWebsiteDataStore *dataStore = (WKWebsiteDataStore *)[self.instanceManager
-      instanceForIdentifier:websiteDataStoreIdentifier.longValue];
-  [self.instanceManager addDartCreatedInstance:dataStore.httpCookieStore
-                                withIdentifier:identifier.longValue];
+error {
+  WKWebsiteDataStore *dataStore =
+  (WKWebsiteDataStore *)[self.instanceManager instanceForIdentifier:websiteDataStoreIdentifier];
+  [self.instanceManager addDartCreatedInstance:dataStore.httpCookieStore withIdentifier:identifier];
 }
 
-- (void)setCookieForStoreWithIdentifier:(nonnull NSNumber *)identifier
+- (void)setCookieForStoreWithIdentifier:(NSInteger)identifier
                                  cookie:(nonnull BTNSHttpCookieData *)cookie
-                             completion:(nonnull void (^)(FlutterError *_Nullable))completion {
+        completion:(nonnull void (^)(FlutterError *_Nullable))completion {
   NSHTTPCookie *nsCookie = BTNativeNSHTTPCookieFromCookieData(cookie);
 
   [[self HTTPCookieStoreForIdentifier:identifier] setCookie:nsCookie
                                           completionHandler:^{
-                                            completion(nil);
+                                              completion(nil);
                                           }];
 }
 @end

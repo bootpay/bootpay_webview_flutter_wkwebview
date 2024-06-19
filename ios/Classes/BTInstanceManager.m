@@ -51,7 +51,6 @@
 @property NSMapTable<NSObject *, NSNumber *> *identifiers;
 @property NSMapTable<NSNumber *, NSObject *> *weakInstances;
 @property NSMapTable<NSNumber *, NSObject *> *strongInstances;
-@property long nextIdentifier;
 @end
 
 @implementation BTInstanceManager
@@ -67,9 +66,17 @@ static long const BTMinHostCreatedIdentifier = 65536;
     _deallocCallback = _deallocCallback ? _deallocCallback : ^(long identifier) {
     };
     _lockQueue = dispatch_queue_create("BTInstanceManager", DISPATCH_QUEUE_SERIAL);
-    _identifiers = [NSMapTable weakToStrongObjectsMapTable];
-    _weakInstances = [NSMapTable strongToWeakObjectsMapTable];
-    _strongInstances = [NSMapTable strongToStrongObjectsMapTable];
+    // Pointer equality is used to prevent collisions of objects that override the `isEqualTo:`
+    // method.
+    _identifiers =
+            [NSMapTable mapTableWithKeyOptions:NSMapTableWeakMemory | NSMapTableObjectPointerPersonality
+                                  valueOptions:NSMapTableStrongMemory];
+    _weakInstances = [NSMapTable
+            mapTableWithKeyOptions:NSMapTableStrongMemory
+                      valueOptions:NSMapTableWeakMemory | NSMapTableObjectPointerPersonality];
+    _strongInstances = [NSMapTable
+            mapTableWithKeyOptions:NSMapTableStrongMemory
+                      valueOptions:NSMapTableStrongMemory | NSMapTableObjectPointerPersonality];
     _nextIdentifier = BTMinHostCreatedIdentifier;
   }
   return self;
@@ -87,7 +94,7 @@ static long const BTMinHostCreatedIdentifier = 65536;
   NSParameterAssert(instance);
   NSParameterAssert(instanceIdentifier >= 0);
   dispatch_async(_lockQueue, ^{
-    [self addInstance:instance withIdentifier:instanceIdentifier];
+      [self addInstance:instance withIdentifier:instanceIdentifier];
   });
 }
 
@@ -95,8 +102,8 @@ static long const BTMinHostCreatedIdentifier = 65536;
   NSParameterAssert(instance);
   long __block identifier = -1;
   dispatch_sync(_lockQueue, ^{
-    identifier = self.nextIdentifier++;
-    [self addInstance:instance withIdentifier:identifier];
+      identifier = self.nextIdentifier++;
+      [self addInstance:instance withIdentifier:identifier];
   });
   return identifier;
 }
@@ -104,10 +111,10 @@ static long const BTMinHostCreatedIdentifier = 65536;
 - (nullable NSObject *)removeInstanceWithIdentifier:(long)instanceIdentifier {
   NSObject *__block instance = nil;
   dispatch_sync(_lockQueue, ^{
-    instance = [self.strongInstances objectForKey:@(instanceIdentifier)];
-    if (instance) {
-      [self.strongInstances removeObjectForKey:@(instanceIdentifier)];
-    }
+      instance = [self.strongInstances objectForKey:@(instanceIdentifier)];
+      if (instance) {
+        [self.strongInstances removeObjectForKey:@(instanceIdentifier)];
+      }
   });
   return instance;
 }
@@ -115,7 +122,7 @@ static long const BTMinHostCreatedIdentifier = 65536;
 - (nullable NSObject *)instanceForIdentifier:(long)instanceIdentifier {
   NSObject *__block instance = nil;
   dispatch_sync(_lockQueue, ^{
-    instance = [self.weakInstances objectForKey:@(instanceIdentifier)];
+      instance = [self.weakInstances objectForKey:@(instanceIdentifier)];
   });
   return instance;
 }
@@ -132,10 +139,10 @@ static long const BTMinHostCreatedIdentifier = 65536;
 - (long)identifierWithStrongReferenceForInstance:(nonnull NSObject *)instance {
   NSNumber *__block identifierNumber = nil;
   dispatch_sync(_lockQueue, ^{
-    identifierNumber = [self.identifiers objectForKey:instance];
-    if (identifierNumber) {
-      [self.strongInstances setObject:instance forKey:identifierNumber];
-    }
+      identifierNumber = [self.identifiers objectForKey:instance];
+      if (identifierNumber) {
+        [self.strongInstances setObject:instance forKey:identifierNumber];
+      }
   });
   return identifierNumber ? identifierNumber.longValue : NSNotFound;
 }
@@ -143,7 +150,7 @@ static long const BTMinHostCreatedIdentifier = 65536;
 - (BOOL)containsInstance:(nonnull NSObject *)instance {
   BOOL __block containsInstance;
   dispatch_sync(_lockQueue, ^{
-    containsInstance = [self.identifiers objectForKey:instance];
+      containsInstance = [self.identifiers objectForKey:instance];
   });
   return containsInstance;
 }
@@ -151,7 +158,7 @@ static long const BTMinHostCreatedIdentifier = 65536;
 - (NSUInteger)strongInstanceCount {
   NSUInteger __block count = -1;
   dispatch_sync(_lockQueue, ^{
-    count = self.strongInstances.count;
+      count = self.strongInstances.count;
   });
   return count;
 }
@@ -159,7 +166,7 @@ static long const BTMinHostCreatedIdentifier = 65536;
 - (NSUInteger)weakInstanceCount {
   NSUInteger __block count = -1;
   dispatch_sync(_lockQueue, ^{
-    count = self.weakInstances.count;
+      count = self.weakInstances.count;
   });
   return count;
 }

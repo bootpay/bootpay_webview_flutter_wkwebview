@@ -28,10 +28,10 @@
                     userContentController:(WKUserContentController *)userContentController
                                   message:(WKScriptMessage *)message
                                completion:(void (^)(FlutterError *_Nullable))completion {
-  NSNumber *userContentControllerIdentifier =
-      @([self.instanceManager identifierWithStrongReferenceForInstance:userContentController]);
+  NSInteger userContentControllerIdentifier =
+          [self.instanceManager identifierWithStrongReferenceForInstance:userContentController];
   BTWKScriptMessageData *messageData = BTWKScriptMessageDataFromNativeWKScriptMessage(message);
-  [self didReceiveScriptMessageForHandlerWithIdentifier:@([self identifierForHandler:instance])
+  [self didReceiveScriptMessageForHandlerWithIdentifier:[self identifierForHandler:instance]
                         userContentControllerIdentifier:userContentControllerIdentifier
                                                 message:messageData
                                              completion:completion];
@@ -44,19 +44,19 @@
   self = [super initWithBinaryMessenger:binaryMessenger instanceManager:instanceManager];
   if (self) {
     _scriptMessageHandlerAPI =
-        [[BTScriptMessageHandlerFlutterApiImpl alloc] initWithBinaryMessenger:binaryMessenger
-                                                               instanceManager:instanceManager];
+            [[BTScriptMessageHandlerFlutterApiImpl alloc] initWithBinaryMessenger:binaryMessenger
+                                                                   instanceManager:instanceManager];
   }
   return self;
 }
 
 - (void)userContentController:(nonnull WKUserContentController *)userContentController
-      didReceiveScriptMessage:(nonnull WKScriptMessage *)message {
+        didReceiveScriptMessage:(nonnull WKScriptMessage *)message {
   [self.scriptMessageHandlerAPI didReceiveScriptMessageForHandler:self
                                             userContentController:userContentController
                                                           message:message
                                                        completion:^(FlutterError *error) {
-                                                         NSAssert(!error, @"%@", error);
+                                                           NSAssert(!error, @"%@", error);
                                                        }];
 }
 @end
@@ -82,15 +82,13 @@
 
 - (BTScriptMessageHandler *)scriptMessageHandlerForIdentifier:(NSNumber *)identifier {
   return (BTScriptMessageHandler *)[self.instanceManager
-      instanceForIdentifier:identifier.longValue];
+          instanceForIdentifier:identifier.longValue];
 }
 
-- (void)createWithIdentifier:(nonnull NSNumber *)identifier
-                       error:(FlutterError *_Nullable *_Nonnull)error {
+- (void)createWithIdentifier:(NSInteger)identifier error:(FlutterError *_Nullable *_Nonnull)error {
   BTScriptMessageHandler *scriptMessageHandler =
-      [[BTScriptMessageHandler alloc] initWithBinaryMessenger:self.binaryMessenger
-                                               instanceManager:self.instanceManager];
-  [self.instanceManager addDartCreatedInstance:scriptMessageHandler
-                                withIdentifier:identifier.longValue];
+          [[BTScriptMessageHandler alloc] initWithBinaryMessenger:self.binaryMessenger
+                                                   instanceManager:self.instanceManager];
+  [self.instanceManager addDartCreatedInstance:scriptMessageHandler withIdentifier:identifier];
 }
 @end

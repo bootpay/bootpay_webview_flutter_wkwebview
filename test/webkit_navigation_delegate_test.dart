@@ -6,11 +6,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutter_platform_interface.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/foundation/foundation.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/web_kit/web_kit.dart';
-import 'package:bootpay_webview_flutter_wkwebview/src/webkit_proxy.dart';
-import 'package:bootpay_webview_flutter_wkwebview/bootpay_webview_flutter_wkwebview.dart';
+import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+import 'package:webview_flutter_wkwebview/src/common/web_kit.g.dart';
+import 'package:webview_flutter_wkwebview/src/foundation/foundation.dart';
+import 'package:webview_flutter_wkwebview/src/web_kit/web_kit.dart';
+import 'package:webview_flutter_wkwebview/src/webkit_proxy.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,10 +19,10 @@ void main() {
   group('WebKitNavigationDelegate', () {
     test('WebKitNavigationDelegate uses params field in constructor', () async {
       await runZonedGuarded(
-            () async => WebKitNavigationDelegate(
+        () async => WebKitNavigationDelegate(
           const PlatformNavigationDelegateCreationParams(),
         ),
-            (Object error, __) {
+        (Object error, __) {
           expect(error, isNot(isA<TypeError>()));
         },
       );
@@ -70,6 +71,60 @@ void main() {
       expect(callbackUrl, 'https://www.google.com');
     });
 
+    test('setOnHttpError from decidePolicyForNavigationResponse', () {
+      final WebKitNavigationDelegate webKitDelegate = WebKitNavigationDelegate(
+        const WebKitNavigationDelegateCreationParams(
+          webKitProxy: WebKitProxy(
+            createNavigationDelegate: CapturingNavigationDelegate.new,
+            createUIDelegate: CapturingUIDelegate.new,
+          ),
+        ),
+      );
+
+      late final HttpResponseError callbackError;
+      void onHttpError(HttpResponseError error) {
+        callbackError = error;
+      }
+
+      webKitDelegate.setOnHttpError(onHttpError);
+
+      CapturingNavigationDelegate
+          .lastCreatedDelegate.decidePolicyForNavigationResponse!(
+        WKWebView.detached(),
+        const WKNavigationResponse(
+            response: NSHttpUrlResponse(statusCode: 401), forMainFrame: true),
+      );
+
+      expect(callbackError.response?.statusCode, 401);
+    });
+
+    test('setOnHttpError is not called for error codes < 400', () {
+      final WebKitNavigationDelegate webKitDelegate = WebKitNavigationDelegate(
+        const WebKitNavigationDelegateCreationParams(
+          webKitProxy: WebKitProxy(
+            createNavigationDelegate: CapturingNavigationDelegate.new,
+            createUIDelegate: CapturingUIDelegate.new,
+          ),
+        ),
+      );
+
+      HttpResponseError? callbackError;
+      void onHttpError(HttpResponseError error) {
+        callbackError = error;
+      }
+
+      webKitDelegate.setOnHttpError(onHttpError);
+
+      CapturingNavigationDelegate
+          .lastCreatedDelegate.decidePolicyForNavigationResponse!(
+        WKWebView.detached(),
+        const WKNavigationResponse(
+            response: NSHttpUrlResponse(statusCode: 399), forMainFrame: true),
+      );
+
+      expect(callbackError, isNull);
+    });
+
     test('onWebResourceError from didFailNavigation', () {
       final WebKitNavigationDelegate webKitDelegate = WebKitNavigationDelegate(
         const WebKitNavigationDelegateCreationParams(
@@ -92,12 +147,17 @@ void main() {
         const NSError(
           code: WKErrorCode.webViewInvalidated,
           domain: 'domain',
-          localizedDescription: 'my desc',
+          userInfo: <String, Object?>{
+            NSErrorUserInfoKey.NSURLErrorFailingURLStringError:
+                'www.flutter.dev',
+            NSErrorUserInfoKey.NSLocalizedDescription: 'my desc',
+          },
         ),
       );
 
       expect(callbackError.description, 'my desc');
       expect(callbackError.errorCode, WKErrorCode.webViewInvalidated);
+      expect(callbackError.url, 'www.flutter.dev');
       expect(callbackError.domain, 'domain');
       expect(callbackError.errorType, WebResourceErrorType.webViewInvalidated);
       expect(callbackError.isForMainFrame, true);
@@ -126,11 +186,16 @@ void main() {
         const NSError(
           code: WKErrorCode.webViewInvalidated,
           domain: 'domain',
-          localizedDescription: 'my desc',
+          userInfo: <String, Object?>{
+            NSErrorUserInfoKey.NSURLErrorFailingURLStringError:
+                'www.flutter.dev',
+            NSErrorUserInfoKey.NSLocalizedDescription: 'my desc',
+          },
         ),
       );
 
       expect(callbackError.description, 'my desc');
+      expect(callbackError.url, 'www.flutter.dev');
       expect(callbackError.errorCode, WKErrorCode.webViewInvalidated);
       expect(callbackError.domain, 'domain');
       expect(callbackError.errorType, WebResourceErrorType.webViewInvalidated);
@@ -194,7 +259,9 @@ void main() {
           WKWebView.detached(),
           const WKNavigationAction(
             request: NSUrlRequest(url: 'https://www.google.com'),
-            targetFrame: WKFrameInfo(isMainFrame: false),
+            targetFrame: WKFrameInfo(
+                isMainFrame: false,
+                request: NSUrlRequest(url: 'https://google.com')),
             navigationType: WKNavigationType.linkActivated,
           ),
         ),
@@ -204,6 +271,44 @@ void main() {
       expect(callbackRequest.url, 'https://www.google.com');
       expect(callbackRequest.isMainFrame, isFalse);
     });
+
+    test('onHttpBasicAuthRequest emits host and realm', () {
+      final WebKitNavigationDelegate iosNavigationDelegate =
+          WebKitNavigationDelegate(
+        const WebKitNavigationDelegateCreationParams(
+          webKitProxy: WebKitProxy(
+            createNavigationDelegate: CapturingNavigationDelegate.new,
+          ),
+        ),
+      );
+
+      String? callbackHost;
+      String? callbackRealm;
+
+      iosNavigationDelegate.setOnHttpAuthRequest((HttpAuthRequest request) {
+        callbackHost = request.host;
+        callbackRealm = request.realm;
+      });
+
+      const String expectedHost = 'expectedHost';
+      const String expectedRealm = 'expectedRealm';
+
+      CapturingNavigationDelegate
+              .lastCreatedDelegate.didReceiveAuthenticationChallenge!(
+          WKWebView.detached(),
+          NSUrlAuthenticationChallenge.detached(
+            protectionSpace: NSUrlProtectionSpace.detached(
+              host: expectedHost,
+              realm: expectedRealm,
+              authenticationMethod: NSUrlAuthenticationMethod.httpBasic,
+            ),
+          ),
+          (NSUrlSessionAuthChallengeDisposition disposition,
+              NSUrlCredential? credential) {});
+
+      expect(callbackHost, expectedHost);
+      expect(callbackRealm, expectedRealm);
+    });
   });
 }
 
@@ -212,15 +317,17 @@ class CapturingNavigationDelegate extends WKNavigationDelegate {
   CapturingNavigationDelegate({
     super.didFinishNavigation,
     super.didStartProvisionalNavigation,
+    super.decidePolicyForNavigationResponse,
     super.didFailNavigation,
     super.didFailProvisionalNavigation,
     super.decidePolicyForNavigationAction,
     super.webViewWebContentProcessDidTerminate,
+    super.didReceiveAuthenticationChallenge,
   }) : super.detached() {
     lastCreatedDelegate = this;
   }
   static CapturingNavigationDelegate lastCreatedDelegate =
-  CapturingNavigationDelegate();
+      CapturingNavigationDelegate();
 }
 
 // Records the last created instance of itself.
@@ -228,6 +335,9 @@ class CapturingUIDelegate extends WKUIDelegate {
   CapturingUIDelegate({
     super.onCreateWebView,
     super.requestMediaCapturePermission,
+    super.runJavaScriptAlertDialog,
+    super.runJavaScriptConfirmDialog,
+    super.runJavaScriptTextInputDialog,
     super.instanceManager,
   }) : super.detached() {
     lastCreatedDelegate = this;

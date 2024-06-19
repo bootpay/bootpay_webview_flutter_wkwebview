@@ -24,7 +24,7 @@
 - (void)createWithConfiguration:(WKWebViewConfiguration *)configuration
                      completion:(void (^)(FlutterError *_Nullable))completion {
   long identifier = [self.instanceManager addHostCreatedInstance:configuration];
-  [self createWithIdentifier:@(identifier) completion:completion];
+  [self createWithIdentifier:identifier completion:completion];
 }
 @end
 
@@ -38,7 +38,19 @@
   }
   return self;
 }
- 
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(void *)context {
+  [self.objectApi observeValueForObject:self
+                                keyPath:keyPath
+                                 object:object
+                                 change:change
+                             completion:^(FlutterError *error) {
+                                 NSAssert(!error, @"%@", error);
+                             }];
+}
 @end
 
 @interface BTWebViewConfigurationHostApiImpl ()
@@ -60,51 +72,60 @@
   return self;
 }
 
-- (WKWebViewConfiguration *)webViewConfigurationForIdentifier:(NSNumber *)identifier {
-  return (WKWebViewConfiguration *)[self.instanceManager
-      instanceForIdentifier:identifier.longValue];
+- (WKWebViewConfiguration *)webViewConfigurationForIdentifier:(NSInteger)identifier {
+  return (WKWebViewConfiguration *)[self.instanceManager instanceForIdentifier:identifier];
 }
 
-- (void)createWithIdentifier:(nonnull NSNumber *)identifier
-                       error:(FlutterError *_Nullable *_Nonnull)error {
+- (void)createWithIdentifier:(NSInteger)identifier error:(FlutterError *_Nullable *_Nonnull)error {
   BTWebViewConfiguration *webViewConfiguration =
-      [[BTWebViewConfiguration alloc] initWithBinaryMessenger:self.binaryMessenger
-                                               instanceManager:self.instanceManager];
-  [self.instanceManager addDartCreatedInstance:webViewConfiguration
-                                withIdentifier:identifier.longValue];
+          [[BTWebViewConfiguration alloc] initWithBinaryMessenger:self.binaryMessenger
+                                                   instanceManager:self.instanceManager];
+  [self.instanceManager addDartCreatedInstance:webViewConfiguration withIdentifier:identifier];
 }
 
-- (void)createFromWebViewWithIdentifier:(nonnull NSNumber *)identifier
-                      webViewIdentifier:(nonnull NSNumber *)webViewIdentifier
+- (void)createFromWebViewWithIdentifier:(NSInteger)identifier
+                      webViewIdentifier:(NSInteger)webViewIdentifier
                                   error:(FlutterError *_Nullable __autoreleasing *_Nonnull)error {
-  WKWebView *webView =
-      (WKWebView *)[self.instanceManager instanceForIdentifier:webViewIdentifier.longValue];
-  [self.instanceManager addDartCreatedInstance:webView.configuration
-                                withIdentifier:identifier.longValue];
+  WKWebView *webView = (WKWebView *)[self.instanceManager instanceForIdentifier:webViewIdentifier];
+  [self.instanceManager addDartCreatedInstance:webView.configuration withIdentifier:identifier];
 }
 
-- (void)setAllowsInlineMediaPlaybackForConfigurationWithIdentifier:(nonnull NSNumber *)identifier
-                                                         isAllowed:(nonnull NSNumber *)allow
+- (void)setAllowsInlineMediaPlaybackForConfigurationWithIdentifier:(NSInteger)identifier
+                                                         isAllowed:(BOOL)allow
                                                              error:
-                                                                 (FlutterError *_Nullable *_Nonnull)
-                                                                     error {
-  [[self webViewConfigurationForIdentifier:identifier]
-      setAllowsInlineMediaPlayback:allow.boolValue];
+                                                                     (FlutterError *_Nullable *_Nonnull)
+error {
+  [[self webViewConfigurationForIdentifier:identifier] setAllowsInlineMediaPlayback:allow];
+}
+
+- (void)setLimitsNavigationsToAppBoundDomainsForConfigurationWithIdentifier:(NSInteger)identifier
+                                                                  isLimited:(BOOL)limit
+                                                                      error:(FlutterError *_Nullable
+*_Nonnull)error {
+  if (@available(iOS 14, *)) {
+    [[self webViewConfigurationForIdentifier:identifier]
+            setLimitsNavigationsToAppBoundDomains:limit];
+  } else {
+    *error = [FlutterError
+            errorWithCode:@"BTUnsupportedVersionError"
+                  message:@"setLimitsNavigationsToAppBoundDomains is only supported on versions 14+."
+                  details:nil];
+  }
 }
 
 - (void)
-    setMediaTypesRequiresUserActionForConfigurationWithIdentifier:(nonnull NSNumber *)identifier
-                                                         forTypes:
+setMediaTypesRequiresUserActionForConfigurationWithIdentifier:(NSInteger)identifier
+                                                     forTypes:
                                                              (nonnull NSArray<
-                                                                 BTWKAudiovisualMediaTypeEnumData
-                                                                     *> *)types
-                                                            error:
-                                                                (FlutterError *_Nullable *_Nonnull)
-                                                                    error {
+BTWKAudiovisualMediaTypeEnumData
+*> *)types
+        error:
+(FlutterError *_Nullable *_Nonnull)
+error {
   NSAssert(types.count, @"Types must not be empty.");
 
   WKWebViewConfiguration *configuration =
-      (WKWebViewConfiguration *)[self webViewConfigurationForIdentifier:identifier];
+  (WKWebViewConfiguration *)[self webViewConfigurationForIdentifier:identifier];
   WKAudiovisualMediaTypes typesInt = 0;
   for (BTWKAudiovisualMediaTypeEnumData *data in types) {
     typesInt |= BTNativeWKAudiovisualMediaTypeFromEnumData(data);

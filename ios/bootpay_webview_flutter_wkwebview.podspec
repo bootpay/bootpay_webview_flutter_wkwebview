@@ -20,5 +20,7 @@ Downloaded by pub (not CocoaPods).
   s.dependency 'Flutter'
 
   s.platform = :ios, '9.0'
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
+  s.resource_bundles = {'webview_flutter_wkwebview_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
 end
