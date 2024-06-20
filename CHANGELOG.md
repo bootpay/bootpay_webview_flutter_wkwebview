@@ -1,4 +1,4 @@
-# 3.13.12
+# 3.13.13
 * event channel rename, popup webview bug fixed
 
 # 3.13.1

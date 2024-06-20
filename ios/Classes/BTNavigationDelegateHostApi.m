@@ -263,8 +263,7 @@ decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse
                                                            completion:^(FlutterError *error) {
                                                              NSAssert(!error, @"%@", error);
                                                            }];
-}
-
+} 
 
 
 
@@ -296,7 +295,7 @@ decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse
 
 
     popupView.navigationDelegate = self;
-    popupView.UIDelegate = self;
+//    popupView.UIDelegate = self;
 
     [webView.superview addSubview:popupView];
     [popupView autoresizingMask];
