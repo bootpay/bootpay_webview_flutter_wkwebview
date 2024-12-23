@@ -203,8 +203,8 @@ Page resource error:
           }),
       )
       ..setOnJavaScriptAlertDialog((JavaScriptAlertDialogRequest request) async {
-        await _showAlert(context, request.message);
-      })
+          await _showAlert(context, request.message);
+        })
       ..setOnJavaScriptConfirmDialog(
               (JavaScriptConfirmDialogRequest request) async {
             final bool result = await _showConfirm(context, request.message);
@@ -233,7 +233,7 @@ Page resource error:
         },
       )
       ..loadRequest(LoadRequestParams(
-        uri: Uri.parse('https://dev-js.bootapi.com/test/payment/'),
+        uri: Uri.parse('https://www.naver.com'),
       ))
       ..setOnScrollPositionChange((ScrollPositionChange scrollPositionChange) {
         debugPrint(
