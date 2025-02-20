@@ -1,3 +1,6 @@
+# 3.13.15
+* 기존 webview와 viewId 겹치는 문제 해결 
+
 # 3.13.14
 * sdk version update
 

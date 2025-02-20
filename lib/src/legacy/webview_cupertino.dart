@@ -35,7 +35,7 @@ class CupertinoWebView implements WebViewPlatform {
       javascriptChannelRegistry: javascriptChannelRegistry,
       onBuildWidget: (WebKitWebViewPlatformController controller) {
         return UiKitView(
-          viewType: 'plugins.flutter.io/webview',
+          viewType: 'kr.co.bootpay/webview',
           onPlatformViewCreated: (int id) {
             if (onWebViewPlatformCreated != null) {
               onWebViewPlatformCreated(controller);

@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 
 import 'foundation/foundation.dart';
 import 'web_kit/web_kit.dart';
-import 'webkit_proxy.dart';
+import 'bt_webkit_proxy.dart';
 
 /// Object specifying creation parameters for a [WebKitWebViewCookieManager].
 class WebKitWebViewCookieManagerCreationParams

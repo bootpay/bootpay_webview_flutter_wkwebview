@@ -16,7 +16,7 @@ import 'common/weak_reference_utils.dart';
 import 'foundation/foundation.dart';
 import 'ui_kit/ui_kit.dart';
 import 'web_kit/web_kit.dart';
-import 'webkit_proxy.dart';
+import 'bt_webkit_proxy.dart';
 
 /// Media types that can require a user gesture to begin playing.
 ///
@@ -923,7 +923,7 @@ class WebKitWebViewWidget extends PlatformWebViewWidget {
       key: _webKitParams.key ??
           ValueKey<WebKitWebViewWidgetCreationParams>(
               params as WebKitWebViewWidgetCreationParams),
-      viewType: 'plugins.flutter.io/webview',
+      viewType: 'kr.co.bootpay/webview',
       onPlatformViewCreated: (_) {},
       layoutDirection: params.layoutDirection,
       gestureRecognizers: params.gestureRecognizers,

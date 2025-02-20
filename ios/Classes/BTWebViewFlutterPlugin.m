@@ -116,7 +116,7 @@
                                                        instanceManager:instanceManager]);
 
   BTWebViewFactory *webviewFactory = [[BTWebViewFactory alloc] initWithManager:instanceManager];
-  [registrar registerViewFactory:webviewFactory withId:@"plugins.flutter.io/webview"];
+  [registrar registerViewFactory:webviewFactory withId:@"kr.co.bootpay/webview"];
 
   // InstanceManager is published so that a strong reference is maintained.
   [registrar publish:instanceManager];

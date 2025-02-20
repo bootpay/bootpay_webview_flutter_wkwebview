@@ -4,8 +4,8 @@
 
 import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutter_platform_interface.dart';
 
-import 'webkit_webview_controller.dart';
-import 'webkit_webview_cookie_manager.dart';
+import 'bt_webkit_webview_controller.dart';
+import 'bt_webkit_webview_cookie_manager.dart';
 
 /// Implementation of [WebViewPlatform] using the WebKit API.
 class BTWebKitWebViewPlatform extends WebViewPlatform {
