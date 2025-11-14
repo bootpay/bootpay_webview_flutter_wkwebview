@@ -1,0 +1,12 @@
+module path_provider_foundation {
+  umbrella header "path_provider_foundation-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+
+module path_provider_foundation.Swift {
+  header "/Users/taesupyoon/bootpay/client/flutter/bootpay/bootpay_flutter_webview/bootpay_webview_flutter_wkwebview/example/build/ios/Debug-iphonesimulator/path_provider_foundation/Swift Compatibility Header/path_provider_foundation-Swift.h"
+  requires objc
+}
