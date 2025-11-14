@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutter_platform_interface.dart';
 import 'package:bootpay_webview_flutter_wkwebview/src/common/web_kit.g.dart';
 import 'package:bootpay_webview_flutter_wkwebview/src/common/webkit_constants.dart';
 import 'package:bootpay_webview_flutter_wkwebview/src/webkit_proxy.dart';

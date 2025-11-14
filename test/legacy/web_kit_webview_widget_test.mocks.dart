@@ -7,11 +7,11 @@ import 'dart:async' as _i4;
 import 'dart:typed_data' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:webview_flutter_platform_interface/src/legacy/types/javascript_channel.dart'
+import 'package:bootpay_webview_flutter_platform_interface/src/legacy/types/javascript_channel.dart'
     as _i7;
-import 'package:webview_flutter_platform_interface/src/legacy/types/types.dart'
+import 'package:bootpay_webview_flutter_platform_interface/src/legacy/types/types.dart'
     as _i8;
-import 'package:webview_flutter_platform_interface/src/webview_flutter_platform_interface_legacy.dart'
+import 'package:bootpay_webview_flutter_platform_interface/src/bootpay_webview_flutter_platform_interface_legacy.dart'
     as _i6;
 import 'package:bootpay_webview_flutter_wkwebview/src/common/platform_webview.dart'
     as _i3;
