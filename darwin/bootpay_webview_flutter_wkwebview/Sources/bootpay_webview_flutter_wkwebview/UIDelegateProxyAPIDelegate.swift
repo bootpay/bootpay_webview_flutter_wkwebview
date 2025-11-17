@@ -32,17 +32,9 @@ class UIDelegateImpl: NSObject, WKUIDelegate, WKNavigationDelegate {
 
     webView.superview?.addSubview(popupView)
 
-    // Notify Dart side about popup creation
-    registrar.dispatchOnMainThread { onFailure in
-      self.api.onCreateWebView(
-        pigeonInstance: self, webView: webView, configuration: configuration,
-        navigationAction: navigationAction
-      ) { result in
-        if case .failure(let error) = result {
-          onFailure("WKUIDelegate.onCreateWebView", error)
-        }
-      }
-    }
+    // Note: Removed Dart callback to prevent popup creation issues
+    // Handle popup entirely in native code for better stability
+    // This matches bootpay_flutter_webview 2 implementation
 
     return popupView
   }
