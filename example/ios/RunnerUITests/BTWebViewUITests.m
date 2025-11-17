@@ -24,11 +24,11 @@ static UIColor *getPixelColorInImage(CGImageRef image, size_t x, size_t y) {
                          alpha:alpha / 255.0f];
 }
 
-@interface FLTWebViewUITests : XCTestCase
+@interface BTWebViewUITests : XCTestCase
 @property(nonatomic, strong) XCUIApplication *app;
 @end
 
-@implementation FLTWebViewUITests
+@implementation BTWebViewUITests
 
 - (void)setUp {
   self.continueAfterFailure = NO;

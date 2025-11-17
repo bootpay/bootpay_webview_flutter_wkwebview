@@ -36,7 +36,7 @@ open class ProxyAPIRegistrar: WebKitLibraryPigeonProxyApiRegistrar {
   /// Creates an error when a method is called on an unsupported version.
   func createUnsupportedVersionError(method: String, versionRequirements: String) -> PigeonError {
     return PigeonError(
-      code: "FWFUnsupportedVersionError",
+      code: "BTUnsupportedVersionError",
       message: createUnsupportedVersionMessage(method, versionRequirements: versionRequirements),
       details: nil)
   }
@@ -52,7 +52,7 @@ open class ProxyAPIRegistrar: WebKitLibraryPigeonProxyApiRegistrar {
   // to keep error code consistent with previous plugin versions.
   fileprivate func createNullURLError(url: String) -> PigeonError {
     return PigeonError(
-      code: "FWFURLParsingError", message: "Failed parsing file path.",
+      code: "BTURLParsingError", message: "Failed parsing file path.",
       details: "Initializing URL with the supplied '\(url)' path resulted in a nil value.")
   }
 

@@ -212,7 +212,7 @@ class WebViewProxyAPIDelegate: PigeonApiDelegateWKWebView, PigeonApiDelegateUIVi
     } else {
       let assetFilePath = registrar.assetManager.lookupKeyForAsset(key)
       throw PigeonError(
-        code: "FWFURLParsingError",
+        code: "BTURLParsingError",
         message: "Failed to find asset with filepath: `\(String(describing: assetFilePath))`.",
         details: nil)
     }
@@ -326,7 +326,7 @@ class WebViewProxyAPIDelegate: PigeonApiDelegateWKWebView, PigeonApiDelegateUIVi
         }
       } else {
         let error = PigeonError(
-          code: "FWFEvaluateJavaScriptError", message: "Failed evaluating JavaScript.",
+          code: "BTEvaluateJavaScriptError", message: "Failed evaluating JavaScript.",
           details: error! as NSError)
         completion(.failure(error))
       }

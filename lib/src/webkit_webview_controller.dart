@@ -392,10 +392,10 @@ class BootpayWebKitWebViewController extends PlatformWebViewController {
   /// Identifier used to retrieve the underlying native `WKWebView`.
   ///
   /// This is typically used by other plugins to retrieve the native `WKWebView`
-  /// from an `FWFInstanceManager`.
+  /// from an `BTInstanceManager`.
   ///
   /// See Objective-C method
-  /// `FLTWebViewFlutterPlugin:webViewForIdentifier:withPluginRegistry`.
+  /// `BTWebViewFlutterPlugin:webViewForIdentifier:withPluginRegistry`.
   int get webViewIdentifier =>
       _webKitParams._instanceManager.getIdentifier(_webView.nativeWebView)!;
 
@@ -1549,3 +1549,14 @@ class BootpayWebKitWebViewPermissionRequest extends PlatformWebViewPermissionReq
     _onDecision(PermissionDecision.prompt);
   }
 }
+
+// Type aliases for backward compatibility with tests
+typedef WebKitLoadFileParams = BootpayWebKitLoadFileParams;
+typedef WebKitWebViewController = BootpayWebKitWebViewController;
+typedef WebKitJavaScriptChannelParams = BootpayWebKitJavaScriptChannelParams;
+typedef WebKitWebViewWidgetCreationParams = BootpayWebKitWebViewWidgetCreationParams;
+typedef WebKitWebViewWidget = BootpayWebKitWebViewWidget;
+typedef WebKitWebResourceError = BootpayWebKitWebResourceError;
+typedef WebKitNavigationDelegateCreationParams = BootpayWebKitNavigationDelegateCreationParams;
+typedef WebKitNavigationDelegate = BootpayWebKitNavigationDelegate;
+typedef WebKitWebViewPermissionRequest = BootpayWebKitWebViewPermissionRequest;

@@ -35,7 +35,7 @@
 		8F1488F62D2DE27000191744 /* NavigationDelegateProxyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1488CC2D2DE27000191744 /* NavigationDelegateProxyAPITests.swift */; };
 		8F1488F72D2DE27000191744 /* UIDelegateProxyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1488D72D2DE27000191744 /* UIDelegateProxyAPITests.swift */; };
 		8F1488F82D2DE27000191744 /* ScrollViewDelegateProxyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1488D22D2DE27000191744 /* ScrollViewDelegateProxyAPITests.swift */; };
-		8F1488FA2D2DE27000191744 /* FWFWebViewFlutterWKWebViewExternalAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1488C72D2DE27000191744 /* FWFWebViewFlutterWKWebViewExternalAPITests.swift */; };
+		8F1488FA2D2DE27000191744 /* BTWebViewFlutterWKWebViewExternalAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1488C72D2DE27000191744 /* BTWebViewFlutterWKWebViewExternalAPITests.swift */; };
 		8F1488FB2D2DE27000191744 /* UserContentControllerProxyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1488DD2D2DE27000191744 /* UserContentControllerProxyAPITests.swift */; };
 		8F1488FC2D2DE27000191744 /* HTTPURLResponseProxyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1488CA2D2DE27000191744 /* HTTPURLResponseProxyAPITests.swift */; };
 		8F1488FD2D2DE27000191744 /* ScrollViewProxyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1488D32D2DE27000191744 /* ScrollViewProxyAPITests.swift */; };
@@ -52,7 +52,7 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		F58D21CF2B56D293F5D0C9DD /* libPods-Runner.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0B3CCDE35BDD41DAFF35D52 /* libPods-Runner.a */; };
-		F7151F77266057800028CB91 /* FLTWebViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F7151F76266057800028CB91 /* FLTWebViewUITests.m */; };
+		F7151F77266057800028CB91 /* BTWebViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F7151F76266057800028CB91 /* BTWebViewUITests.m */; };
 		FD385D0DDFE8391F59BF3761 /* libPods-RunnerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1EBA96B1558D8F704E0F2F /* libPods-RunnerTests.a */; };
 /* End PBXBuildFile section */
 
@@ -102,7 +102,7 @@
 		8F0EDFD22E1F4967001938E6 /* ProxyAPIRegistrarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProxyAPIRegistrarTests.swift; path = ../../darwin/Tests/ProxyAPIRegistrarTests.swift; sourceTree = SOURCE_ROOT; };
 		8F1488C52D2DE27000191744 /* ErrorProxyAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ErrorProxyAPITests.swift; path = ../../darwin/Tests/ErrorProxyAPITests.swift; sourceTree = SOURCE_ROOT; };
 		8F1488C62D2DE27000191744 /* FrameInfoProxyAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FrameInfoProxyAPITests.swift; path = ../../darwin/Tests/FrameInfoProxyAPITests.swift; sourceTree = SOURCE_ROOT; };
-		8F1488C72D2DE27000191744 /* FWFWebViewFlutterWKWebViewExternalAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FWFWebViewFlutterWKWebViewExternalAPITests.swift; path = ../../darwin/Tests/FWFWebViewFlutterWKWebViewExternalAPITests.swift; sourceTree = SOURCE_ROOT; };
+		8F1488C72D2DE27000191744 /* BTWebViewFlutterWKWebViewExternalAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BTWebViewFlutterWKWebViewExternalAPITests.swift; path = ../../darwin/Tests/BTWebViewFlutterWKWebViewExternalAPITests.swift; sourceTree = SOURCE_ROOT; };
 		8F1488C82D2DE27000191744 /* HTTPCookieProxyAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTTPCookieProxyAPITests.swift; path = ../../darwin/Tests/HTTPCookieProxyAPITests.swift; sourceTree = SOURCE_ROOT; };
 		8F1488C92D2DE27000191744 /* HTTPCookieStoreProxyAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTTPCookieStoreProxyAPITests.swift; path = ../../darwin/Tests/HTTPCookieStoreProxyAPITests.swift; sourceTree = SOURCE_ROOT; };
 		8F1488CA2D2DE27000191744 /* HTTPURLResponseProxyAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HTTPURLResponseProxyAPITests.swift; path = ../../darwin/Tests/HTTPURLResponseProxyAPITests.swift; sourceTree = SOURCE_ROOT; };
@@ -148,7 +148,7 @@
 		E0B3CCDE35BDD41DAFF35D52 /* libPods-Runner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Runner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF1EBA96B1558D8F704E0F2F /* libPods-RunnerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RunnerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7151F74266057800028CB91 /* RunnerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F7151F76266057800028CB91 /* FLTWebViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FLTWebViewUITests.m; sourceTree = "<group>"; };
+		F7151F76266057800028CB91 /* BTWebViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BTWebViewUITests.m; sourceTree = "<group>"; };
 		F7151F78266057800028CB91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -202,7 +202,7 @@
 				8F1489002D2DE91C00191744 /* AuthenticationChallengeResponseProxyAPITests.swift */,
 				8F1488C52D2DE27000191744 /* ErrorProxyAPITests.swift */,
 				8F1488C62D2DE27000191744 /* FrameInfoProxyAPITests.swift */,
-				8F1488C72D2DE27000191744 /* FWFWebViewFlutterWKWebViewExternalAPITests.swift */,
+				8F1488C72D2DE27000191744 /* BTWebViewFlutterWKWebViewExternalAPITests.swift */,
 				8F1488C82D2DE27000191744 /* HTTPCookieProxyAPITests.swift */,
 				8F1488C92D2DE27000191744 /* HTTPCookieStoreProxyAPITests.swift */,
 				8F1488CA2D2DE27000191744 /* HTTPURLResponseProxyAPITests.swift */,
@@ -307,7 +307,7 @@
 		F7151F75266057800028CB91 /* RunnerUITests */ = {
 			isa = PBXGroup;
 			children = (
-				F7151F76266057800028CB91 /* FLTWebViewUITests.m */,
+				F7151F76266057800028CB91 /* BTWebViewUITests.m */,
 				F7151F78266057800028CB91 /* Info.plist */,
 			);
 			path = RunnerUITests;
@@ -589,7 +589,7 @@
 				8F1488F62D2DE27000191744 /* NavigationDelegateProxyAPITests.swift in Sources */,
 				8F1488F72D2DE27000191744 /* UIDelegateProxyAPITests.swift in Sources */,
 				8F1488F82D2DE27000191744 /* ScrollViewDelegateProxyAPITests.swift in Sources */,
-				8F1488FA2D2DE27000191744 /* FWFWebViewFlutterWKWebViewExternalAPITests.swift in Sources */,
+				8F1488FA2D2DE27000191744 /* BTWebViewFlutterWKWebViewExternalAPITests.swift in Sources */,
 				8F1488FB2D2DE27000191744 /* UserContentControllerProxyAPITests.swift in Sources */,
 				8F1488FC2D2DE27000191744 /* HTTPURLResponseProxyAPITests.swift in Sources */,
 				8F1488FD2D2DE27000191744 /* ScrollViewProxyAPITests.swift in Sources */,
@@ -612,7 +612,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7151F77266057800028CB91 /* FLTWebViewUITests.m in Sources */,
+				F7151F77266057800028CB91 /* BTWebViewUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

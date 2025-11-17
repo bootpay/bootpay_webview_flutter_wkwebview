@@ -5,7 +5,7 @@
 import WebKit
 import XCTest
 
-@testable import webview_flutter_wkwebview
+@testable import bootpay_webview_flutter_wkwebview
 
 #if os(iOS)
   import Flutter
@@ -15,7 +15,7 @@ import XCTest
   #error("Unsupported platform.")
 #endif
 
-class FWFWebViewFlutterWKWebViewExternalAPITests: XCTestCase {
+class BTWebViewFlutterWKWebViewExternalAPITests: XCTestCase {
   @MainActor func testWebViewForIdentifier() {
     let registry = TestRegistry()
 
@@ -25,16 +25,16 @@ class FWFWebViewFlutterWKWebViewExternalAPITests: XCTestCase {
       let registrar = registry.registrar(forPlugin: "")
     #endif
 
-    WebViewFlutterPlugin.register(with: registrar)
+    BTWebViewFlutterPlugin.register(with: registrar)
 
-    let plugin = registry.registrar.plugin as! WebViewFlutterPlugin?
+    let plugin = registry.registrar.plugin as! BTWebViewFlutterPlugin?
 
     let webView = WKWebView(frame: .zero)
     let webViewIdentifier = 0
     plugin?.proxyApiRegistrar?.instanceManager.addDartCreatedInstance(
       webView, withIdentifier: Int64(webViewIdentifier))
 
-    let result = FWFWebViewFlutterWKWebViewExternalAPI.webView(
+    let result = BTWebViewFlutterWKWebViewExternalAPI.webView(
       forIdentifier: Int64(webViewIdentifier), withPluginRegistry: registry)
     XCTAssertEqual(result, webView)
   }
@@ -58,7 +58,7 @@ class TestRegistry: NSObject, FlutterPluginRegistry {
   }
 
   func valuePublished(byPlugin pluginKey: String) -> NSObject? {
-    if pluginKey == "WebViewFlutterPlugin" {
+    if pluginKey == "BTWebViewFlutterPlugin" {
       return registrar.plugin
     }
     return nil
@@ -85,7 +85,7 @@ class TestFlutterTextureRegistry: NSObject, FlutterTextureRegistry {
 // protocol reaches stable, this #if should be removed, as should Stubs.*.
 #if os(macOS)
   class TestFlutterPluginRegistrar: NSObject, FlutterPluginRegistrar {
-    var plugin: WebViewFlutterPlugin? = nil
+    var plugin: BTWebViewFlutterPlugin? = nil
 
     #if os(iOS)
       var viewController: UIViewController?
@@ -131,7 +131,7 @@ class TestFlutterTextureRegistry: NSObject, FlutterTextureRegistry {
     }
 
     func publish(_ value: NSObject) {
-      plugin = (value as! WebViewFlutterPlugin)
+      plugin = (value as! BTWebViewFlutterPlugin)
     }
 
     func addMethodCallDelegate(_ delegate: FlutterPlugin, channel: FlutterMethodChannel) {

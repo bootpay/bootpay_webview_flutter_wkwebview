@@ -27,7 +27,7 @@ Objective-C:
 @import bootpay_webview_flutter_wkwebview;
 ```
 
-Then you will have access to the native class `FWFWebViewFlutterWKWebViewExternalAPI`.
+Then you will have access to the native class `BTWebViewFlutterWKWebViewExternalAPI`.
 
 ## Contributing
 

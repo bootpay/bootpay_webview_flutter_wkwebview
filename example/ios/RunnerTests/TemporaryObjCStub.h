@@ -6,7 +6,7 @@
 
 // TODO(stuartmorgan): This file is temporarily iOS workaround for changes in
 // FlutterPluginRegistrar. See the TestFlutterPluginRegistrar TODO in
-// FWFWebViewFlutterWKWebViewExternalAPITests.swift.
+// BTWebViewFlutterWKWebViewExternalAPITests.swift.
 #if TARGET_OS_IOS
 @import Flutter;
 

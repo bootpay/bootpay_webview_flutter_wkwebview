@@ -83,3 +83,7 @@ class BootpayWebKitWebViewCookieManager extends PlatformWebViewCookieManager {
     });
   }
 }
+
+// Type aliases for backward compatibility with tests
+typedef WebKitWebViewCookieManagerCreationParams = BootpayWebKitWebViewCookieManagerCreationParams;
+typedef WebKitWebViewCookieManager = BootpayWebKitWebViewCookieManager;

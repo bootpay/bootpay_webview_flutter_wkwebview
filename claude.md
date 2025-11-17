@@ -159,8 +159,8 @@ public class BTWebViewFlutterPlugin: NSObject, FlutterPlugin {
 ```swift
 // 파일: darwin/bootpay_webview_flutter_wkwebview/Sources/bootpay_webview_flutter_wkwebview/WebViewFlutterWKWebViewExternalAPI.swift
 
-@objc(FWFWebViewFlutterWKWebViewExternalAPI)
-public class FWFWebViewFlutterWKWebViewExternalAPI: NSObject {
+@objc(BTWebViewFlutterWKWebViewExternalAPI)
+public class BTWebViewFlutterWKWebViewExternalAPI: NSObject {
   @objc(webViewForIdentifier:withPluginRegistry:)
   public static func webView(
     forIdentifier identifier: Int64, withPluginRegistry registry: FlutterPluginRegistry

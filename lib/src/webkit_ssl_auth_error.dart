@@ -9,10 +9,10 @@ import 'common/web_kit.g.dart';
 import 'webkit_proxy.dart';
 
 /// An implementation of [PlatformSslAuthError] with the WebKit api.
-class BootpayWebKitSslAuthError extends PlatformSslAuthError {
-  /// Creates a [BootpayWebKitSslAuthError].
+class WebKitSslAuthError extends PlatformSslAuthError {
+  /// Creates a [WebKitSslAuthError].
   @internal
-  BootpayWebKitSslAuthError({
+  WebKitSslAuthError({
     required super.certificate,
     required super.description,
     required SecTrust trust,
