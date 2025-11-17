@@ -20,8 +20,8 @@ import 'webkit_ssl_auth_error.dart';
 
 /// Media types that can require a user gesture to begin playing.
 ///
-/// See [BootpayWebKitWebViewControllerCreationParams.mediaTypesRequiringUserAction].
-enum BootpayPlaybackMediaTypes {
+/// See [WebKitWebViewControllerCreationParams.mediaTypesRequiringUserAction].
+enum PlaybackMediaTypes {
   /// A media type that contains audio.
   audio,
 
@@ -30,9 +30,9 @@ enum BootpayPlaybackMediaTypes {
 
   AudiovisualMediaType _toWKAudiovisualMediaType() {
     switch (this) {
-      case BootpayPlaybackMediaTypes.audio:
+      case PlaybackMediaTypes.audio:
         return AudiovisualMediaType.audio;
-      case BootpayPlaybackMediaTypes.video:
+      case PlaybackMediaTypes.video:
         return AudiovisualMediaType.video;
     }
   }
@@ -73,14 +73,14 @@ base class BootpayWebKitLoadFileParams extends LoadFileParams {
 
 /// Object specifying creation parameters for a [BootpayWebKitWebViewController].
 @immutable
-class BootpayWebKitWebViewControllerCreationParams
+class WebKitWebViewControllerCreationParams
     extends PlatformWebViewControllerCreationParams {
-  /// Constructs a [BootpayWebKitWebViewControllerCreationParams].
-  BootpayWebKitWebViewControllerCreationParams({
+  /// Constructs a [WebKitWebViewControllerCreationParams].
+  WebKitWebViewControllerCreationParams({
     @visibleForTesting this.webKitProxy = const WebKitProxy(),
-    this.mediaTypesRequiringUserAction = const <BootpayPlaybackMediaTypes>{
-      BootpayPlaybackMediaTypes.audio,
-      BootpayPlaybackMediaTypes.video,
+    this.mediaTypesRequiringUserAction = const <PlaybackMediaTypes>{
+      PlaybackMediaTypes.audio,
+      PlaybackMediaTypes.video,
     },
     this.allowsInlineMediaPlayback = false,
     this.limitsNavigationsToAppBoundDomains = false,
@@ -112,17 +112,17 @@ class BootpayWebKitWebViewControllerCreationParams
     }
   }
 
-  /// Constructs a [BootpayWebKitWebViewControllerCreationParams] using a
+  /// Constructs a [WebKitWebViewControllerCreationParams] using a
   /// [PlatformWebViewControllerCreationParams].
-  BootpayWebKitWebViewControllerCreationParams.fromPlatformWebViewControllerCreationParams(
+  WebKitWebViewControllerCreationParams.fromPlatformWebViewControllerCreationParams(
     // Recommended placeholder to prevent being broken by platform interface.
     // ignore: avoid_unused_constructor_parameters
     PlatformWebViewControllerCreationParams params, {
     @visibleForTesting WebKitProxy webKitProxy = const WebKitProxy(),
-    Set<BootpayPlaybackMediaTypes> mediaTypesRequiringUserAction =
-        const <BootpayPlaybackMediaTypes>{
-          BootpayPlaybackMediaTypes.audio,
-          BootpayPlaybackMediaTypes.video,
+    Set<PlaybackMediaTypes> mediaTypesRequiringUserAction =
+        const <PlaybackMediaTypes>{
+          PlaybackMediaTypes.audio,
+          PlaybackMediaTypes.video,
         },
     bool allowsInlineMediaPlayback = false,
     bool limitsNavigationsToAppBoundDomains = false,
@@ -139,9 +139,9 @@ class BootpayWebKitWebViewControllerCreationParams
 
   /// Media types that require a user gesture to begin playing.
   ///
-  /// Defaults to include [BootpayPlaybackMediaTypes.audio] and
-  /// [BootpayPlaybackMediaTypes.video].
-  final Set<BootpayPlaybackMediaTypes> mediaTypesRequiringUserAction;
+  /// Defaults to include [PlaybackMediaTypes.audio] and
+  /// [PlaybackMediaTypes.video].
+  final Set<PlaybackMediaTypes> mediaTypesRequiringUserAction;
 
   /// Whether inline playback of HTML5 videos is allowed.
   ///
@@ -170,9 +170,9 @@ class BootpayWebKitWebViewController extends PlatformWebViewController {
   /// Constructs a [BootpayWebKitWebViewController].
   BootpayWebKitWebViewController(PlatformWebViewControllerCreationParams params)
     : super.implementation(
-        params is BootpayWebKitWebViewControllerCreationParams
+        params is WebKitWebViewControllerCreationParams
             ? params
-            : BootpayWebKitWebViewControllerCreationParams.fromPlatformWebViewControllerCreationParams(
+            : WebKitWebViewControllerCreationParams.fromPlatformWebViewControllerCreationParams(
                 params,
               ),
       ) {
@@ -386,8 +386,8 @@ class BootpayWebKitWebViewController extends PlatformWebViewController {
   void Function(ScrollPositionChange scrollPositionChange)?
   _onScrollPositionChangeCallback;
 
-  BootpayWebKitWebViewControllerCreationParams get _webKitParams =>
-      params as BootpayWebKitWebViewControllerCreationParams;
+  WebKitWebViewControllerCreationParams get _webKitParams =>
+      params as WebKitWebViewControllerCreationParams;
 
   /// Identifier used to retrieve the underlying native `WKWebView`.
   ///
