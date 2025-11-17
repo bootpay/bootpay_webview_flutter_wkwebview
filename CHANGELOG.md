@@ -1,3 +1,7 @@
+## 3.23.21
+
+* 팝업 처리 버그 개선
+
 ## 3.23.2
 
 * **Bootpay Fork**: 최신 webview_flutter_wkwebview v3.23.2 기반 마이그레이션
