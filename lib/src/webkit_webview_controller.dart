@@ -1109,7 +1109,7 @@ class WebKitWebViewWidget extends PlatformWebViewWidget {
     if (defaultTargetPlatform == TargetPlatform.macOS) {
       return AppKitView(
         key: key,
-        viewType: 'plugins.flutter.io/webview',
+        viewType: 'kr.co.bootpay/webview',
         onPlatformViewCreated: (_) {},
         layoutDirection: params.layoutDirection,
         gestureRecognizers: params.gestureRecognizers,
@@ -1121,7 +1121,7 @@ class WebKitWebViewWidget extends PlatformWebViewWidget {
     } else {
       return UiKitView(
         key: key,
-        viewType: 'plugins.flutter.io/webview',
+        viewType: 'kr.co.bootpay/webview',
         onPlatformViewCreated: (_) {},
         layoutDirection: params.layoutDirection,
         gestureRecognizers: params.gestureRecognizers,

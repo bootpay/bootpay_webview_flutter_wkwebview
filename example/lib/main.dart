@@ -140,6 +140,43 @@ const String kAlertTestPage = '''
 </html>
 ''';
 
+const String kPopupTestPage = '''
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Popup Test for Payment Windows</title>
+      <script type = "text/javascript">
+            function openPopup() {
+              var popup = window.open('about:blank', 'payment_popup', 'width=400,height=600');
+              if (popup) {
+                popup.document.write('<h1>Payment Popup Window</h1>');
+                popup.document.write('<p>This is a test popup for payment processing.</p>');
+                popup.document.write('<button onclick="window.close()">Close Popup</button>');
+              } else {
+                alert('Popup was blocked!');
+              }
+            }
+
+            function openTargetBlank() {
+              window.open('https://www.google.com', '_blank');
+            }
+      </script>
+   </head>
+
+   <body>
+      <h1>Popup Window Test</h1>
+      <p>Test popup functionality for Korean payment systems</p>
+      <form>
+        <input type = "button" value = "Open Popup (window.open)" onclick = "openPopup();" />
+        <br/><br/>
+        <input type = "button" value = "Open in New Tab (_blank)" onclick = "openTargetBlank();" />
+        <br/><br/>
+        <a href="https://www.naver.com" target="_blank">Link with target="_blank"</a>
+      </form>
+   </body>
+</html>
+''';
+
 class WebViewExample extends StatefulWidget {
   const WebViewExample({super.key, this.cookieManager});
 

@@ -28,7 +28,7 @@ public class BTWebViewFlutterPlugin: NSObject, FlutterPlugin {
     let plugin = BTWebViewFlutterPlugin(binaryMessenger: binaryMessenger)
 
     let viewFactory = FlutterViewFactory(instanceManager: plugin.proxyApiRegistrar!.instanceManager)
-    registrar.register(viewFactory, withId: "plugins.flutter.io/webview")
+    registrar.register(viewFactory, withId: "kr.co.bootpay/webview")
     registrar.publish(plugin)
   }
 

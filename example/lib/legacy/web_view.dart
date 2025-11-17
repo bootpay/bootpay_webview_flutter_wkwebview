@@ -9,7 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 // ignore: implementation_imports
-import 'package:webview_flutter_platform_interface/src/webview_flutter_platform_interface_legacy.dart';
+import 'package:bootpay_webview_flutter_platform_interface/src/webview_flutter_platform_interface_legacy.dart';
 // ignore: implementation_imports
 import 'package:bootpay_webview_flutter_wkwebview/src/bootpay_webview_flutter_wkwebview_legacy.dart';
 

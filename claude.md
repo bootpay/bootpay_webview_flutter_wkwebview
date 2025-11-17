@@ -142,7 +142,8 @@ public class BTWebViewFlutterPlugin: NSObject, FlutterPlugin {
     let plugin = BTWebViewFlutterPlugin(binaryMessenger: binaryMessenger)
 
     let viewFactory = FlutterViewFactory(instanceManager: plugin.proxyApiRegistrar!.instanceManager)
-    registrar.register(viewFactory, withId: "plugins.flutter.io/webview")
+    // ⚠️ 충돌 방지: webview_flutter와 동시 사용을 위해 Bootpay 전용 네임스페이스 사용
+    registrar.register(viewFactory, withId: "kr.co.bootpay/webview")
     registrar.publish(plugin)
   }
 
@@ -268,14 +269,103 @@ open example/ios/Runner.xcworkspace
 - [ ] `pod install` 실행
 - [ ] 빌드 테스트 (iOS 디바이스)
 
-## 7. 주의사항
+## 7. 충돌 방지 처리 (필수!)
 
-### 7.1 네이밍 규칙
+> ⚠️ **매우 중요**: 이 섹션의 처리를 하지 않으면 `webview_flutter`와 `bootpay_flutter_webview`를 동시에 사용할 때 충돌이 발생합니다!
+
+### 7.1 플랫폼 뷰 타입 이름 변경
+
+**문제**: 공식 `webview_flutter`와 플랫폼 뷰 타입 이름이 동일하면 Flutter 엔진에서 충돌 발생
+
+**해결**: Bootpay 전용 네임스페이스 사용
+
+#### Swift 네이티브 코드
+**파일**: `darwin/bootpay_webview_flutter_wkwebview/Sources/bootpay_webview_flutter_wkwebview/WebViewFlutterPlugin.swift`
+
+```swift
+// ❌ 잘못된 예 (webview_flutter와 충돌)
+registrar.register(viewFactory, withId: "plugins.flutter.io/webview")
+
+// ✅ 올바른 예 (충돌 없음)
+registrar.register(viewFactory, withId: "kr.co.bootpay/webview")
+```
+
+#### Dart 코드
+**파일**: `lib/src/webkit_webview_controller.dart` (2군데)
+
+```dart
+// ❌ 잘못된 예
+viewType: 'plugins.flutter.io/webview',
+
+// ✅ 올바른 예
+viewType: 'kr.co.bootpay/webview',
+```
+
+**파일**: `lib/src/legacy/webview_cupertino.dart` (1군데)
+
+```dart
+// ❌ 잘못된 예
+viewType: 'plugins.flutter.io/webview',
+
+// ✅ 올바른 예
+viewType: 'kr.co.bootpay/webview',
+```
+
+### 7.2 변경 확인 방법
+
+```bash
+# 올바르게 변경되었는지 확인
+grep -r "kr.co.bootpay/webview" .
+# 결과: Swift 파일 1개, Dart 파일 3개에서 발견되어야 함
+
+# 잘못된 값이 남아있는지 확인
+grep -r "plugins.flutter.io/webview" .
+# 결과: 아무것도 나오지 않아야 함 (주석, 문서 제외)
+```
+
+### 7.3 충돌 방지 테스트
+
+실제로 두 패키지를 함께 사용하는 테스트 앱을 만들어 검증:
+
+```yaml
+# test_app/pubspec.yaml
+dependencies:
+  webview_flutter: ^4.0.0  # 공식 패키지
+  bootpay_webview_flutter: ^3.0.0  # Bootpay 패키지
+```
+
+```dart
+// 두 WebView를 동시에 사용
+Column(
+  children: [
+    Expanded(
+      child: webview_flutter.WebViewWidget(...),  // 공식
+    ),
+    Expanded(
+      child: bootpay_webview_flutter.WebViewWidget(...),  // Bootpay
+    ),
+  ],
+)
+```
+
+**성공 조건**:
+- ✅ 두 WebView가 모두 정상 표시
+- ✅ 에러나 충돌 없음
+- ✅ 각각 독립적으로 작동
+
+**실패 시 에러 예시**:
+```
+Error: The platform view type 'plugins.flutter.io/webview' is already registered.
+```
+
+## 8. 주의사항
+
+### 8.1 네이밍 규칙
 - **패키지명**: `bootpay_` 접두사 사용
 - **iOS 네이티브 클래스**: `BT` 접두사 사용 (예: `BTWebViewFlutterPlugin`)
 - **Dart 클래스**: `BT` 접두사 사용 (예: `BTWebKitWebViewPlatform`)
 
-### 7.2 implements 필드 (매우 중요!)
+### 8.2 implements 필드 (매우 중요!)
 - `implements` 필드는 **메인 패키지**를 지정해야 함
 - 예: `implements: bootpay_webview_flutter` (bootpay_webview_flutter_v3의 패키지명)
 - ❌ 잘못된 예 1: `implements: bootpay_webview_flutter_wkwebview` (자기 자신을 implements하면 안됨)
@@ -288,16 +378,16 @@ open example/ios/Runner.xcworkspace
 
 메인 패키지가 `default_package`로 플랫폼 구현을 자동 선택하므로, 구현 패키지는 메인 패키지를 `implements`해야 합니다.
 
-### 7.3 플랫폼 인터페이스
+### 8.3 플랫폼 인터페이스
 - 반드시 `bootpay_webview_flutter_platform_interface` 사용
 - 로컬 경로 의존성으로 설정: `path: ../bootpay_webview_flutter_platform_interface`
 
-### 7.4 iOS 네이티브 클래스명
+### 8.4 iOS 네이티브 클래스명
 - `GeneratedPluginRegistrant.m`이 자동으로 `BTWebViewFlutterPlugin`을 찾음
 - pubspec.yaml의 `pluginClass`와 Swift 클래스명이 **정확히 일치**해야 함
 - `WebViewFlutterWKWebViewExternalAPI.swift`의 플러그인 조회 시에도 동일한 이름 사용
 
-### 7.5 iOS 26 UIScene Lifecycle 필수 적용
+### 8.5 iOS 26 UIScene Lifecycle 필수 적용
 - **경고**: `UIScene lifecycle will soon be required. Failure to adopt will result in an assert in the future.`
 - iOS 13부터 도입된 UIScene lifecycle이 iOS 26에서 필수가 될 예정
 - **해결 방법**:
@@ -370,7 +460,7 @@ open example/ios/Runner.xcworkspace
 @end
 ```
 
-### 7.6 알려진 이슈
+### 8.6 알려진 이슈
 - **Asset Catalog 에러**: "Failed to launch AssetCatalogSimulatorAgent via CoreSimulator spawn"
   - 이는 macOS/Xcode 시스템 이슈로 코드 문제가 아님
   - 해결 방법:
@@ -378,8 +468,9 @@ open example/ios/Runner.xcworkspace
     2. CoreSimulator 재시작: `killall -9 com.apple.CoreSimulator.CoreSimulatorService`
     3. USB 유선 연결 사용 (무선 대신)
 
-## 8. 참고 링크
+## 9. 참고 링크
 
 - [Flutter Plugin 개발 가이드](https://docs.flutter.dev/packages-and-plugins/developing-packages)
 - [CocoaPods Podspec 문법](https://guides.cocoapods.org/syntax/podspec.html)
 - [Swift Package Manager](https://swift.org/package-manager/)
+- [전체 프로젝트 Fork 업데이트 가이드](../FORK_UPDATE_GUIDE.md) - 새 버전 업데이트 시 참고

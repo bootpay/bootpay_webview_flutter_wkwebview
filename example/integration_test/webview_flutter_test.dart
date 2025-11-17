@@ -16,7 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:leak_tracker/leak_tracker.dart';
-import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+import 'package:bootpay_webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 import 'package:bootpay_webview_flutter_wkwebview/src/common/platform_webview.dart';
 import 'package:bootpay_webview_flutter_wkwebview/src/common/weak_reference_utils.dart';
 import 'package:bootpay_webview_flutter_wkwebview/src/common/web_kit.g.dart';
