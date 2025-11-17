@@ -449,7 +449,7 @@ Future<void> main() async {
 
       WebKitWebViewController controller = WebKitWebViewController(
         WebKitWebViewControllerCreationParams(
-          mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
+          mediaTypesRequiringUserAction: const <BootpayPlaybackMediaTypes>{},
         ),
       );
       unawaited(controller.setJavaScriptMode(JavaScriptMode.unrestricted));
@@ -528,7 +528,7 @@ Future<void> main() async {
 
       final PlatformWebViewController controller = PlatformWebViewController(
         WebKitWebViewControllerCreationParams(
-          mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
+          mediaTypesRequiringUserAction: const <BootpayPlaybackMediaTypes>{},
           allowsInlineMediaPlayback: true,
         ),
       );
@@ -593,7 +593,7 @@ Future<void> main() async {
 
         final PlatformWebViewController controller = PlatformWebViewController(
           WebKitWebViewControllerCreationParams(
-            mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
+            mediaTypesRequiringUserAction: const <BootpayPlaybackMediaTypes>{},
           ),
         );
         unawaited(controller.setJavaScriptMode(JavaScriptMode.unrestricted));
@@ -693,7 +693,7 @@ Future<void> main() async {
 
         PlatformWebViewController controller = PlatformWebViewController(
           WebKitWebViewControllerCreationParams(
-            mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
+            mediaTypesRequiringUserAction: const <BootpayPlaybackMediaTypes>{},
           ),
         );
         unawaited(controller.setJavaScriptMode(JavaScriptMode.unrestricted));

@@ -20,8 +20,8 @@ import 'webkit_ssl_auth_error.dart';
 
 /// Media types that can require a user gesture to begin playing.
 ///
-/// See [WebKitWebViewControllerCreationParams.mediaTypesRequiringUserAction].
-enum PlaybackMediaTypes {
+/// See [BootpayWebKitWebViewControllerCreationParams.mediaTypesRequiringUserAction].
+enum BootpayPlaybackMediaTypes {
   /// A media type that contains audio.
   audio,
 
@@ -30,31 +30,31 @@ enum PlaybackMediaTypes {
 
   AudiovisualMediaType _toWKAudiovisualMediaType() {
     switch (this) {
-      case PlaybackMediaTypes.audio:
+      case BootpayPlaybackMediaTypes.audio:
         return AudiovisualMediaType.audio;
-      case PlaybackMediaTypes.video:
+      case BootpayPlaybackMediaTypes.video:
         return AudiovisualMediaType.video;
     }
   }
 }
 
 /// Object specifying parameters for loading a local file in a
-/// [WebKitWebViewController].
+/// [BootpayWebKitWebViewController].
 @immutable
-base class WebKitLoadFileParams extends LoadFileParams {
-  /// Constructs a [WebKitLoadFileParams], the subclass of a [LoadFileParams].
-  WebKitLoadFileParams({
+base class BootpayWebKitLoadFileParams extends LoadFileParams {
+  /// Constructs a [BootpayWebKitLoadFileParams], the subclass of a [LoadFileParams].
+  BootpayWebKitLoadFileParams({
     required super.absoluteFilePath,
     String? readAccessPath,
   }) : readAccessPath = readAccessPath ?? path.dirname(absoluteFilePath),
        super();
 
-  /// Constructs a [WebKitLoadFileParams] using a [LoadFileParams].
-  factory WebKitLoadFileParams.fromLoadFileParams(
+  /// Constructs a [BootpayWebKitLoadFileParams] using a [LoadFileParams].
+  factory BootpayWebKitLoadFileParams.fromLoadFileParams(
     LoadFileParams params, {
     String? readAccessPath,
   }) {
-    return WebKitLoadFileParams(
+    return BootpayWebKitLoadFileParams(
       absoluteFilePath: params.absoluteFilePath,
       readAccessPath: readAccessPath,
     );
@@ -71,16 +71,16 @@ base class WebKitLoadFileParams extends LoadFileParams {
   final String readAccessPath;
 }
 
-/// Object specifying creation parameters for a [WebKitWebViewController].
+/// Object specifying creation parameters for a [BootpayWebKitWebViewController].
 @immutable
-class WebKitWebViewControllerCreationParams
+class BootpayWebKitWebViewControllerCreationParams
     extends PlatformWebViewControllerCreationParams {
-  /// Constructs a [WebKitWebViewControllerCreationParams].
-  WebKitWebViewControllerCreationParams({
+  /// Constructs a [BootpayWebKitWebViewControllerCreationParams].
+  BootpayWebKitWebViewControllerCreationParams({
     @visibleForTesting this.webKitProxy = const WebKitProxy(),
-    this.mediaTypesRequiringUserAction = const <PlaybackMediaTypes>{
-      PlaybackMediaTypes.audio,
-      PlaybackMediaTypes.video,
+    this.mediaTypesRequiringUserAction = const <BootpayPlaybackMediaTypes>{
+      BootpayPlaybackMediaTypes.audio,
+      BootpayPlaybackMediaTypes.video,
     },
     this.allowsInlineMediaPlayback = false,
     this.limitsNavigationsToAppBoundDomains = false,
@@ -112,17 +112,17 @@ class WebKitWebViewControllerCreationParams
     }
   }
 
-  /// Constructs a [WebKitWebViewControllerCreationParams] using a
+  /// Constructs a [BootpayWebKitWebViewControllerCreationParams] using a
   /// [PlatformWebViewControllerCreationParams].
-  WebKitWebViewControllerCreationParams.fromPlatformWebViewControllerCreationParams(
+  BootpayWebKitWebViewControllerCreationParams.fromPlatformWebViewControllerCreationParams(
     // Recommended placeholder to prevent being broken by platform interface.
     // ignore: avoid_unused_constructor_parameters
     PlatformWebViewControllerCreationParams params, {
     @visibleForTesting WebKitProxy webKitProxy = const WebKitProxy(),
-    Set<PlaybackMediaTypes> mediaTypesRequiringUserAction =
-        const <PlaybackMediaTypes>{
-          PlaybackMediaTypes.audio,
-          PlaybackMediaTypes.video,
+    Set<BootpayPlaybackMediaTypes> mediaTypesRequiringUserAction =
+        const <BootpayPlaybackMediaTypes>{
+          BootpayPlaybackMediaTypes.audio,
+          BootpayPlaybackMediaTypes.video,
         },
     bool allowsInlineMediaPlayback = false,
     bool limitsNavigationsToAppBoundDomains = false,
@@ -139,9 +139,9 @@ class WebKitWebViewControllerCreationParams
 
   /// Media types that require a user gesture to begin playing.
   ///
-  /// Defaults to include [PlaybackMediaTypes.audio] and
-  /// [PlaybackMediaTypes.video].
-  final Set<PlaybackMediaTypes> mediaTypesRequiringUserAction;
+  /// Defaults to include [BootpayPlaybackMediaTypes.audio] and
+  /// [BootpayPlaybackMediaTypes.video].
+  final Set<BootpayPlaybackMediaTypes> mediaTypesRequiringUserAction;
 
   /// Whether inline playback of HTML5 videos is allowed.
   ///
@@ -166,13 +166,13 @@ class WebKitWebViewControllerCreationParams
 }
 
 /// An implementation of [PlatformWebViewController] with the WebKit api.
-class WebKitWebViewController extends PlatformWebViewController {
-  /// Constructs a [WebKitWebViewController].
-  WebKitWebViewController(PlatformWebViewControllerCreationParams params)
+class BootpayWebKitWebViewController extends PlatformWebViewController {
+  /// Constructs a [BootpayWebKitWebViewController].
+  BootpayWebKitWebViewController(PlatformWebViewControllerCreationParams params)
     : super.implementation(
-        params is WebKitWebViewControllerCreationParams
+        params is BootpayWebKitWebViewControllerCreationParams
             ? params
-            : WebKitWebViewControllerCreationParams.fromPlatformWebViewControllerCreationParams(
+            : BootpayWebKitWebViewControllerCreationParams.fromPlatformWebViewControllerCreationParams(
                 params,
               ),
       ) {
@@ -193,8 +193,8 @@ class WebKitWebViewController extends PlatformWebViewController {
       <KeyValueObservingOptions>[KeyValueObservingOptions.newValue],
     );
 
-    final WeakReference<WebKitWebViewController> weakThis =
-        WeakReference<WebKitWebViewController>(this);
+    final WeakReference<BootpayWebKitWebViewController> weakThis =
+        WeakReference<BootpayWebKitWebViewController>(this);
     _uiDelegate = _webKitParams.webKitProxy.newWKUIDelegate(
       onCreateWebView:
           (
@@ -252,7 +252,7 @@ class WebKitWebViewController extends PlatformWebViewController {
                   Completer<PermissionDecision>();
 
               callback(
-                WebKitWebViewPermissionRequest._(
+                BootpayWebKitWebViewPermissionRequest._(
                   types: types,
                   onDecision: decisionCompleter.complete,
                 ),
@@ -320,7 +320,7 @@ class WebKitWebViewController extends PlatformWebViewController {
       .newPlatformWebView(
         initialConfiguration: _webKitParams._configuration,
         observeValue: withWeakReferenceTo(this, (
-          WeakReference<WebKitWebViewController> weakReference,
+          WeakReference<BootpayWebKitWebViewController> weakReference,
         ) {
           return (
             _,
@@ -328,7 +328,7 @@ class WebKitWebViewController extends PlatformWebViewController {
             NSObject? object,
             Map<KeyValueChangeKey, Object?>? change,
           ) async {
-            final WebKitWebViewController? controller = weakReference.target;
+            final BootpayWebKitWebViewController? controller = weakReference.target;
             if (controller == null || change == null) {
               return;
             }
@@ -366,11 +366,11 @@ class WebKitWebViewController extends PlatformWebViewController {
 
   late final UIScrollViewDelegate? _uiScrollViewDelegate;
 
-  final Map<String, WebKitJavaScriptChannelParams> _javaScriptChannelParams =
-      <String, WebKitJavaScriptChannelParams>{};
+  final Map<String, BootpayWebKitJavaScriptChannelParams> _javaScriptChannelParams =
+      <String, BootpayWebKitJavaScriptChannelParams>{};
 
   bool _zoomEnabled = true;
-  WebKitNavigationDelegate? _currentNavigationDelegate;
+  BootpayWebKitNavigationDelegate? _currentNavigationDelegate;
 
   void Function(bool)? _onCanGoBackChangeCallback;
   void Function(JavaScriptConsoleMessage)? _onConsoleMessageCallback;
@@ -386,8 +386,8 @@ class WebKitWebViewController extends PlatformWebViewController {
   void Function(ScrollPositionChange scrollPositionChange)?
   _onScrollPositionChangeCallback;
 
-  WebKitWebViewControllerCreationParams get _webKitParams =>
-      params as WebKitWebViewControllerCreationParams;
+  BootpayWebKitWebViewControllerCreationParams get _webKitParams =>
+      params as BootpayWebKitWebViewControllerCreationParams;
 
   /// Identifier used to retrieve the underlying native `WKWebView`.
   ///
@@ -436,14 +436,14 @@ class WebKitWebViewController extends PlatformWebViewController {
   @override
   Future<void> loadFile(String absoluteFilePath) {
     return loadFileWithParams(
-      WebKitLoadFileParams(absoluteFilePath: absoluteFilePath),
+      BootpayWebKitLoadFileParams(absoluteFilePath: absoluteFilePath),
     );
   }
 
   @override
   Future<void> loadFileWithParams(LoadFileParams params) {
     switch (params) {
-      case final WebKitLoadFileParams params:
+      case final BootpayWebKitLoadFileParams params:
         return _webView.loadFileUrl(
           params.absoluteFilePath,
           params.readAccessPath,
@@ -451,7 +451,7 @@ class WebKitWebViewController extends PlatformWebViewController {
 
       default:
         return loadFileWithParams(
-          WebKitLoadFileParams.fromLoadFileParams(params),
+          BootpayWebKitLoadFileParams.fromLoadFileParams(params),
         );
     }
   }
@@ -494,10 +494,10 @@ class WebKitWebViewController extends PlatformWebViewController {
       );
     }
 
-    final WebKitJavaScriptChannelParams webKitParams =
-        javaScriptChannelParams is WebKitJavaScriptChannelParams
+    final BootpayWebKitJavaScriptChannelParams webKitParams =
+        javaScriptChannelParams is BootpayWebKitJavaScriptChannelParams
         ? javaScriptChannelParams
-        : WebKitJavaScriptChannelParams.fromJavaScriptChannelParams(
+        : BootpayWebKitJavaScriptChannelParams.fromJavaScriptChannelParams(
             javaScriptChannelParams,
           );
 
@@ -710,7 +710,7 @@ class WebKitWebViewController extends PlatformWebViewController {
 
   @override
   Future<void> setPlatformNavigationDelegate(
-    covariant WebKitNavigationDelegate handler,
+    covariant BootpayWebKitNavigationDelegate handler,
   ) {
     _currentNavigationDelegate = handler;
     return _webView.setNavigationDelegate(handler._navigationDelegate);
@@ -730,7 +730,7 @@ class WebKitWebViewController extends PlatformWebViewController {
   ) {
     _onConsoleMessageCallback = onConsoleMessage;
 
-    final JavaScriptChannelParams channelParams = WebKitJavaScriptChannelParams(
+    final JavaScriptChannelParams channelParams = BootpayWebKitJavaScriptChannelParams(
       name: 'fltConsoleMessage',
       webKitProxy: _webKitParams.webKitProxy,
       onMessageReceived: (JavaScriptMessage message) {
@@ -806,8 +806,8 @@ class WebKitWebViewController extends PlatformWebViewController {
       _onScrollPositionChangeCallback = onScrollPositionChange;
 
       if (onScrollPositionChange != null) {
-        final WeakReference<WebKitWebViewController> weakThis =
-            WeakReference<WebKitWebViewController>(this);
+        final WeakReference<BootpayWebKitWebViewController> weakThis =
+            WeakReference<BootpayWebKitWebViewController>(this);
         _uiScrollViewDelegate = _webKitParams.webKitProxy
             .newUIScrollViewDelegate(
               scrollViewDidScroll: (_, __, double x, double y) {
@@ -882,8 +882,8 @@ class WebKitWebViewController extends PlatformWebViewController {
     _javaScriptChannelParams.keys.forEach(
       controller.removeScriptMessageHandler,
     );
-    final Map<String, WebKitJavaScriptChannelParams> remainingChannelParams =
-        Map<String, WebKitJavaScriptChannelParams>.from(
+    final Map<String, BootpayWebKitJavaScriptChannelParams> remainingChannelParams =
+        Map<String, BootpayWebKitJavaScriptChannelParams>.from(
           _javaScriptChannelParams,
         );
     remainingChannelParams.remove(removedJavaScriptChannel);
@@ -996,11 +996,11 @@ window.addEventListener("error", function(e) {
 
 /// An implementation of [JavaScriptChannelParams] with the WebKit api.
 ///
-/// See [WebKitWebViewController.addJavaScriptChannel].
+/// See [BootpayWebKitWebViewController.addJavaScriptChannel].
 @immutable
-class WebKitJavaScriptChannelParams extends JavaScriptChannelParams {
-  /// Constructs a [WebKitJavaScriptChannelParams].
-  WebKitJavaScriptChannelParams({
+class BootpayWebKitJavaScriptChannelParams extends JavaScriptChannelParams {
+  /// Constructs a [BootpayWebKitJavaScriptChannelParams].
+  BootpayWebKitJavaScriptChannelParams({
     required super.name,
     required super.onMessageReceived,
     @visibleForTesting WebKitProxy webKitProxy = const WebKitProxy(),
@@ -1025,9 +1025,9 @@ class WebKitJavaScriptChannelParams extends JavaScriptChannelParams {
          }),
        );
 
-  /// Constructs a [WebKitJavaScriptChannelParams] using a
+  /// Constructs a [BootpayWebKitJavaScriptChannelParams] using a
   /// [JavaScriptChannelParams].
-  WebKitJavaScriptChannelParams.fromJavaScriptChannelParams(
+  BootpayWebKitJavaScriptChannelParams.fromJavaScriptChannelParams(
     JavaScriptChannelParams params, {
     @visibleForTesting WebKitProxy webKitProxy = const WebKitProxy(),
   }) : this(
@@ -1039,12 +1039,12 @@ class WebKitJavaScriptChannelParams extends JavaScriptChannelParams {
   final WKScriptMessageHandler _messageHandler;
 }
 
-/// Object specifying creation parameters for a [WebKitWebViewWidget].
+/// Object specifying creation parameters for a [BootpayWebKitWebViewWidget].
 @immutable
-class WebKitWebViewWidgetCreationParams
+class BootpayWebKitWebViewWidgetCreationParams
     extends PlatformWebViewWidgetCreationParams {
-  /// Constructs a [WebKitWebViewWidgetCreationParams].
-  WebKitWebViewWidgetCreationParams({
+  /// Constructs a [BootpayWebKitWebViewWidgetCreationParams].
+  BootpayWebKitWebViewWidgetCreationParams({
     super.key,
     required super.controller,
     super.layoutDirection,
@@ -1052,9 +1052,9 @@ class WebKitWebViewWidgetCreationParams
     @visibleForTesting PigeonInstanceManager? instanceManager,
   }) : _instanceManager = instanceManager ?? PigeonInstanceManager.instance;
 
-  /// Constructs a [WebKitWebViewWidgetCreationParams] using a
+  /// Constructs a [BootpayWebKitWebViewWidgetCreationParams] using a
   /// [PlatformWebViewWidgetCreationParams].
-  WebKitWebViewWidgetCreationParams.fromPlatformWebViewWidgetCreationParams(
+  BootpayWebKitWebViewWidgetCreationParams.fromPlatformWebViewWidgetCreationParams(
     PlatformWebViewWidgetCreationParams params, {
     PigeonInstanceManager? instanceManager,
   }) : this(
@@ -1075,7 +1075,7 @@ class WebKitWebViewWidgetCreationParams
 
   @override
   bool operator ==(Object other) {
-    return other is WebKitWebViewWidgetCreationParams &&
+    return other is BootpayWebKitWebViewWidgetCreationParams &&
         controller == other.controller &&
         layoutDirection == other.layoutDirection &&
         _instanceManager == other._instanceManager;
@@ -1083,19 +1083,19 @@ class WebKitWebViewWidgetCreationParams
 }
 
 /// An implementation of [PlatformWebViewWidget] with the WebKit api.
-class WebKitWebViewWidget extends PlatformWebViewWidget {
-  /// Constructs a [WebKitWebViewWidget].
-  WebKitWebViewWidget(PlatformWebViewWidgetCreationParams params)
+class BootpayWebKitWebViewWidget extends PlatformWebViewWidget {
+  /// Constructs a [BootpayWebKitWebViewWidget].
+  BootpayWebKitWebViewWidget(PlatformWebViewWidgetCreationParams params)
     : super.implementation(
-        params is WebKitWebViewWidgetCreationParams
+        params is BootpayWebKitWebViewWidgetCreationParams
             ? params
-            : WebKitWebViewWidgetCreationParams.fromPlatformWebViewWidgetCreationParams(
+            : BootpayWebKitWebViewWidgetCreationParams.fromPlatformWebViewWidgetCreationParams(
                 params,
               ),
       );
 
-  WebKitWebViewWidgetCreationParams get _webKitParams =>
-      params as WebKitWebViewWidgetCreationParams;
+  BootpayWebKitWebViewWidgetCreationParams get _webKitParams =>
+      params as BootpayWebKitWebViewWidgetCreationParams;
 
   @override
   Widget build(BuildContext context) {
@@ -1103,8 +1103,8 @@ class WebKitWebViewWidget extends PlatformWebViewWidget {
     // the PlatformView when changes are made.
     final Key key =
         _webKitParams.key ??
-        ValueKey<WebKitWebViewWidgetCreationParams>(
-          params as WebKitWebViewWidgetCreationParams,
+        ValueKey<BootpayWebKitWebViewWidgetCreationParams>(
+          params as BootpayWebKitWebViewWidgetCreationParams,
         );
     if (defaultTargetPlatform == TargetPlatform.macOS) {
       return AppKitView(
@@ -1114,7 +1114,7 @@ class WebKitWebViewWidget extends PlatformWebViewWidget {
         layoutDirection: params.layoutDirection,
         gestureRecognizers: params.gestureRecognizers,
         creationParams: _webKitParams._instanceManager.getIdentifier(
-          (params.controller as WebKitWebViewController)._webView.nativeWebView,
+          (params.controller as BootpayWebKitWebViewController)._webView.nativeWebView,
         ),
         creationParamsCodec: const StandardMessageCodec(),
       );
@@ -1126,7 +1126,7 @@ class WebKitWebViewWidget extends PlatformWebViewWidget {
         layoutDirection: params.layoutDirection,
         gestureRecognizers: params.gestureRecognizers,
         creationParams: _webKitParams._instanceManager.getIdentifier(
-          (params.controller as WebKitWebViewController)._webView.nativeWebView,
+          (params.controller as BootpayWebKitWebViewController)._webView.nativeWebView,
         ),
         creationParamsCodec: const StandardMessageCodec(),
       );
@@ -1135,8 +1135,8 @@ class WebKitWebViewWidget extends PlatformWebViewWidget {
 }
 
 /// An implementation of [WebResourceError] with the WebKit API.
-class WebKitWebResourceError extends WebResourceError {
-  WebKitWebResourceError._(
+class BootpayWebKitWebResourceError extends WebResourceError {
+  BootpayWebKitWebResourceError._(
     this._nsError, {
     required bool isForMainFrame,
     required super.url,
@@ -1173,18 +1173,18 @@ class WebKitWebResourceError extends WebResourceError {
   final NSError _nsError;
 }
 
-/// Object specifying creation parameters for a [WebKitNavigationDelegate].
+/// Object specifying creation parameters for a [BootpayWebKitNavigationDelegate].
 @immutable
-class WebKitNavigationDelegateCreationParams
+class BootpayWebKitNavigationDelegateCreationParams
     extends PlatformNavigationDelegateCreationParams {
-  /// Constructs a [WebKitNavigationDelegateCreationParams].
-  const WebKitNavigationDelegateCreationParams({
+  /// Constructs a [BootpayWebKitNavigationDelegateCreationParams].
+  const BootpayWebKitNavigationDelegateCreationParams({
     @visibleForTesting this.webKitProxy = const WebKitProxy(),
   });
 
-  /// Constructs a [WebKitNavigationDelegateCreationParams] using a
+  /// Constructs a [BootpayWebKitNavigationDelegateCreationParams] using a
   /// [PlatformNavigationDelegateCreationParams].
-  const WebKitNavigationDelegateCreationParams.fromPlatformNavigationDelegateCreationParams(
+  const BootpayWebKitNavigationDelegateCreationParams.fromPlatformNavigationDelegateCreationParams(
     // Recommended placeholder to prevent being broken by platform interface.
     // ignore: avoid_unused_constructor_parameters
     PlatformNavigationDelegateCreationParams params, {
@@ -1198,19 +1198,19 @@ class WebKitNavigationDelegateCreationParams
 }
 
 /// An implementation of [PlatformNavigationDelegate] with the WebKit API.
-class WebKitNavigationDelegate extends PlatformNavigationDelegate {
-  /// Constructs a [WebKitNavigationDelegate].
-  WebKitNavigationDelegate(PlatformNavigationDelegateCreationParams params)
+class BootpayWebKitNavigationDelegate extends PlatformNavigationDelegate {
+  /// Constructs a [BootpayWebKitNavigationDelegate].
+  BootpayWebKitNavigationDelegate(PlatformNavigationDelegateCreationParams params)
     : super.implementation(
-        params is WebKitNavigationDelegateCreationParams
+        params is BootpayWebKitNavigationDelegateCreationParams
             ? params
-            : WebKitNavigationDelegateCreationParams.fromPlatformNavigationDelegateCreationParams(
+            : BootpayWebKitNavigationDelegateCreationParams.fromPlatformNavigationDelegateCreationParams(
                 params,
               ),
       ) {
-    final WeakReference<WebKitNavigationDelegate> weakThis =
-        WeakReference<WebKitNavigationDelegate>(this);
-    _navigationDelegate = (this.params as WebKitNavigationDelegateCreationParams)
+    final WeakReference<BootpayWebKitNavigationDelegate> weakThis =
+        WeakReference<BootpayWebKitNavigationDelegate>(this);
+    _navigationDelegate = (this.params as BootpayWebKitNavigationDelegateCreationParams)
         .webKitProxy
         .newWKNavigationDelegate(
           didFinishNavigation: (_, __, String? url) {
@@ -1263,7 +1263,7 @@ class WebKitNavigationDelegate extends PlatformNavigationDelegate {
           didFailNavigation: (_, __, NSError error) {
             if (weakThis.target?._onWebResourceError != null) {
               weakThis.target!._onWebResourceError!(
-                WebKitWebResourceError._(
+                BootpayWebKitWebResourceError._(
                   error,
                   isForMainFrame: true,
                   url:
@@ -1277,7 +1277,7 @@ class WebKitNavigationDelegate extends PlatformNavigationDelegate {
           didFailProvisionalNavigation: (_, __, NSError error) {
             if (weakThis.target?._onWebResourceError != null) {
               weakThis.target!._onWebResourceError!(
-                WebKitWebResourceError._(
+                BootpayWebKitWebResourceError._(
                   error,
                   isForMainFrame: true,
                   url:
@@ -1291,7 +1291,7 @@ class WebKitNavigationDelegate extends PlatformNavigationDelegate {
           webViewWebContentProcessDidTerminate: (_, __) {
             if (weakThis.target?._onWebResourceError != null) {
               weakThis.target!._onWebResourceError!(
-                WebKitWebResourceError._(
+                BootpayWebKitWebResourceError._(
                   NSError.pigeon_detached(
                     code: WKErrorCode.webContentProcessTerminated,
                     // Value from https://developer.apple.com/documentation/webkit/wkerrordomain?language=objc.
@@ -1306,11 +1306,11 @@ class WebKitNavigationDelegate extends PlatformNavigationDelegate {
           },
           didReceiveAuthenticationChallenge:
               (_, __, URLAuthenticationChallenge challenge) async {
-                final WebKitNavigationDelegate? delegate = weakThis.target;
+                final BootpayWebKitNavigationDelegate? delegate = weakThis.target;
 
                 final WebKitProxy proxy =
                     (delegate?.params
-                            as WebKitNavigationDelegateCreationParams?)
+                            as BootpayWebKitNavigationDelegateCreationParams?)
                         ?.webKitProxy ??
                     const WebKitProxy();
 
@@ -1377,7 +1377,7 @@ class WebKitNavigationDelegate extends PlatformNavigationDelegate {
         );
   }
 
-  // Used to set `WKWebView.setNavigationDelegate` in `WebKitWebViewController`.
+  // Used to set `WKWebView.setNavigationDelegate` in `BootpayWebKitWebViewController`.
   late final WKNavigationDelegate _navigationDelegate;
 
   PageEventCallback? _onPageFinished;
@@ -1526,8 +1526,8 @@ class WebKitNavigationDelegate extends PlatformNavigationDelegate {
 }
 
 /// WebKit implementation of [PlatformWebViewPermissionRequest].
-class WebKitWebViewPermissionRequest extends PlatformWebViewPermissionRequest {
-  const WebKitWebViewPermissionRequest._({
+class BootpayWebKitWebViewPermissionRequest extends PlatformWebViewPermissionRequest {
+  const BootpayWebKitWebViewPermissionRequest._({
     required super.types,
     required void Function(PermissionDecision decision) onDecision,
   }) : _onDecision = onDecision;

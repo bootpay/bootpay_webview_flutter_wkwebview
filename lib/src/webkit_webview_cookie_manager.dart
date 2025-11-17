@@ -8,16 +8,16 @@ import 'package:bootpay_webview_flutter_platform_interface/bootpay_webview_flutt
 import 'common/web_kit.g.dart';
 import 'webkit_proxy.dart';
 
-/// Object specifying creation parameters for a [WebKitWebViewCookieManager].
-class WebKitWebViewCookieManagerCreationParams
+/// Object specifying creation parameters for a [BootpayWebKitWebViewCookieManager].
+class BootpayWebKitWebViewCookieManagerCreationParams
     extends PlatformWebViewCookieManagerCreationParams {
-  /// Constructs a [WebKitWebViewCookieManagerCreationParams].
-  WebKitWebViewCookieManagerCreationParams({WebKitProxy? webKitProxy})
+  /// Constructs a [BootpayWebKitWebViewCookieManagerCreationParams].
+  BootpayWebKitWebViewCookieManagerCreationParams({WebKitProxy? webKitProxy})
     : webKitProxy = webKitProxy ?? const WebKitProxy();
 
-  /// Constructs a [WebKitWebViewCookieManagerCreationParams] using a
+  /// Constructs a [BootpayWebKitWebViewCookieManagerCreationParams] using a
   /// [PlatformWebViewCookieManagerCreationParams].
-  WebKitWebViewCookieManagerCreationParams.fromPlatformWebViewCookieManagerCreationParams(
+  BootpayWebKitWebViewCookieManagerCreationParams.fromPlatformWebViewCookieManagerCreationParams(
     // Recommended placeholder to prevent being broken by platform interface.
     // ignore: avoid_unused_constructor_parameters
     PlatformWebViewCookieManagerCreationParams params, {
@@ -35,19 +35,19 @@ class WebKitWebViewCookieManagerCreationParams
 }
 
 /// An implementation of [PlatformWebViewCookieManager] with the WebKit api.
-class WebKitWebViewCookieManager extends PlatformWebViewCookieManager {
-  /// Constructs a [WebKitWebViewCookieManager].
-  WebKitWebViewCookieManager(PlatformWebViewCookieManagerCreationParams params)
+class BootpayWebKitWebViewCookieManager extends PlatformWebViewCookieManager {
+  /// Constructs a [BootpayWebKitWebViewCookieManager].
+  BootpayWebKitWebViewCookieManager(PlatformWebViewCookieManagerCreationParams params)
     : super.implementation(
-        params is WebKitWebViewCookieManagerCreationParams
+        params is BootpayWebKitWebViewCookieManagerCreationParams
             ? params
-            : WebKitWebViewCookieManagerCreationParams.fromPlatformWebViewCookieManagerCreationParams(
+            : BootpayWebKitWebViewCookieManagerCreationParams.fromPlatformWebViewCookieManagerCreationParams(
                 params,
               ),
       );
 
-  WebKitWebViewCookieManagerCreationParams get _webkitParams =>
-      params as WebKitWebViewCookieManagerCreationParams;
+  BootpayWebKitWebViewCookieManagerCreationParams get _webkitParams =>
+      params as BootpayWebKitWebViewCookieManagerCreationParams;
 
   @override
   Future<bool> clearCookies() {

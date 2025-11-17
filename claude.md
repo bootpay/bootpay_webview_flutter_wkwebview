@@ -367,7 +367,7 @@ Error: The platform view type 'plugins.flutter.io/webview' is already registered
 
 ### 8.2 implements 필드 (매우 중요!)
 - `implements` 필드는 **메인 패키지**를 지정해야 함
-- 예: `implements: bootpay_webview_flutter` (bootpay_webview_flutter_v3의 패키지명)
+- 예: `implements: bootpay_webview_flutter` (bootpay_webview_flutter의 패키지명)
 - ❌ 잘못된 예 1: `implements: bootpay_webview_flutter_wkwebview` (자기 자신을 implements하면 안됨)
 - ❌ 잘못된 예 2: `implements: bootpay_webview_flutter_platform_interface` (인터페이스 패키지가 아닌 메인 패키지를 지정)
 

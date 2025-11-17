@@ -291,8 +291,8 @@ void main() {
             },
           ),
           instanceManager: TestInstanceManager(),
-          mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{
-            PlaybackMediaTypes.video,
+          mediaTypesRequiringUserAction: const <BootpayPlaybackMediaTypes>{
+            BootpayPlaybackMediaTypes.video,
           },
         );
 
@@ -339,7 +339,7 @@ void main() {
               },
             ),
             instanceManager: TestInstanceManager(),
-            mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
+            mediaTypesRequiringUserAction: const <BootpayPlaybackMediaTypes>{},
           );
 
           verify(

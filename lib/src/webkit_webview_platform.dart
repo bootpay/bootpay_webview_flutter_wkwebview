@@ -15,30 +15,30 @@ class BTWebKitWebViewPlatform extends WebViewPlatform {
   }
 
   @override
-  WebKitWebViewController createPlatformWebViewController(
+  BootpayWebKitWebViewController createPlatformWebViewController(
     PlatformWebViewControllerCreationParams params,
   ) {
-    return WebKitWebViewController(params);
+    return BootpayWebKitWebViewController(params);
   }
 
   @override
-  WebKitNavigationDelegate createPlatformNavigationDelegate(
+  BootpayWebKitNavigationDelegate createPlatformNavigationDelegate(
     PlatformNavigationDelegateCreationParams params,
   ) {
-    return WebKitNavigationDelegate(params);
+    return BootpayWebKitNavigationDelegate(params);
   }
 
   @override
-  WebKitWebViewWidget createPlatformWebViewWidget(
+  BootpayWebKitWebViewWidget createPlatformWebViewWidget(
     PlatformWebViewWidgetCreationParams params,
   ) {
-    return WebKitWebViewWidget(params);
+    return BootpayWebKitWebViewWidget(params);
   }
 
   @override
-  WebKitWebViewCookieManager createPlatformCookieManager(
+  BootpayWebKitWebViewCookieManager createPlatformCookieManager(
     PlatformWebViewCookieManagerCreationParams params,
   ) {
-    return WebKitWebViewCookieManager(params);
+    return BootpayWebKitWebViewCookieManager(params);
   }
 }
