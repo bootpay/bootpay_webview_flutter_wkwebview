@@ -1,3 +1,8 @@
+## 3.23.26
+
+* 배포용 pubspec.yaml 의존성 수정
+  - bootpay_webview_flutter_platform_interface를 pub.dev 버전으로 설정
+
 ## 3.23.25
 
 * 외부 앱(카드사 앱카드 등) 복귀 시 세션 만료 문제 해결
