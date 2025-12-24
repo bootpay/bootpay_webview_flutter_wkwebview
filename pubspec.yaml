@@ -2,7 +2,7 @@ name: bootpay_webview_flutter_wkwebview
 description: webview_flutter_wkwebview 를 국내 결제환경에 맞게 fork 떠서 관리하는 프로젝트 입니다.
 repository: https://github.com/bootpay/bootpay_webview_flutter_wkwebview
 issue_tracker: https://github.com/bootpay/bootpay_webview_flutter_wkwebview/issues
-version: 3.23.24
+version: 3.23.25
 
 environment:
   sdk: ^3.5.0
@@ -26,7 +26,13 @@ dependencies:
     sdk: flutter
   meta: ^1.10.0
   path: ^1.8.0
+
+  # [배포용] pub.dev 버전 - 배포 시 아래 주석 해제
   bootpay_webview_flutter_platform_interface: ^2.14.2
+
+  # [로컬 테스트용] 로컬 경로 - 테스트 완료 후 위 배포용으로 변경
+#  bootpay_webview_flutter_platform_interface:
+#    path: ../bootpay_webview_flutter_platform_interface
    
 
 dev_dependencies:
