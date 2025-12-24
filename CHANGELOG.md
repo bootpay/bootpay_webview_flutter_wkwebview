@@ -1,3 +1,12 @@
+## 3.23.25
+
+* 외부 앱(카드사 앱카드 등) 복귀 시 세션 만료 문제 해결
+  - WKProcessPool 싱글톤 공유로 세션/쿠키 유지
+  - HTTPCookieStorage.cookieAcceptPolicy를 .always로 설정
+* NavigationDelegate 크래시 방지
+  - 웹뷰 해제 시 비동기 콜백 안전 처리
+  - weak reference 및 isValid 플래그 추가
+
 ## 3.23.21
 
 * 팝업 처리 버그 개선

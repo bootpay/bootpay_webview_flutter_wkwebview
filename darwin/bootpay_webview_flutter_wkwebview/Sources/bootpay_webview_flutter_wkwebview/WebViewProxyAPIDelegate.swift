@@ -15,6 +15,10 @@ class WebViewImpl: WKWebView {
     self.api = api
     self.registrar = registrar
     super.init(frame: frame, configuration: configuration)
+
+    // 카드사 등 외부 도메인으로 리다이렉트 시 쿠키가 전달되도록 설정
+    HTTPCookieStorage.shared.cookieAcceptPolicy = .always
+
     #if os(iOS)
       scrollView.contentInsetAdjustmentBehavior = .never
       scrollView.automaticallyAdjustsScrollIndicatorInsets = false
