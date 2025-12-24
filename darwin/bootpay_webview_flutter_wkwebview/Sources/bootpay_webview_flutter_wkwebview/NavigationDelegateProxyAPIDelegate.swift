@@ -145,11 +145,12 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
                   decisionHandler(.download)
                 } else {
                   decisionHandler(.cancel)
-                  assertionFailure(
-                    self?.registrar?.createUnsupportedVersionMessage(
+                  if let message = self?.registrar?.createUnsupportedVersionMessage(
                       "WKNavigationActionPolicy.download",
                       versionRequirements: "iOS 14.5, macOS 11.3"
-                    ))
+                    ) {
+                    assertionFailure(message)
+                  }
                 }
               }
             case .failure(let error):
@@ -214,11 +215,12 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
                   decisionHandler(.download)
                 } else {
                   decisionHandler(.cancel)
-                  assertionFailure(
-                    self?.registrar?.createUnsupportedVersionMessage(
+                  if let message = self?.registrar?.createUnsupportedVersionMessage(
                       "WKNavigationActionPolicy.download",
                       versionRequirements: "iOS 14.5, macOS 11.3"
-                    ))
+                    ) {
+                    assertionFailure(message)
+                  }
                 }
               }
             case .failure(let error):
@@ -273,11 +275,12 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
                   decisionHandler(.download)
                 } else {
                   decisionHandler(.cancel)
-                  assertionFailure(
-                    self?.registrar?.createUnsupportedVersionMessage(
+                  if let message = self?.registrar?.createUnsupportedVersionMessage(
                       "WKNavigationResponsePolicy.download",
                       versionRequirements: "iOS 14.5, macOS 11.3"
-                    ))
+                    ) {
+                    assertionFailure(message)
+                  }
                 }
               }
             case .failure(let error):
@@ -327,11 +330,12 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
                   decisionHandler(.download)
                 } else {
                   decisionHandler(.cancel)
-                  assertionFailure(
-                    self?.registrar?.createUnsupportedVersionMessage(
+                  if let message = self?.registrar?.createUnsupportedVersionMessage(
                       "WKNavigationResponsePolicy.download",
                       versionRequirements: "iOS 14.5, macOS 11.3"
-                    ))
+                    ) {
+                    assertionFailure(message)
+                  }
                 }
               }
             case .failure(let error):
