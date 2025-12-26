@@ -12,11 +12,16 @@
 
 public class BTWebViewFlutterPlugin: NSObject, FlutterPlugin {
   var proxyApiRegistrar: ProxyAPIRegistrar?
+  var warmUpMethodChannel: BootpayWarmUpMethodChannel?
 
   init(binaryMessenger: FlutterBinaryMessenger) {
     proxyApiRegistrar = ProxyAPIRegistrar(
       binaryMessenger: binaryMessenger)
     proxyApiRegistrar?.setUp()
+
+    // Register WarmUp Method Channel
+    warmUpMethodChannel = BootpayWarmUpMethodChannel()
+    warmUpMethodChannel?.register(with: binaryMessenger)
   }
 
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -36,5 +41,9 @@ public class BTWebViewFlutterPlugin: NSObject, FlutterPlugin {
     proxyApiRegistrar!.ignoreCallsToDart = true
     proxyApiRegistrar!.tearDown()
     proxyApiRegistrar = nil
+
+    // Dispose WarmUp Method Channel
+    warmUpMethodChannel?.dispose()
+    warmUpMethodChannel = nil
   }
 }

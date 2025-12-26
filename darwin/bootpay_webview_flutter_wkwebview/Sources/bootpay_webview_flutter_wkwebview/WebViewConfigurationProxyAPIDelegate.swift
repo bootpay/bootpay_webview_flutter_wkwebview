@@ -4,21 +4,21 @@
 
 import WebKit
 
-/// Shared WKProcessPool singleton for session/cookie persistence across WKWebView instances.
-/// This ensures that sessions are maintained when returning from external apps (e.g., card company apps).
-private let sharedProcessPool = WKProcessPool()
-
 /// ProxyApi implementation for `WKWebViewConfiguration`.
 ///
 /// This class may handle instantiating native object instances that are attached to a Dart instance
 /// or handle method calls on the associated native class or an instance of that class.
+///
+/// Note: Shared WKProcessPool is defined in BootpayWarmUpManager.swift as `bootpaySharedProcessPool`
+/// This ensures session/cookie persistence across all WKWebView instances and enables warm-up functionality.
 class WebViewConfigurationProxyAPIDelegate: PigeonApiDelegateWKWebViewConfiguration {
   func pigeonDefaultConstructor(pigeonApi: PigeonApiWKWebViewConfiguration) throws
     -> WKWebViewConfiguration
   {
     let config = WKWebViewConfiguration()
-    // Use shared processPool to maintain session/cookies when returning from external apps
-    config.processPool = sharedProcessPool
+    // Use shared processPool from WarmUpManager to maintain session/cookies
+    // and benefit from pre-warmed WebView process
+    config.processPool = bootpaySharedProcessPool
     return config
   }
 
