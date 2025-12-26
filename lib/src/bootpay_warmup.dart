@@ -72,24 +72,32 @@ class BootpayWarmUp {
   /// Pre-warms the WebView by creating an invisible instance
   ///
   /// This method:
-  /// 1. Creates a WKWebView with zero frame (invisible)
-  /// 2. Loads empty HTML to trigger process initialization
+  /// 1. Creates a WKWebView with 1x1 frame
+  /// 2. Loads HTML with Canvas rendering + fetch to trigger all processes
   /// 3. Keeps the WebView in memory for process reuse
   ///
   /// The shared ProcessPool ensures all subsequent WebView instances
   /// benefit from the pre-warmed processes.
   ///
+  /// [delay] - Delay before starting warm-up (seconds). Default 0.1.
+  ///           Increase to 0.5~1.0 if UI becomes sluggish.
+  ///
   /// **Note**: This is a no-op on platforms other than iOS/macOS.
   ///
   /// Returns `true` if warm-up was initiated successfully.
-  static Future<bool> warmUp() async {
+  ///
+  /// ```dart
+  /// BootpayWarmUp.warmUp();           // Default 0.1 second delay
+  /// BootpayWarmUp.warmUp(delay: 0.5); // Custom delay for slow devices
+  /// ```
+  static Future<bool> warmUp({double delay = 0.1}) async {
     // Only supported on iOS and macOS
     if (!Platform.isIOS && !Platform.isMacOS) {
       return false;
     }
 
     try {
-      final result = await _channel.invokeMethod<bool>('warmUp');
+      final result = await _channel.invokeMethod<bool>('warmUp', {'delay': delay});
       _isWarmedUp = result ?? false;
       return _isWarmedUp;
     } on PlatformException catch (e) {

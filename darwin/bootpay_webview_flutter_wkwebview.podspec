@@ -14,7 +14,7 @@ Forked from webview_flutter_wkwebview for Korean payment environment.
   s.author           = { 'Bootpay' => 'bootpay.co.kr' }
   s.source           = { :http => 'https://github.com/bootpay/bootpay_webview_flutter_wkwebview' }
   s.documentation_url = 'https://github.com/bootpay/bootpay_webview_flutter_wkwebview'
-  s.source_files = 'bootpay_webview_flutter_wkwebview/Sources/bootpay_webview_flutter_wkwebview/**/*.swift'
+  s.source_files = 'bootpay_webview_flutter_wkwebview/Sources/bootpay_webview_flutter_wkwebview/**/*.{swift,m,h}'
   s.ios.dependency 'Flutter'
   s.osx.dependency 'FlutterMacOS'
   s.ios.deployment_target = '13.0'

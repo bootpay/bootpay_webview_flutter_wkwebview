@@ -10,11 +10,13 @@
   #error("Unsupported platform.")
 #endif
 
+@objc(BTWebViewFlutterPlugin)
 public class BTWebViewFlutterPlugin: NSObject, FlutterPlugin {
   var proxyApiRegistrar: ProxyAPIRegistrar?
   var warmUpMethodChannel: BootpayWarmUpMethodChannel?
 
   init(binaryMessenger: FlutterBinaryMessenger) {
+    print("[Bootpay] BTWebViewFlutterPlugin.init() called")
     proxyApiRegistrar = ProxyAPIRegistrar(
       binaryMessenger: binaryMessenger)
     proxyApiRegistrar?.setUp()
@@ -22,9 +24,14 @@ public class BTWebViewFlutterPlugin: NSObject, FlutterPlugin {
     // Register WarmUp Method Channel
     warmUpMethodChannel = BootpayWarmUpMethodChannel()
     warmUpMethodChannel?.register(with: binaryMessenger)
+
+    // 플러그인 등록 시 자동으로 WebView 프리워밍 시작
+    print("[Bootpay] Calling warmUp from plugin init...")
+    BootpayWarmUpManager.shared.warmUp()
   }
 
   public static func register(with registrar: FlutterPluginRegistrar) {
+    print("[Bootpay] BTWebViewFlutterPlugin.register() called")
     #if os(iOS)
       let binaryMessenger = registrar.messenger()
     #else
@@ -35,6 +42,7 @@ public class BTWebViewFlutterPlugin: NSObject, FlutterPlugin {
     let viewFactory = FlutterViewFactory(instanceManager: plugin.proxyApiRegistrar!.instanceManager)
     registrar.register(viewFactory, withId: "kr.co.bootpay/webview")
     registrar.publish(plugin)
+    print("[Bootpay] BTWebViewFlutterPlugin registered successfully")
   }
 
   public func detachFromEngine(for registrar: FlutterPluginRegistrar) {
