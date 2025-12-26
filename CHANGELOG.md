@@ -1,11 +1,11 @@
 ## 3.23.27
 
-* WebView 프리워밍 API 추가 (BootpayWarmUp.warmUp(), BootpayWarmUp.releaseWarmUp())
-  - iOS WKWebView 첫 로딩 시 프로세스 초기화를 앱 시작 시 미리 수행
+* WebView 자동 프리워밍 기능 추가
+  - BootpayAutoWarmUp (+load) 메서드로 앱 시작 시 자동으로 WebView 프로세스 초기화
+  - 수동 API도 지원 (BootpayWarmUp.warmUp(), BootpayWarmUp.releaseWarmUp())
   - 첫 결제 화면 로딩 속도 3-7초 단축
-  - BootpayWarmUpManager 네이티브 클래스 추가
-  - Method Channel (kr.co.bootpay/webview_warmup) 구현
-  - ProcessPool 공유 구조 통합 (bootpaySharedProcessPool)
+  - WKProcessPool 공유로 세션/쿠키 유지
+  - podspec에 Objective-C 파일(.m, .h) 포함
 
 ## 3.23.26
 
