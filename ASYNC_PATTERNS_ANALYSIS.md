@@ -52,7 +52,9 @@ if isItunesURL(url) {
     return
 }
 
-// ✅ 정상: HTTP URL은 비동기 Dart 콜백 사용 (v2와 동일)
+// ✅ 정상: HTTP URL은 비동기 Dart 콜백 사용 (공식 webview_flutter 및 v2와 동일)
+// NOTE(3.23.28): unowned let registrar + strong self 캡처 사용.
+// 이전 weak self + isValid 방식은 블록 해제 시 WebKit 크래시를 유발하여 제거됨.
 registrar.dispatchOnMainThread { onFailure in
     self.api.decidePolicyForNavigationAction(...) { result in
         DispatchQueue.main.async {
@@ -427,5 +429,10 @@ return popupView
 
 ---
 
-**마지막 업데이트**: 2025-01-17
+**마지막 업데이트**: 2026-01-27
 **분석 범위**: 22개 `registrar.dispatchOnMainThread` 인스턴스 전체
+
+### 변경 이력
+
+- **2026-01-27 (3.23.28)**: NavigationDelegateImpl의 `weak var registrar` + `isValid` 플래그를 공식 패턴 `unowned let registrar` + strong self 캡처로 변경. iOS 26에서 블록 해제 시 발생하던 NSInternalInconsistencyException 크래시 수정.
+- **2025-01-17**: 최초 분석 문서 작성

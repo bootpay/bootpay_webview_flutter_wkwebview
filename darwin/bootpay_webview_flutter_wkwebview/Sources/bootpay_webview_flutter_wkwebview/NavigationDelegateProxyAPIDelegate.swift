@@ -7,22 +7,15 @@ import WebKit
 /// Implementation of `WKNavigationDelegate` that calls to Dart in callback methods.
 public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
   let api: PigeonApiProtocolWKNavigationDelegate
-  weak var registrar: ProxyAPIRegistrar?
-
-  /// Flag to track if this delegate is still valid (not deallocated)
-  private var isValid = true
+  unowned let registrar: ProxyAPIRegistrar
 
   init(api: PigeonApiProtocolWKNavigationDelegate, registrar: ProxyAPIRegistrar) {
     self.api = api
     self.registrar = registrar
   }
 
-  deinit {
-    isValid = false
-  }
-
   public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-    registrar?.dispatchOnMainThread { onFailure in
+    registrar.dispatchOnMainThread { onFailure in
       self.api.didFinishNavigation(
         pigeonInstance: self, webView: webView, url: webView.url?.absoluteString
       ) { result in
@@ -35,7 +28,7 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
 
   public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!)
   {
-    registrar?.dispatchOnMainThread { onFailure in
+    registrar.dispatchOnMainThread { onFailure in
       self.api.didStartProvisionalNavigation(
         pigeonInstance: self, webView: webView, url: webView.url?.absoluteString
       ) { result in
@@ -49,7 +42,7 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
   public func webView(
     _ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error
   ) {
-    registrar?.dispatchOnMainThread { onFailure in
+    registrar.dispatchOnMainThread { onFailure in
       self.api.didFailNavigation(pigeonInstance: self, webView: webView, error: error as NSError) {
         result in
         if case .failure(let error) = result {
@@ -63,7 +56,7 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
     _ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!,
     withError error: Error
   ) {
-    registrar?.dispatchOnMainThread { onFailure in
+    registrar.dispatchOnMainThread { onFailure in
       self.api.didFailProvisionalNavigation(
         pigeonInstance: self, webView: webView, error: error as NSError
       ) { result in
@@ -75,7 +68,7 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
   }
 
   public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-    registrar?.dispatchOnMainThread { onFailure in
+    registrar.dispatchOnMainThread { onFailure in
       self.api.webViewWebContentProcessDidTerminate(pigeonInstance: self, webView: webView) {
         result in
         if case .failure(let error) = result {
@@ -107,32 +100,11 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
         return
       }
 
-      // Guard: if registrar is nil, webview is being deallocated - just cancel
-      guard let registrar = registrar else {
-        DispatchQueue.main.async {
-          decisionHandler(.cancel)
-        }
-        return
-      }
-
-      registrar.dispatchOnMainThread { [weak self] onFailure in
-        guard let self = self, self.isValid else {
-          DispatchQueue.main.async {
-            decisionHandler(.cancel)
-          }
-          return
-        }
-
+      registrar.dispatchOnMainThread { onFailure in
         self.api.decidePolicyForNavigationAction(
           pigeonInstance: self, webView: webView, navigationAction: navigationAction
-        ) { [weak self] result in
+        ) { result in
           DispatchQueue.main.async {
-            // Safety check: if delegate is deallocated, just cancel
-            guard self?.isValid == true else {
-              decisionHandler(.cancel)
-              return
-            }
-
             switch result {
             case .success(let policy):
               switch policy {
@@ -145,12 +117,11 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
                   decisionHandler(.download)
                 } else {
                   decisionHandler(.cancel)
-                  if let message = self?.registrar?.createUnsupportedVersionMessage(
+                  assertionFailure(
+                    self.registrar.createUnsupportedVersionMessage(
                       "WKNavigationActionPolicy.download",
                       versionRequirements: "iOS 14.5, macOS 11.3"
-                    ) {
-                    assertionFailure(message)
-                  }
+                    ))
                 }
               }
             case .failure(let error):
@@ -179,30 +150,11 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
         return
       }
 
-      // Guard: if registrar is nil, webview is being deallocated - just cancel
-      guard let registrar = registrar else {
-        decisionHandler(.cancel)
-        return
-      }
-
-      registrar.dispatchOnMainThread { [weak self] onFailure in
-        guard let self = self, self.isValid else {
-          DispatchQueue.main.async {
-            decisionHandler(.cancel)
-          }
-          return
-        }
-
+      registrar.dispatchOnMainThread { onFailure in
         self.api.decidePolicyForNavigationAction(
           pigeonInstance: self, webView: webView, navigationAction: navigationAction
-        ) { [weak self] result in
+        ) { result in
           DispatchQueue.main.async {
-            // Safety check: if delegate is deallocated, just cancel
-            guard self?.isValid == true else {
-              decisionHandler(.cancel)
-              return
-            }
-
             switch result {
             case .success(let policy):
               switch policy {
@@ -215,12 +167,11 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
                   decisionHandler(.download)
                 } else {
                   decisionHandler(.cancel)
-                  if let message = self?.registrar?.createUnsupportedVersionMessage(
+                  assertionFailure(
+                    self.registrar.createUnsupportedVersionMessage(
                       "WKNavigationActionPolicy.download",
                       versionRequirements: "iOS 14.5, macOS 11.3"
-                    ) {
-                    assertionFailure(message)
-                  }
+                    ))
                 }
               }
             case .failure(let error):
@@ -238,31 +189,11 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
       _ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse,
       decisionHandler: @escaping @MainActor (WKNavigationResponsePolicy) -> Void
     ) {
-      // Guard: if registrar is nil, webview is being deallocated - just cancel
-      guard let registrar = registrar else {
-        DispatchQueue.main.async {
-          decisionHandler(.cancel)
-        }
-        return
-      }
-
-      registrar.dispatchOnMainThread { [weak self] onFailure in
-        guard let self = self, self.isValid else {
-          DispatchQueue.main.async {
-            decisionHandler(.cancel)
-          }
-          return
-        }
-
+      registrar.dispatchOnMainThread { onFailure in
         self.api.decidePolicyForNavigationResponse(
           pigeonInstance: self, webView: webView, navigationResponse: navigationResponse
-        ) { [weak self] result in
+        ) { result in
           DispatchQueue.main.async {
-            guard self?.isValid == true else {
-              decisionHandler(.cancel)
-              return
-            }
-
             switch result {
             case .success(let policy):
               switch policy {
@@ -275,12 +206,11 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
                   decisionHandler(.download)
                 } else {
                   decisionHandler(.cancel)
-                  if let message = self?.registrar?.createUnsupportedVersionMessage(
+                  assertionFailure(
+                    self.registrar.createUnsupportedVersionMessage(
                       "WKNavigationResponsePolicy.download",
                       versionRequirements: "iOS 14.5, macOS 11.3"
-                    ) {
-                    assertionFailure(message)
-                  }
+                    ))
                 }
               }
             case .failure(let error):
@@ -296,28 +226,11 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
       _ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse,
       decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void
     ) {
-      guard let registrar = registrar else {
-        decisionHandler(.cancel)
-        return
-      }
-
-      registrar.dispatchOnMainThread { [weak self] onFailure in
-        guard let self = self, self.isValid else {
-          DispatchQueue.main.async {
-            decisionHandler(.cancel)
-          }
-          return
-        }
-
+      registrar.dispatchOnMainThread { onFailure in
         self.api.decidePolicyForNavigationResponse(
           pigeonInstance: self, webView: webView, navigationResponse: navigationResponse
-        ) { [weak self] result in
+        ) { result in
           DispatchQueue.main.async {
-            guard self?.isValid == true else {
-              decisionHandler(.cancel)
-              return
-            }
-
             switch result {
             case .success(let policy):
               switch policy {
@@ -330,12 +243,11 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
                   decisionHandler(.download)
                 } else {
                   decisionHandler(.cancel)
-                  if let message = self?.registrar?.createUnsupportedVersionMessage(
+                  assertionFailure(
+                    self.registrar.createUnsupportedVersionMessage(
                       "WKNavigationResponsePolicy.download",
                       versionRequirements: "iOS 14.5, macOS 11.3"
-                    ) {
-                    assertionFailure(message)
-                  }
+                    ))
                 }
               }
             case .failure(let error):
@@ -355,30 +267,11 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
         ->
         Void
     ) {
-      guard let registrar = registrar else {
-        DispatchQueue.main.async {
-          completionHandler(.cancelAuthenticationChallenge, nil)
-        }
-        return
-      }
-
-      registrar.dispatchOnMainThread { [weak self] onFailure in
-        guard let self = self, self.isValid else {
-          DispatchQueue.main.async {
-            completionHandler(.cancelAuthenticationChallenge, nil)
-          }
-          return
-        }
-
+      registrar.dispatchOnMainThread { onFailure in
         self.api.didReceiveAuthenticationChallenge(
           pigeonInstance: self, webView: webView, challenge: challenge
-        ) { [weak self] result in
+        ) { result in
           DispatchQueue.main.async {
-            guard self?.isValid == true else {
-              completionHandler(.cancelAuthenticationChallenge, nil)
-              return
-            }
-
             switch result {
             case .success(let response):
               completionHandler(response.disposition, response.credential)
@@ -396,28 +289,11 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
       completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) ->
         Void
     ) {
-      guard let registrar = registrar else {
-        completionHandler(.cancelAuthenticationChallenge, nil)
-        return
-      }
-
-      registrar.dispatchOnMainThread { [weak self] onFailure in
-        guard let self = self, self.isValid else {
-          DispatchQueue.main.async {
-            completionHandler(.cancelAuthenticationChallenge, nil)
-          }
-          return
-        }
-
+      registrar.dispatchOnMainThread { onFailure in
         self.api.didReceiveAuthenticationChallenge(
           pigeonInstance: self, webView: webView, challenge: challenge
-        ) { [weak self] result in
+        ) { result in
           DispatchQueue.main.async {
-            guard self?.isValid == true else {
-              completionHandler(.cancelAuthenticationChallenge, nil)
-              return
-            }
-
             switch result {
             case .success(let response):
               completionHandler(response.disposition, response.credential)

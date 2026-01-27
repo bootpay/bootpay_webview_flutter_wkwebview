@@ -1,3 +1,10 @@
+## 3.23.28
+
+* iOS 26 NavigationDelegate 해제 시 크래시(NSInternalInconsistencyException) 수정
+  - `weak var registrar` + `isValid` 플래그 방식을 공식 webview_flutter 패턴(`unowned let registrar` + strong self 캡처)으로 변경
+  - 웹뷰 해제 시 WebKit 블록 정리 과정에서 발생하는 레이스 컨디션 해결
+  - `decidePolicyForNavigationAction`, `decidePolicyForNavigationResponse`, `didReceiveAuthenticationChallenge` 모두 적용
+
 ## 3.23.27
 
 * WebView 자동 프리워밍 기능 추가
@@ -19,7 +26,7 @@
   - HTTPCookieStorage.cookieAcceptPolicy를 .always로 설정
 * NavigationDelegate 크래시 방지
   - 웹뷰 해제 시 비동기 콜백 안전 처리
-  - weak reference 및 isValid 플래그 추가
+  - weak reference 및 isValid 플래그 추가 (3.23.28에서 공식 패턴으로 재수정)
 
 ## 3.23.21
 
