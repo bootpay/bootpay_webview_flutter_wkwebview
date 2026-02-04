@@ -1,3 +1,9 @@
+## 3.23.29
+
+* WarmUp 로직을 Swift BootpayWarmUpManager로 통합
+  - ObjC +load 메서드 비활성화 (중복 warmUp 방지)
+  - Swift에서 통합 관리하여 안정성 향상
+
 ## 3.23.28
 
 * iOS 26 NavigationDelegate 해제 시 크래시(NSInternalInconsistencyException) 수정
