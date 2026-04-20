@@ -86,17 +86,17 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
       // Bootpay payment URL handling
       let url = navigationAction.request.url?.absoluteString ?? ""
 
-      if isItunesURL(url) {
+      if isItunesURL(url), let itunesURL = URL(string: url) {
         DispatchQueue.main.async {
           decisionHandler(.cancel)
         }
-        startAppToApp(URL(string: url)!)
+        startAppToApp(itunesURL)
         return
-      } else if !url.hasPrefix("http") {
+      } else if isAppToAppScheme(url), let appURL = URL(string: url) {
         DispatchQueue.main.async {
           decisionHandler(.cancel)
         }
-        startAppToApp(URL(string: url)!)
+        startAppToApp(appURL)
         return
       }
 
@@ -140,12 +140,12 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
       // Bootpay payment URL handling
       let url = navigationAction.request.url?.absoluteString ?? ""
 
-      if isItunesURL(url) {
-        startAppToApp(URL(string: url)!)
+      if isItunesURL(url), let itunesURL = URL(string: url) {
+        startAppToApp(itunesURL)
         decisionHandler(.cancel)
         return
-      } else if !url.hasPrefix("http") {
-        startAppToApp(URL(string: url)!)
+      } else if isAppToAppScheme(url), let appURL = URL(string: url) {
+        startAppToApp(appURL)
         decisionHandler(.cancel)
         return
       }
@@ -388,6 +388,27 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
 
   private func isItunesURL(_ urlString: String) -> Bool {
     return urlString.contains("apple.com")
+  }
+
+  /// 표준 웹/파일 스키마(iframe 내부 초기화·리소스 로드·SPA 라우팅에 사용)는
+  /// 네이티브 layer에서 가로채지 않고 Dart/WebView 기본 처리에 맡긴다.
+  private func isStandardWebScheme(_ urlString: String) -> Bool {
+    if urlString.isEmpty { return true }
+    let allowed: [String] = [
+      "http://", "https://",
+      "about:", "data:", "blob:",
+      "file://", "javascript:"
+    ]
+    return allowed.contains(where: urlString.hasPrefix)
+  }
+
+  /// 결제/인증 앱 딥링크 스킴만 네이티브 `UIApplication.open` 으로 위임한다.
+  /// (Android `BootpayUrlHelper` allow-list 와 동일한 철학)
+  private func isAppToAppScheme(_ urlString: String) -> Bool {
+    if isStandardWebScheme(urlString) { return false }
+    guard let schemeEnd = urlString.firstIndex(of: ":") else { return false }
+    let scheme = urlString[urlString.startIndex..<schemeEnd].lowercased()
+    return !scheme.isEmpty && scheme != "http" && scheme != "https"
   }
 }
 

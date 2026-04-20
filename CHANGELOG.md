@@ -1,3 +1,11 @@
+## 3.23.30
+
+* fix: iOS NavigationDelegate URL 판정을 블랙리스트 → 화이트리스트로 전환
+  - 기존 `!url.hasPrefix("http")` 조건이 `about:blank`/`data:`/`blob:`/`file:`/`javascript:` 같은
+    표준 웹 스키마까지 차단해 SPA 기반 결제 위젯의 iframe 초기화·내부 네비게이션이 막히던 문제 수정
+  - 표준 웹 스키마는 Dart 레이어로 통과시키고, 결제/인증 앱 딥링크 스킴만 `startAppToApp` 위임
+  - `URL(string: url)!` force-unwrap 제거 (빈 URL 에서 크래시 리스크 해소)
+
 ## 3.23.29
 
 * WarmUp 로직을 Swift BootpayWarmUpManager로 통합
