@@ -1,3 +1,10 @@
+## 3.23.31
+
+* fix: iOS `startItunesToInstall` 라우팅 보강 — 삼성 모니모(`monimopay://`, `smcard://`) 스킴 매핑 추가
+  - 기존에는 매핑 분기 부재로 모니모 앱 미설치 시 버튼이 무반응이었음
+  - 이제 다른 카드사와 동일하게 App Store(`id379577046`)로 fallback
+  - Android `bootpay_webview_flutter_android` 5.1.1의 라우팅 보강과 동기화
+
 ## 3.23.30
 
 * fix: iOS NavigationDelegate URL 판정을 블랙리스트 → 화이트리스트로 전환

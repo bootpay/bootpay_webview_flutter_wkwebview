@@ -339,6 +339,8 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
       itunesUrl = "https://apps.apple.com/kr/app/%EB%A6%AC%EB%B8%8C/id1126232922"
     } else if urlString.hasPrefix("mpocket.online.ansimclick") || urlString.hasPrefix("ansimclickscard") || urlString.hasPrefix("ansimclickipcollect") || urlString.hasPrefix("samsungpay") || urlString.hasPrefix("scardcertiapp") {
       itunesUrl = "https://apps.apple.com/kr/app/%EC%82%BC%EC%84%B1%EC%B9%B4%EB%93%9C/id535125356"
+    } else if urlString.hasPrefix("monimopay") || urlString.hasPrefix("smcard") {
+      itunesUrl = "https://apps.apple.com/kr/app/monimo-%EB%AA%A8%EB%8B%88%EB%AA%A8-%EC%82%BC%EC%84%B1%EA%B8%88%EC%9C%B5%EB%84%A4%ED%8A%B8%EC%9B%8D%EC%8A%A4/id379577046"
     } else if urlString.hasPrefix("lottesmartpay") {
       itunesUrl = "https://apps.apple.com/us/app/%EB%A1%AF%EB%8D%B0%EC%B9%B4%EB%93%9C-%EC%95%B1%EC%B9%B4%EB%93%9C/id688047200"
     } else if urlString.hasPrefix("lotteappcard") {
