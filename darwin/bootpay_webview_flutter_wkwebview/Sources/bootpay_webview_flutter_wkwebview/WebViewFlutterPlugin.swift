@@ -14,6 +14,7 @@
 public class BTWebViewFlutterPlugin: NSObject, FlutterPlugin {
   var proxyApiRegistrar: ProxyAPIRegistrar?
   var warmUpMethodChannel: BootpayWarmUpMethodChannel?
+  var popupConfigMethodChannel: BootpayPopupConfigMethodChannel?
 
   init(binaryMessenger: FlutterBinaryMessenger) {
     print("[Bootpay] BTWebViewFlutterPlugin.init() called")
@@ -24,6 +25,10 @@ public class BTWebViewFlutterPlugin: NSObject, FlutterPlugin {
     // Register WarmUp Method Channel
     warmUpMethodChannel = BootpayWarmUpMethodChannel()
     warmUpMethodChannel?.register(with: binaryMessenger)
+
+    // Register popup config channel (lets Dart extend the ad-host list)
+    popupConfigMethodChannel = BootpayPopupConfigMethodChannel()
+    popupConfigMethodChannel?.register(with: binaryMessenger)
 
     // 플러그인 등록 시 자동으로 WebView 프리워밍 시작
     print("[Bootpay] Calling warmUp from plugin init...")
@@ -53,5 +58,9 @@ public class BTWebViewFlutterPlugin: NSObject, FlutterPlugin {
     // Dispose WarmUp Method Channel
     warmUpMethodChannel?.dispose()
     warmUpMethodChannel = nil
+
+    // Dispose popup config channel
+    popupConfigMethodChannel?.dispose()
+    popupConfigMethodChannel = nil
   }
 }

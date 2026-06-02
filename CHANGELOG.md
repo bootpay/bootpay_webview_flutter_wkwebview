@@ -1,3 +1,19 @@
+## 3.23.32
+
+* feat: iOS 팝업(window.open / target="_blank")에 **반투명 플로팅 닫기(✕) 버튼** 추가 — 광고 등 `window.close()`를 호출하지 않는 새 창에 사용자가 갇히던 문제 해결
+  - 닫기 UI 를 상단 바(‹ 뒤로 / ✕ 닫기)에서 **팝업 위에 겹쳐 뜨는 반투명 원형 ✕ 버튼 하나**로 단순화 (별도 바/레이아웃 없이 우상단 SafeArea 안에 오버레이)
+  - 노출 모드 3종을 `Bootpay.setPopupCloseButtonMode(BootpayPopupCloseButtonMode.auto | always | never)` 로 제어:
+    - `auto`(기본): 광고 네트워크 도메인 팝업에만 ✕ 노출 (기존 동작 유지)
+    - `always`: 모든 팝업에 ✕ 노출
+    - `never`: ✕ 미노출
+  - `Bootpay.closePopupWebView()` 로 현재 떠 있는 팝업을 코드로 즉시 닫는 API 추가 — 개발자가 광고 종료 이벤트를 받았을 때 호출 (`BootpayPopupContainerView.current` / `closeCurrent()`)
+  - 팝업을 opener WebView 의 bounds 가 아니라 **opener 의 window(전체화면)**에 부착 — Bootpay WebView 가 화면 일부에만 embed 된 경우에도 팝업이 항상 전체화면으로 뜬다 (Android 의 decorView 부착과 동일). 콘텐츠는 SafeArea inset 을 적용해 메인 결제창과 동일한 영역을 차지
+  - 광고 분류는 광고 도메인 목록 방식 — 팝업/광고를 차단하지 않고 ✕ 노출 여부만 결정. 결제창은 동적 PG gateway 도메인이라 열거가 불가능하므로 auto 기본값은 "✕ 없음", 알려진 광고 도메인(`doubleclick.net` / `googleadservices.com` / `googlesyndication.com` 등)만 매칭 (`BootpayPopupAdFilter`)
+  - `createWebViewWith` 초기 URL + `decidePolicyFor` 리다이렉트 양쪽에서 `shouldShowCloseButton(for:)` 으로 판정해 `BootpayPopupContainerView.setCloseButtonVisible`로 늦게라도 ✕ 노출 (about:blank → 광고 리다이렉트 대응, reveal-only)
+  - `bootpay` 패키지의 `Bootpay.addPopupAdHosts([...])`로 광고 도메인 목록을 런타임 확장 가능 (`kr.co.bootpay/webview_popup` 채널 — `addAdHosts` / `setCloseButtonMode` / `closePopup`)
+  - 결제 흐름은 기존 그대로 — `window.close()` 자동 닫힘(`webViewDidClose`), App-to-App 딥링크, SSL 처리 모두 유지
+  - Android `bootpay_webview_flutter_android` 4.10.64의 동일 변경과 동기화
+
 ## 3.23.31
 
 * fix: iOS `startItunesToInstall` 라우팅 보강 — 삼성 모니모(`monimopay://`, `smcard://`) 스킴 매핑 추가

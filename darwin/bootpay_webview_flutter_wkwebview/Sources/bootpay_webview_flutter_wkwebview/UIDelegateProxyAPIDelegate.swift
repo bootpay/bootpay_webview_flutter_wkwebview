@@ -19,18 +19,38 @@ class UIDelegateImpl: NSObject, WKUIDelegate, WKNavigationDelegate {
     _ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration,
     for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures
   ) -> WKWebView? {
-    // Create popup webview for payment windows
-    let popupView = WKWebView(
-      frame: CGRect(x: 0, y: 0, width: webView.bounds.size.width, height: webView.bounds.size.height),
-      configuration: configuration
-    )
+    // Create popup webview for payment / external windows
+    // (window.open, target="_blank").
+    let popupView = WKWebView(frame: .zero, configuration: configuration)
 
-    popupView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     // Use self as navigationDelegate to handle App-to-App payment in popup
     popupView.navigationDelegate = self
     popupView.uiDelegate = self
 
-    webView.superview?.addSubview(popupView)
+    // Wrap the popup in a container that overlays a single floating, semi-
+    // transparent close (✕) button on top of the popup. The button is hidden
+    // by default, so payment popups render exactly as before and auto-dismiss
+    // via `window.close()` (-> webViewDidClose). It is shown per the configured
+    // mode (auto: ad popups only — the default; always; never), so ad pages
+    // opened via window.open / target="_blank" (e.g. AdSense) get a manual
+    // escape hatch while still being displayed in-app. See BootpayPopupAdFilter.
+    let container = BootpayPopupContainerView(webView: popupView)
+
+    // Attach the popup to the opener's window so it always covers the full
+    // screen, regardless of where the Bootpay web view sits in the Flutter view
+    // hierarchy (e.g. embedded in a sub-region). This mirrors the Android
+    // implementation, which adds popups to the Activity decorView. Falls back to
+    // the opener's superview / the opener itself if no window is available.
+    // Safe-area insets are applied in BootpayPopupContainerView.layoutSubviews
+    // so the popup matches the main payment web view (hosted inside a SafeArea).
+    let hostView: UIView = webView.window ?? webView.superview ?? webView
+    container.frame = hostView.bounds
+    container.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+    container.setCloseButtonVisible(
+      BootpayPopupAdFilter.shared.shouldShowCloseButton(for: navigationAction.request.url))
+
+    hostView.addSubview(container)
 
     // Note: Removed Dart callback to prevent popup creation issues
     // Handle popup entirely in native code for better stability
@@ -128,8 +148,15 @@ class UIDelegateImpl: NSObject, WKUIDelegate, WKNavigationDelegate {
   #endif
 
   func webViewDidClose(_ webView: WKWebView) {
-    // Remove popup webview when closed
-    webView.removeFromSuperview()
+    // The popup is wrapped in a BootpayPopupContainerView; dismiss the whole
+    // container so the floating close button disappears together with the popup
+    // and the static `current` reference is cleared. Fall back to removing the
+    // web view itself for any unwrapped popup.
+    if let container = webView.superview as? BootpayPopupContainerView {
+      container.dismiss()
+    } else {
+      webView.removeFromSuperview()
+    }
   }
 
   #if compiler(>=6.0)
@@ -268,6 +295,17 @@ class UIDelegateImpl: NSObject, WKUIDelegate, WKNavigationDelegate {
     _ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
     decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
   ) {
+    // If a popup navigates into a URL that should show the close button (e.g. an
+    // initial about:blank that then redirects to an AdSense click-through in
+    // "auto" mode), reveal the floating ✕ so the user can escape. Reveal-only:
+    // once shown it stays. In "never" mode this never reveals; "always" already
+    // showed it at creation.
+    if let container = webView.superview as? BootpayPopupContainerView,
+      BootpayPopupAdFilter.shared.shouldShowCloseButton(for: navigationAction.request.url)
+    {
+      container.setCloseButtonVisible(true)
+    }
+
     // Handle App-to-App payment URLs in popup
     let url = navigationAction.request.url?.absoluteString ?? ""
 
@@ -414,5 +452,123 @@ class UIDelegateProxyAPIDelegate: PigeonApiDelegateWKUIDelegate {
   func pigeonDefaultConstructor(pigeonApi: PigeonApiWKUIDelegate) throws -> WKUIDelegate {
     return UIDelegateImpl(
       api: pigeonApi, registrar: pigeonApi.pigeonRegistrar as! ProxyAPIRegistrar)
+  }
+}
+
+/// Container view that hosts a Bootpay popup `WKWebView` and overlays a single
+/// floating, semi-transparent close (✕) button on top of it.
+///
+/// The Bootpay payment flow opens new windows via `window.open` and dismisses
+/// them by calling `window.close()` (handled in `UIDelegateImpl.webViewDidClose`).
+/// Some non-payment new-window requests — most notably ad pages opened by Google
+/// AdSense (`window.open` / `target="_blank"`) — never call `window.close()`,
+/// which previously left the user trapped with no way back.
+///
+/// The container is pinned to the opener's window (full screen) and lays the
+/// popup web view out inside the safe area, so it occupies the same region as
+/// the main payment web view. The ✕ button is hidden by default; it is revealed
+/// via `setCloseButtonVisible(true)` per the configured mode (see
+/// `BootpayPopupAdFilter.shouldShowCloseButton`) — in the default "auto" mode
+/// only for known ad networks — giving users a manual escape hatch from ad pages
+/// without altering the payment success path.
+///
+/// `BootpayPopupContainerView.current` tracks the most recently shown popup so it
+/// can be dismissed programmatically from Dart via `Bootpay.closePopupWebView()`
+/// (see the `closePopup` method-channel case).
+class BootpayPopupContainerView: UIView {
+  /// The most recently created popup container, used by `closeCurrent()` so Dart
+  /// can dismiss the active popup (e.g. on an ad-finished event). Weak so it
+  /// never keeps a dismissed popup alive.
+  static weak var current: BootpayPopupContainerView?
+
+  /// Dismisses the currently displayed popup, if any. No-op when none is open.
+  static func closeCurrent() {
+    current?.dismiss()
+  }
+
+  private let buttonSize: CGFloat = 18
+  private let buttonMargin: CGFloat = 12
+  private let closeButton = UIButton(type: .custom)
+  private weak var popupWebView: WKWebView?
+
+  /// Whether the floating ✕ button is currently shown. Hidden by default so
+  /// payment popups keep their original chrome-less appearance.
+  private var showCloseButton = false
+
+  init(webView: WKWebView) {
+    self.popupWebView = webView
+    super.init(frame: .zero)
+
+    backgroundColor = .white
+
+    addSubview(webView)
+
+    // Circular, semi-transparent ✕ floated on top of the popup. Hidden until
+    // revealed via setCloseButtonVisible(_:).
+    closeButton.setTitle("✕", for: .normal)
+    closeButton.setTitleColor(.white, for: .normal)
+    closeButton.titleLabel?.font = .systemFont(ofSize: 11, weight: .medium)
+    closeButton.backgroundColor = UIColor(white: 0, alpha: 0.45)
+    closeButton.layer.cornerRadius = buttonSize / 2
+    closeButton.clipsToBounds = true
+    closeButton.isHidden = true
+    closeButton.addTarget(self, action: #selector(didTapClose), for: .touchUpInside)
+    addSubview(closeButton)
+
+    BootpayPopupContainerView.current = self
+  }
+
+  @available(*, unavailable)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  /// Shows or hides the floating ✕ button. Callers use this reveal-only (always
+  /// passing `true`) once a popup is classified as needing the button, so once
+  /// shown it stays for the life of the popup.
+  func setCloseButtonVisible(_ visible: Bool) {
+    guard showCloseButton != visible else { return }
+    showCloseButton = visible
+    closeButton.isHidden = !visible
+    if visible {
+      bringSubviewToFront(closeButton)
+    }
+    setNeedsLayout()
+    layoutIfNeeded()
+  }
+
+  override func layoutSubviews() {
+    super.layoutSubviews()
+
+    // The container is pinned to the full window, so lay the popup out inside
+    // the safe area. This makes it occupy the same region as the main payment
+    // web view (which is hosted inside a Flutter SafeArea).
+    let insets = safeAreaInsets
+    let safeX = insets.left
+    let safeWidth = bounds.width - insets.left - insets.right
+    let safeTop = insets.top
+    let safeBottom = bounds.height - insets.bottom
+
+    popupWebView?.frame = CGRect(
+      x: safeX, y: safeTop, width: safeWidth, height: safeBottom - safeTop)
+
+    // Float the ✕ at the top-right corner, inside the safe area.
+    closeButton.frame = CGRect(
+      x: bounds.width - insets.right - buttonSize - buttonMargin,
+      y: safeTop + buttonMargin,
+      width: buttonSize,
+      height: buttonSize)
+  }
+
+  @objc private func didTapClose() {
+    dismiss()
+  }
+
+  func dismiss() {
+    if BootpayPopupContainerView.current === self {
+      BootpayPopupContainerView.current = nil
+    }
+    popupWebView?.stopLoading()
+    removeFromSuperview()
   }
 }
