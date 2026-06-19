@@ -1,3 +1,11 @@
+## 3.23.33
+
+* fix(spm): Swift Package Manager 빌드 실패 해소 — 단일 SwiftPM target 의 mixed-language(Swift+ObjC) 제약 위반 제거
+  - deprecated 死코드였던 `BootpayAutoWarmUp.m` / `include/BootpayAutoWarmUp.h`(ObjC) 삭제 → target 이 순수 Swift 가 되어 `contains mixed language source files; feature not supported` 에러 해결
+  - 실제 warmUp 로직은 이미 `BootpayWarmUpManager.swift` 로 이전돼 있어 동작 변화 없음 (유일 참조는 `NSClassFromString` 런타임 룩업 → nil 시 Swift `bootpaySharedProcessPool` fallback, 기존과 동일)
+  - Flutter 3.44+ 에서 SPM 이 기본이 되며 `Package.swift` 보유 플러그인은 SPM 으로 통합되는데, 이때 발생하던 빌드 실패를 수정 (CocoaPods 빌드는 영향 없음)
+  - iOS 시뮬레이터에서 SPM 빌드·실행·WKWebView 렌더링까지 검증 완료
+
 ## 3.23.32
 
 * feat: iOS 팝업(window.open / target="_blank")에 **반투명 플로팅 닫기(✕) 버튼** 추가 — 광고 등 `window.close()`를 호출하지 않는 새 창에 사용자가 갇히던 문제 해결
